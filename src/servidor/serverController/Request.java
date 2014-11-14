@@ -28,20 +28,19 @@ final class HttpRequest implements Runnable {
   private void processRequest() throws Exception {
     String requestLine = sockManager.Leer();
     System.out.println("RequestLine: " + requestLine);
-/*
-    // Display the request line.
-    //System.out.println();
-    //System.out.println(requestLine);
 
     // Extract the filename from the request line.
-    StringTokenizer tokens = new StringTokenizer(requestLine);
-    tokens.nextToken(); // skip over the method, which should be "GET"
-    //System.out.println("Next Token: "+tokens.nextToken());
-    String fileName = tokens.nextToken();
-
-    // Prepend a "." so that file request is within the current directory.
-    fileName = "archivos/" + fileName;
-
+    if(requestLine.equals("Hola"))
+    {
+    	sockManager.Escribir("Adios");
+        sockManager.CerrarStreams();
+        sockManager.CerrarSocket();
+    }
+    else
+    {
+    	sockManager.Escribir(requestLine);
+    }
+    /*
     // Open the requested file.
     FileInputStream fis = null;
     boolean fileExists = true;
