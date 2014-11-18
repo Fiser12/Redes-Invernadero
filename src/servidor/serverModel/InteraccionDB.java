@@ -1,4 +1,8 @@
 package servidor.serverModel;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * Clase dedicada a métodos estaticos que haciendo uso de SQLiteManager enmascara el modelo al controlador
  * @author Fiser
@@ -33,4 +37,41 @@ public class InteraccionDB {
 	{
 		
 	}
+	public int metodoUser(String nombre){
+		gestor.enviarComando("SELECT Nombre FROM Usuario WHERE Nombre = '" + nombre + "';");
+		ResultSet resultado = gestor.getResultSet();
+		try {
+			if(resultado.next())
+				return 200;
+			else
+				if(nombre.equals(""))
+					return 400;
+				else
+					return 401;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	public int metodoPass(String nombre, String pass){
+		gestor.enviarComando("SELECT * FROM Usuario WHERE Nombre = '" + nombre + "' AND Pass = '"+ pass + "';");
+		ResultSet resultado = gestor.getResultSet();
+		try {
+			if(resultado.next())
+				return 201;
+			else
+				if(pass.equals(""))
+					return 402;
+				else
+					return 403;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+/*	public LinkedList<Placa> metodoListado(String usuario)
+	{
+		gestor.enviarComando("SELECT * FROM Placa WHERE ")
+	}
+	*/
 }
