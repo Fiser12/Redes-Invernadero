@@ -5,13 +5,23 @@ public class Sensor {
 	private String estadoVariable;
 	private String ultimaAcción;
 	private String nombreVariable;
-	public Sensor(String estadoVariable, String ultimaAcción, String variable) {
+	private String funcionPrincipal;
+	private int id_Placa;
+	public Sensor(String estadoVariable, String ultimaAcción, String variable, String funcionPrincipal) {
 		this.estadoVariable = estadoVariable;
 		this.ultimaAcción = ultimaAcción;
 		this.nombreVariable = variable;
+		this.funcionPrincipal = funcionPrincipal;
+	}
+	public Sensor(String estadoVariable, String ultimaAcción, String variable, String funcionPrincipal, int idPlaca) {
+		this.estadoVariable = estadoVariable;
+		this.ultimaAcción = ultimaAcción;
+		this.nombreVariable = variable;
+		this.funcionPrincipal = funcionPrincipal;
+		this.id_Placa = idPlaca;
 	}
 	public Sensor() {
-		super();
+
 	}
 	public String getEstadoVariable() {
 		return estadoVariable;
@@ -36,6 +46,18 @@ public class Sensor {
 	}
 	public void setId_sensor(int id_sensor) {
 		this.id_sensor = id_sensor;
+	}
+	public String getFuncionPrincipal() {
+		return funcionPrincipal;
+	}
+	public void setFuncionPrincipal(String funcionPrincipal) {
+		this.funcionPrincipal = funcionPrincipal;
+	}
+	public int getId_Placa() {
+		return id_Placa;
+	}
+	public void setId_Placa(int id_Placa) {
+		this.id_Placa = id_Placa;
 	}
 	
 	
