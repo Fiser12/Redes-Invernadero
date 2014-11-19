@@ -12,6 +12,10 @@ public class Usuario {
 		this.pass = pass;
 		this.idPlaca = idPlaca;
 	}
+	public Usuario(String usuario, String pass) {
+		this.usuario = usuario;
+		this.pass = pass;
+	}
 	public Usuario() {
 		
 	}

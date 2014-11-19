@@ -1,17 +1,17 @@
 package servidor.serverController;
-import java.io.* ;
 import java.net.* ;
-import java.util.* ;
 import util.*;
 
 public final class WebServer
 {
+	private static ServerSocket wellcomeSocket;
+
 	public static void main(String argv[]) throws Exception
 	{
 		// Set the port number.
 		int port = 3000; //(new Integer(argv[0])).intValue();
 
-		ServerSocket wellcomeSocket = new ServerSocket(port);
+		wellcomeSocket = new ServerSocket(port);
 
 		while (true)
 		{
@@ -19,7 +19,7 @@ public final class WebServer
 
 			SocketManager sockManager = new SocketManager(wellcomeSocket.accept());
 
-			HttpRequest request = new HttpRequest(sockManager);
+			Request request = new Request(sockManager);
 
 			Thread thre = new Thread(request);
 

@@ -4,120 +4,112 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import util.*;
+import servidor.serverModel.InteraccionDB;
+final class Request implements Runnable {
 
-final class HttpRequest implements Runnable {
+	final static String CRLF = "\r\n";
+	SocketManager sockManager;
+	int estado;
+	String usuario;
+	// Constructor
+	public Request(SocketManager sockMan) throws Exception {
+		sockManager = sockMan;
+	}
 
-  final static String CRLF = "\r\n";
-  SocketManager sockManager;
+	// Implement the run() method of the Runnable interface.
+	public void run() {
+		try {
+			processRequest();
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 
-  // Constructor
-  public HttpRequest(SocketManager sockMan) throws Exception {
-    sockManager = sockMan;
-  }
+	private void processRequest() throws Exception {
+	    String requestLine = sockManager.Leer();
+	    System.out.println("RequestLine: " + requestLine);
 
-  // Implement the run() method of the Runnable interface.
-  public void run() {
-    try {
-      processRequest();
-    }
-    catch (Exception e) {
-      System.out.println(e);
-    }
-  }
+		switch (estado) {
+		case 0:
+			if (requestLine.contains("USER"))
+			{
+				usuario = requestLine.substring(5);
+				System.out.println(usuario);
+				int respuesta = InteraccionDB.metodoUser(usuario);
+				System.out.println(respuesta);
+				if(respuesta == 200){
+					sockManager.Escribir("200 OK Bienvenido " + usuario);
+					estado = 1;
+				}
+				else if(respuesta == 400)
+					sockManager.Escribir("400 ERR Falta el nombre de usuario");
+				else if(respuesta == 401)
+					sockManager.Escribir("401 ERR Usuario desconocido");
+			}
+			else{}
+			break; 
+		case 1:
+			if (requestLine.contains("PASS"))
+			{
+				String pass = requestLine.substring(5, requestLine.length()-1);
+				int respuesta = InteraccionDB.metodoPass(usuario, pass);
+				if(respuesta == 201)
+					sockManager.Escribir("200 OK Bienvenido al sistema");
+				else if(respuesta == 402)
+					sockManager.Escribir("402 ERR La clave es incorrecta");
+				else if(respuesta == 403)
+					sockManager.Escribir("403 ERR Falta la clave");
+				estado = 2;
+			}
+			else{}
+			break;
+		case 2:
+			if (requestLine.contains("ON"))
+			{
 
-  private void processRequest() throws Exception {
-    String requestLine = sockManager.Leer();
-    System.out.println("RequestLine: " + requestLine);
+			}
+			else if(requestLine.contains("OFF"))
+			{
 
-    // Extract the filename from the request line.
-    if(requestLine.equals("Hola"))
-    {
-    	sockManager.Escribir("Adios");
-        sockManager.CerrarStreams();
-        sockManager.CerrarSocket();
-    }
-    else
-    {
-    	sockManager.Escribir(requestLine);
-    }
-    /*
-    // Open the requested file.
-    FileInputStream fis = null;
-    boolean fileExists = true;
-    try {
-      fis = new FileInputStream(fileName);
-    }
-    catch (FileNotFoundException e) {
-      fileExists = false;
-      System.out.println("No abre fichero");
-    }
+			}
+			else if(requestLine.contains("ACCION"))
+			{
 
-    System.out.println("Incoming!!!");
-    System.out.println("1.............." + requestLine);
+			}
+			else if(requestLine.contains("LISTADO"))
+			{
 
-    // Get and display the header lines.
-    String headerLine = null;
-    while ( (headerLine = sockManager.Leer()).length() != 0) {
-      System.out.println("2.............." + headerLine);
-    }
+			}
+			else if(requestLine.contains("BUSCAR"))
+			{
 
-    // Construct the response message.
-    String statusLine = null;
-    String contentTypeLine = null;
-    String entityBody = null;
-    if (fileExists) {
-      statusLine = "HTTP/1.0 200 OK" + CRLF;
-      contentTypeLine = "Content-type: " + contentType(fileName) + CRLF;
-    }
-    else {
-      statusLine = "HTTP/1.0 404 Not Found" + CRLF;
-      contentTypeLine = "Content-Type: text/html" + CRLF;
-      //entityBody = "<HTML>" + "<HEAD><TITLE>Not Found</TITLE></HEAD>" + "<BODY>Not Found</BODY></HTML>";
-      entityBody = "<HTML><HEAD><TITLE>Not Found</TITLE></HEAD><BODY><font size='6' face='Calibri'>El fichero no ha sido encontrado. Puedes ver c�mo puedes dar formato al texto poniendolo, por ejemplo, en <b>negrita</b> o <i>cursiva</i>.</font></BODY></HTML>";
-    }
+			}
+			else if(requestLine.contains("OBTENER_FOTO"))
+			{
 
-    // Send the status line.
-    sockManager.Escribir(statusLine);
+			}
+			else
+			{
 
-    // Send the content type line.
-    sockManager.Escribir(contentTypeLine);
+			}
+			break;
+		case 3:
+			if(requestLine.contains("CONFIRMAR_ACCION"))
+			{
 
-    // Send a blank line to indicate the end of the header lines.
-    sockManager.Escribir(CRLF);
+			}
+			else if(requestLine.contains("RECHAZAR_ACCION"))
+			{
 
-    // Send the entity body.
-    if (fileExists) {
-      sendBytes(fis);
-      fis.close();
-    }
-    else {
-      sockManager.Escribir(entityBody);
-    }
+			}
+			else{}
+			break;
 
-    // Close streams and socket.
-    sockManager.CerrarStreams();
-    sockManager.CerrarSocket();
-    */
-  }
-
-  private void sendBytes(FileInputStream fis) throws Exception {
-    // Construct a 1K buffer to hold bytes on their way to the socket.
-    byte[] buffer = new byte[1024];
-    int bytes = 0;
-
-    // Copy requested file into the socket's output stream.
-    while ( (bytes = fis.read(buffer)) != -1) {
-      sockManager.Escribir(buffer, bytes);
-    }
-  }
-
-  private static String contentType(String fileName) {
-    if (fileName.endsWith(".htm") || fileName.endsWith(".html")) {
-      return "text/html";
-    }
-    if (fileName.endsWith(".ram") || fileName.endsWith(".ra")) {
-      return "audio/x-pn-realaudio";
-    }
-    return "application/octet-stream";
-  }
+		case 4:
+			sockManager.CerrarStreams();
+			sockManager.CerrarSocket();
+			break;
+		}
+	}
 }

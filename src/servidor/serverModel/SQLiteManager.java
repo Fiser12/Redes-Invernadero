@@ -46,6 +46,7 @@ public class SQLiteManager
                         }
                 }catch (ClassNotFoundException e) {
                         conectado = false;
+                        System.out.println(e.getMessage());
                 }
         }
         /**
@@ -76,15 +77,17 @@ public class SQLiteManager
         public synchronized boolean enviarComando(String comando){
                 try {
                         if(conectado){
-                                if(comando.toLowerCase().startsWith("insert") 
+                        	if(comando.toLowerCase().startsWith("insert") 
                                                 || comando.toLowerCase().startsWith("update")
                                                 || comando.toLowerCase().startsWith("delete")
                                                 || comando.toLowerCase().startsWith("create")
                                                 || comando.toLowerCase().startsWith("alter")
                                                 || comando.toLowerCase().startsWith("drop")
+                                                || comando.toLowerCase().startsWith("pragma")
                                         ){
+                        				System.out.println(comando);
                                         query.executeUpdate(comando);
-                                }else{
+                                        }else{
                                         resultadoDeConsulta = query.executeQuery(comando);
                                 }
                                 return true;
