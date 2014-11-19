@@ -15,7 +15,6 @@ public final class WebServer
 
 		while (true)
 		{
-			//Socket conn = sock.accept();
 
 			SocketManager sockManager = new SocketManager(wellcomeSocket.accept());
 
