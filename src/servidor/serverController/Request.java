@@ -37,7 +37,7 @@ final class Request implements Runnable {
 				{
 					usuario = requestLine.substring(5);
 					int respuesta = InteraccionDB.metodoUser(usuario);
-					System.out.println(respuesta);
+					System.out.println("USER: " + respuesta);
 					if(respuesta == 200){
 						sockManager.Escribir("200 OK Bienvenido " + usuario + "\n");
 						estado = 1;
@@ -46,18 +46,27 @@ final class Request implements Runnable {
 						sockManager.Escribir("400 ERR Falta el nombre de usuario\n");
 					else if(respuesta == 401)
 						sockManager.Escribir("401 ERR Usuario desconocido\n");
+					requestLine = sockManager.Leer();
+					System.out.println("0. RequestLine: " + requestLine);
+				}
+				else if(requestLine.startsWith("SALIR"))
+				{
+					sockManager.Escribir("209 OK Adios\n");
+					estado = 4;
 				}
 				else{
-					sockManager.Escribir("0 ERR Genericoºn");
+					sockManager.Escribir("\n");
+					requestLine = sockManager.Leer();
+					System.out.println("0. RequestLine: " + requestLine);
+
 				}
-				requestLine = sockManager.Leer();
-				System.out.println("0. RequestLine: " + requestLine);
 				break; 
 			case 1:
 				if (requestLine.startsWith("PASS"))
 				{
-					String pass = requestLine.substring(5, requestLine.length()-1);
+					String pass = requestLine.substring(5);
 					int respuesta = InteraccionDB.metodoPass(usuario, pass);
+					System.out.println("PASS: " + pass);
 					if(respuesta == 201)
 						sockManager.Escribir("200 OK Bienvenido al sistema\n");
 					else if(respuesta == 402)
@@ -65,59 +74,93 @@ final class Request implements Runnable {
 					else if(respuesta == 403)
 						sockManager.Escribir("403 ERR Falta la clave\n");
 					estado = 2;
-					sockManager.Leer();
+					requestLine = sockManager.Leer();
+					System.out.println("1. RequestLine: " + requestLine);
+				}
+				else if(requestLine.startsWith("SALIR"))
+				{
+					sockManager.Escribir("209 OK Adios\n");
+					estado = 4;
 				}
 				else{
-					sockManager.Escribir("0 ERR Generico\n");
+					sockManager.Escribir("\n");
+					requestLine = sockManager.Leer();
+					System.out.println("1. RequestLine: " + requestLine);
 				}
-				requestLine = sockManager.Leer();
-				System.out.println("RequestLine: " + requestLine);
 				break;
 			case 2:
 				if (requestLine.startsWith("ON"))
 				{
-
+					requestLine = sockManager.Leer();
+					System.out.println("2. RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("OFF"))
 				{
-
+					requestLine = sockManager.Leer();
+					System.out.println("2. RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("ACCION"))
 				{
 					estado = 3;
+					requestLine = sockManager.Leer();
+					System.out.println("2. RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("LISTADO"))
 				{
-
+					requestLine = sockManager.Leer();
+					System.out.println("2. RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("BUSCAR"))
 				{
-
+					requestLine = sockManager.Leer();
+					System.out.println("2. RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("OBTENER_FOTO"))
 				{
-
+					requestLine = sockManager.Leer();
+					System.out.println("2. RequestLine: " + requestLine);
+				}
+				else if(requestLine.startsWith("SALIR"))
+				{
+					sockManager.Escribir("209 OK Adios\n");
+					estado = 4;
 				}
 				else
 				{
-
+					sockManager.Escribir("\n");
+					requestLine = sockManager.Leer();
+					System.out.println("2. RequestLine: " + requestLine);
 				}
 				break;
 			case 3:
 				if(requestLine.startsWith("CONFIRMAR_ACCION"))
 				{
 					estado = 2;
+					requestLine = sockManager.Leer();
+					System.out.println("3. RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("RECHAZAR_ACCION"))
 				{
 					estado = 2;
+					requestLine = sockManager.Leer();
+					System.out.println("0. RequestLine: " + requestLine);
 				}
-				else{}
+				else if(requestLine.startsWith("SALIR"))
+				{
+					sockManager.Escribir("209 OK Adios\n");
+					estado = 4;
+				}
+				else{
+					sockManager.Escribir("\n");
+					requestLine = sockManager.Leer();
+					System.out.println("0. RequestLine: " + requestLine);
+				}
 				break;
 
 			case 4:
 				sockManager.CerrarStreams();
 				sockManager.CerrarSocket();
+				System.out.println("Cerrando");
 				stop = true;
 				break;
 			}

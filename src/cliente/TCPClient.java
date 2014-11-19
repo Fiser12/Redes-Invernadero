@@ -17,7 +17,7 @@ public class TCPClient {
             BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
             //Se almacena en "sentence" la linea introducida por teclado
 
-            while (!sentence.equals("adios")) {
+            while (!modifiedSentence.startsWith("209")) {
                 System.out.print("String a enviar: ");
                 sentence = inFromUser.readLine();
                 //El m�todo Escribir, pone en el socket lo introducido por teclado
