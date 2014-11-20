@@ -1,8 +1,5 @@
 package servidor.serverController;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
 import util.*;
 import servidor.serverModel.InteraccionDB;
 final class Request implements Runnable {
@@ -66,14 +63,15 @@ final class Request implements Runnable {
 				{
 					String pass = requestLine.substring(5);
 					int respuesta = InteraccionDB.metodoPass(usuario, pass);
-					System.out.println("PASS: " + pass);
-					if(respuesta == 201)
+					System.out.println("PASS: " + pass + "resptuesta= " + respuesta);
+					if(respuesta == 201){
 						sockManager.Escribir("200 OK Bienvenido al sistema\n");
+						estado = 2;
+					}
 					else if(respuesta == 402)
 						sockManager.Escribir("402 ERR La clave es incorrecta\n");
 					else if(respuesta == 403)
 						sockManager.Escribir("403 ERR Falta la clave\n");
-					estado = 2;
 					requestLine = sockManager.Leer();
 					System.out.println("1. RequestLine: " + requestLine);
 				}
