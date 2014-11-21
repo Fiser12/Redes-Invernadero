@@ -68,8 +68,10 @@ final class Request implements Runnable {
 						sockManager.Escribir("200 OK Bienvenido al sistema\n");
 						estado = 2;
 					}
-					else if(respuesta == 402)
+					else if(respuesta == 402){
 						sockManager.Escribir("402 ERR La clave es incorrecta\n");
+						estado = 0;
+					}
 					else if(respuesta == 403)
 						sockManager.Escribir("403 ERR Falta la clave\n");
 					requestLine = sockManager.Leer();
@@ -105,6 +107,7 @@ final class Request implements Runnable {
 				}
 				else if(requestLine.startsWith("LISTADO"))
 				{
+					sockManager.Escribir(InteraccionDB.listado(usuario));
 					requestLine = sockManager.Leer();
 					System.out.println("2. RequestLine: " + requestLine);
 				}

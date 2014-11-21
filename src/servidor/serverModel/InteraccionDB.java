@@ -73,6 +73,30 @@ public class InteraccionDB {
 			return 0;
 		}
 	}
+	private static LinkedList<Sensor> listadoList(String nombre)
+	{
+		LinkedList<Sensor> lista = new LinkedList<Sensor>();
+		gestor.enviarComando("SELECT * FROM Usuario_Placa U Sensor S WHERE Nombre = '" + nombre +"' AND U.Id_Placa=S.id_Placa;");
+		ResultSet resultado = gestor.getResultSet();
+		try {
+			while(resultado.next())
+				lista.add(new Sensor(resultado.getString("Nombre_Variable"), resultado.getString("Funcion_Principal"), resultado.getString("Estado_la_variable"), resultado.getString("Ultima_Accion"), resultado.getInt("id_Placa")));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
+		
+	}
+	public static String listado(String nombre){
+		String texto = "";
+		LinkedList<Sensor> lista = listadoList(nombre);
+		for(Sensor temp: lista){
+			String temporal = "ELEM " + temp.getId_sensor() + "Placa" + temp.getId_Placa() + "; " + temp.getVariable() + "; " + temp.getFuncionPrincipal() + "; " + temp.getEstadoVariable() + "; " + temp.getUltimaAcción() + "\n";
+			texto = texto + temporal;
+		}
+		texto = texto + "\n\n202 FINLISTA";
+		return texto;
+	}
 	public static void main(String []argv)
 	{
 		reiniciarBase();
