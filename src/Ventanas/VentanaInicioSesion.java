@@ -4,19 +4,32 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import java.awt.GridLayout;
+
 import javax.swing.JButton;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
-public class VentanaUsuario extends JFrame implements FocusListener {
+
+import util.SocketManager;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+public class VentanaInicioSesion extends JFrame implements FocusListener {
 
 	private JPanel contentPane;
 	private JTextField textUsuario;
@@ -32,6 +45,9 @@ public class VentanaUsuario extends JFrame implements FocusListener {
     private JPanel TextoInicial;
     private JLabel lblDatos;
     private boolean UsuarioCorrecto;
+    private SocketManager sm ;
+    private String respuesta;
+	
     /**
 	 * Launch the application.
 	 */
@@ -39,7 +55,7 @@ public class VentanaUsuario extends JFrame implements FocusListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaUsuario frame = new VentanaUsuario();
+					VentanaInicioSesion frame = new VentanaInicioSesion();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,8 +66,9 @@ public class VentanaUsuario extends JFrame implements FocusListener {
 
 	/**
 	 * Create the frame.
+	 * @throws IOException 
 	 */
-	public VentanaUsuario() {
+	public VentanaInicioSesion() throws IOException {
 		
 		setResizable(false);
 		setUndecorated(true);
@@ -70,7 +87,9 @@ public class VentanaUsuario extends JFrame implements FocusListener {
 		inicioSesion.add(Inicio, BorderLayout.CENTER);
 		Inicio.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		 Interno = new JPanel();
+		sm = new SocketManager("127.0.0.1", 3000);
+		
+		Interno = new JPanel();
 		Inicio.add(Interno);
 		Interno.setLayout(null);
 		
@@ -94,11 +113,50 @@ public class VentanaUsuario extends JFrame implements FocusListener {
 	    Botones = new JPanel();
 		inicioSesion.add(Botones, BorderLayout.SOUTH);
 		Botones.setLayout(new GridLayout(0, 2, 0, 0));
-		
 	    btnLogin = new JButton("Login");
+	    btnLogin.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    try {
+			sm.Escribir("USER"+textUsuario.getText());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    try {
+			respuesta=sm.Leer();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    JOptionPane.showMessageDialog(null,respuesta);
+	    if(respuesta.equals("200 OK Bienvenido "+textUsuario.getText())){
+	    	UsuarioCorrecto=true;
+	    }
+	    	}
+	    });
 		btnLogin.setEnabled(false);
 		Botones.add(btnLogin);
 	    btnClear = new JButton("Clear");
+	    btnClear.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    	try {
+				sm.Escribir(passwordField.getText());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	     try {
+			respuesta=sm.Leer();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	     JOptionPane.showMessageDialog(null,respuesta);
+	     if(respuesta.equals("201 OK Bienvenido al sistema.")){
+	    	 //abrir ventana de funciones
+	     }
+	    	}
+	    });
 		btnClear.setEnabled(false);
 		Botones.add(btnClear);
 		TextoInicial = new JPanel();
