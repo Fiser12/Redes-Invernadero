@@ -29,10 +29,10 @@ public class Sensor {
 	public void setEstadoVariable(String estadoVariable) {
 		this.estadoVariable = estadoVariable;
 	}
-	public String getUltimaAcción() {
+	public String getUltimaAccion() {
 		return ultimaAccion;
 	}
-	public void setUltimaAcción(String ultimaAccion) {
+	public void setUltimaAccion(String ultimaAccion) {
 		this.ultimaAccion = ultimaAccion;
 	}
 	public String getVariable() {
