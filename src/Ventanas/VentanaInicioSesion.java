@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.awt.Button;
 public class VentanaInicioSesion extends JFrame implements FocusListener {
 
 	private JPanel contentPane;
@@ -44,9 +45,9 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
     private JButton btnClear;
     private JPanel TextoInicial;
     private JLabel lblDatos;
-    private boolean UsuarioCorrecto;
     private SocketManager sm ;
     private String respuesta;
+    private JButton btnSalir;
 	
     /**
 	 * Launch the application.
@@ -69,7 +70,7 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 	 * @throws IOException 
 	 */
 	public VentanaInicioSesion() throws IOException {
-		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,53 +113,87 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 		Interno.add(passwordField);
 	    Botones = new JPanel();
 		inicioSesion.add(Botones, BorderLayout.SOUTH);
-		Botones.setLayout(new GridLayout(0, 2, 0, 0));
-	    btnLogin = new JButton("Login");
-	    btnLogin.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent arg0) {
-	    try {
-			sm.Escribir("USER"+textUsuario.getText());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    try {
-			respuesta=sm.Leer();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    JOptionPane.showMessageDialog(null,respuesta);
-	    if(respuesta.equals("200 OK Bienvenido "+textUsuario.getText())){
-	    	UsuarioCorrecto=true;
-	    }
-	    	}
-	    });
-		btnLogin.setEnabled(false);
-		Botones.add(btnLogin);
-	    btnClear = new JButton("Clear");
-	    btnClear.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent arg0) {
-	    	try {
+		GridBagLayout gbl_Botones = new GridBagLayout();
+		gbl_Botones.columnWidths = new int[]{220, 0, 220, 0};
+		gbl_Botones.rowHeights = new int[]{23, 0};
+		gbl_Botones.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_Botones.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		Botones.setLayout(gbl_Botones);
+		btnClear = new JButton("Clear");
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			try {
 				sm.Escribir(passwordField.getText());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	     try {
+		 try {
 			respuesta=sm.Leer();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	     JOptionPane.showMessageDialog(null,respuesta);
-	     if(respuesta.equals("201 OK Bienvenido al sistema.")){
-	    	 //abrir ventana de funciones
-	     }
-	    	}
-	    });
+	   
+		 if(respuesta.equals("201 OK Bienvenido al sistema.")){
+			 JOptionPane.showMessageDialog(null,respuesta,"Correcto",JOptionPane.ALLBITS);
+			 //abrir ventana de funciones
+		 }
+		 else{
+			 JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR); 
+		 }
+			}
+		});
+		btnLogin = new JButton("Login");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+		try {
+			sm.Escribir("USER"+textUsuario.getText());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			respuesta=sm.Leer();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   
+		if(respuesta.equals("200 OK Bienvenido "+textUsuario.getText())){
+			 JOptionPane.showMessageDialog(null,respuesta,"Correcto",JOptionPane.ALLBITS);
+			 btnClear.setEnabled(true);
+		}
+		else{
+			 JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR);
+		}
+			}
+		});
+		btnLogin.setEnabled(false);
+		GridBagConstraints gbc_btnLogin = new GridBagConstraints();
+		gbc_btnLogin.fill = GridBagConstraints.BOTH;
+		gbc_btnLogin.insets = new Insets(0, 0, 0, 5);
+		gbc_btnLogin.gridx = 0;
+		gbc_btnLogin.gridy = 0;
+		Botones.add(btnLogin, gbc_btnLogin);
+		
+		btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			dispose();
+			}
+		});
+		GridBagConstraints gbc_btnSalir = new GridBagConstraints();
+		gbc_btnSalir.insets = new Insets(0, 0, 0, 5);
+		gbc_btnSalir.gridx = 1;
+		gbc_btnSalir.gridy = 0;
+		Botones.add(btnSalir, gbc_btnSalir);
 		btnClear.setEnabled(false);
-		Botones.add(btnClear);
+		GridBagConstraints gbc_btnClear = new GridBagConstraints();
+		gbc_btnClear.fill = GridBagConstraints.BOTH;
+		gbc_btnClear.gridx = 2;
+		gbc_btnClear.gridy = 0;
+		Botones.add(btnClear, gbc_btnClear);
 		TextoInicial = new JPanel();
 		inicioSesion.add(TextoInicial, BorderLayout.NORTH);
 		lblDatos = new JLabel("Introduzca los datos indicados:");
@@ -168,8 +203,8 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 		gbc_lblDatos.gridx = 0;
 		gbc_lblDatos.gridy = 0;
 		TextoInicial.add(lblDatos, gbc_lblDatos);
-		textUsuario.addFocusListener( (FocusListener) this);
-		passwordField.addFocusListener((FocusListener) this);
+		textUsuario.addFocusListener( this);
+		passwordField.addFocusListener( this);
 		
 	}
 
@@ -186,14 +221,13 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 	    if(textUsuario.getText().equals("")){
 	    	btnLogin.setEnabled(false);
 	    }
-	    else if(!textUsuario.getText().equals("")||!UsuarioCorrecto){
+	    else if(!textUsuario.getText().equals("")){
 	    	btnLogin.setEnabled(true);
 	    }
-	    else if(!textUsuario.getText().equals("")||UsuarioCorrecto||!passwordField.getText().equals("")){
-	    btnClear.setEnabled(true);
+	    else if(passwordField.getText().equals("")){
+	       btnClear.setEnabled(false);
 	    
 	    }
 	    
 	}
-	
 }
