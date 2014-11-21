@@ -69,12 +69,20 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 	 * Create the frame.
 	 * @throws IOException 
 	 */
-	public VentanaInicioSesion() throws IOException {
+	public VentanaInicioSesion() {
+		try {
+			sm = new SocketManager("127.0.0.1", 3000);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 200);
+		setBounds(100, 100, 450, 150);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -88,8 +96,7 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 		inicioSesion.add(Inicio, BorderLayout.CENTER);
 		Inicio.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		sm = new SocketManager("127.0.0.1", 3000);
-		
+	
 		Interno = new JPanel();
 		Inicio.add(Interno);
 		Interno.setLayout(null);
@@ -113,12 +120,6 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 		Interno.add(passwordField);
 	    Botones = new JPanel();
 		inicioSesion.add(Botones, BorderLayout.SOUTH);
-		GridBagLayout gbl_Botones = new GridBagLayout();
-		gbl_Botones.columnWidths = new int[]{220, 0, 220, 0};
-		gbl_Botones.rowHeights = new int[]{23, 0};
-		gbl_Botones.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_Botones.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-		Botones.setLayout(gbl_Botones);
 		btnClear = new JButton("Clear");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -136,7 +137,7 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 		}
 	   
 		 if(respuesta.equals("201 OK Bienvenido al sistema.")){
-			 JOptionPane.showMessageDialog(null,respuesta,"Correcto",JOptionPane.ALLBITS);
+			 JOptionPane.showMessageDialog(null,respuesta,"Correcto",JOptionPane.INFORMATION_MESSAGE);
 			 //abrir ventana de funciones
 		 }
 		 else{
@@ -161,7 +162,7 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 		}
 	   
 		if(respuesta.equals("200 OK Bienvenido "+textUsuario.getText())){
-			 JOptionPane.showMessageDialog(null,respuesta,"Correcto",JOptionPane.ALLBITS);
+			 JOptionPane.showMessageDialog(null,respuesta,"Correcto",JOptionPane.INFORMATION_MESSAGE);
 			 btnClear.setEnabled(true);
 		}
 		else{
@@ -169,13 +170,11 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 		}
 			}
 		});
+		Botones.setLayout(new GridLayout(0, 3, 0, 0));
 		btnLogin.setEnabled(false);
-		GridBagConstraints gbc_btnLogin = new GridBagConstraints();
-		gbc_btnLogin.fill = GridBagConstraints.BOTH;
-		gbc_btnLogin.insets = new Insets(0, 0, 0, 5);
-		gbc_btnLogin.gridx = 0;
-		gbc_btnLogin.gridy = 0;
-		Botones.add(btnLogin, gbc_btnLogin);
+		Botones.add(btnLogin);
+		btnClear.setEnabled(false);
+		Botones.add(btnClear);
 		
 		btnSalir = new JButton("Salir");
 		btnSalir.addActionListener(new ActionListener() {
@@ -183,17 +182,7 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 			dispose();
 			}
 		});
-		GridBagConstraints gbc_btnSalir = new GridBagConstraints();
-		gbc_btnSalir.insets = new Insets(0, 0, 0, 5);
-		gbc_btnSalir.gridx = 1;
-		gbc_btnSalir.gridy = 0;
-		Botones.add(btnSalir, gbc_btnSalir);
-		btnClear.setEnabled(false);
-		GridBagConstraints gbc_btnClear = new GridBagConstraints();
-		gbc_btnClear.fill = GridBagConstraints.BOTH;
-		gbc_btnClear.gridx = 2;
-		gbc_btnClear.gridy = 0;
-		Botones.add(btnClear, gbc_btnClear);
+		Botones.add(btnSalir);
 		TextoInicial = new JPanel();
 		inicioSesion.add(TextoInicial, BorderLayout.NORTH);
 		lblDatos = new JLabel("Introduzca los datos indicados:");
