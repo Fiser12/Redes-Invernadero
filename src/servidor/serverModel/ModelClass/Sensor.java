@@ -3,19 +3,19 @@ package servidor.serverModel.ModelClass;
 public class Sensor {
 	private int id_sensor;
 	private String estadoVariable;
-	private String ultimaAcción;
+	private String ultimaAccion;
 	private String nombreVariable;
 	private String funcionPrincipal;
 	private int id_Placa;
 	public Sensor(String estadoVariable, String ultimaAcción, String variable, String funcionPrincipal) {
 		this.estadoVariable = estadoVariable;
-		this.ultimaAcción = ultimaAcción;
+		this.ultimaAccion = ultimaAcción;
 		this.nombreVariable = variable;
 		this.funcionPrincipal = funcionPrincipal;
 	}
 	public Sensor(String variable, String funcionPrincipal, String estadoVariable, String Ultima_Accion, int idPlaca) {
 		this.estadoVariable = estadoVariable;
-		this.ultimaAcción = ultimaAcción;
+		this.ultimaAccion = ultimaAccion;
 		this.nombreVariable = variable;
 		this.funcionPrincipal = funcionPrincipal;
 		this.id_Placa = idPlaca;
@@ -30,10 +30,10 @@ public class Sensor {
 		this.estadoVariable = estadoVariable;
 	}
 	public String getUltimaAcción() {
-		return ultimaAcción;
+		return ultimaAccion;
 	}
-	public void setUltimaAcción(String ultimaAcción) {
-		this.ultimaAcción = ultimaAcción;
+	public void setUltimaAcción(String ultimaAccion) {
+		this.ultimaAccion = ultimaAccion;
 	}
 	public String getVariable() {
 		return nombreVariable;

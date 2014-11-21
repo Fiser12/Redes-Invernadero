@@ -91,7 +91,7 @@ public class InteraccionDB {
 		String texto = "";
 		LinkedList<Sensor> lista = listadoList(nombre);
 		for(Sensor temp: lista){
-			String temporal = "ELEM " + temp.getId_sensor() + "Placa" + temp.getId_Placa() + "; " + temp.getVariable() + "; " + temp.getFuncionPrincipal() + "; " + temp.getEstadoVariable() + "; " + temp.getUltimaAcción() + "\n";
+			String temporal = "ELEM " + temp.getId_sensor() + "Placa" + temp.getId_Placa() + "; " + temp.getVariable() + "; " + temp.getFuncionPrincipal() + "; " + temp.getEstadoVariable() + "; " + temp.getUltimaAccion() + "\n";
 			texto = texto + temporal;
 		}
 		texto = texto + "\n\n202 FINLISTA";
