@@ -3,8 +3,6 @@ package servidor.serverModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
-
-import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Sensor;
 
 /**

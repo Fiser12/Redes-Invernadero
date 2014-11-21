@@ -108,7 +108,7 @@ final class Request implements Runnable {
 				else if(requestLine.startsWith("LISTADO"))
 				{
 					sockManager.Escribir(InteraccionDB.listado(usuario));
-					requestLine = sockManager.Leer();
+					requestLine = sockManager.Leer(); //Cuidado con los \n
 					System.out.println("2. RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("BUSCAR"))
