@@ -15,7 +15,7 @@ public class Sensor {
 	}
 	public Sensor(String variable, String funcionPrincipal, String estadoVariable, String Ultima_Accion, int idPlaca) {
 		this.estadoVariable = estadoVariable;
-		this.ultimaAccion = ultimaAccion;
+		this.ultimaAccion = Ultima_Accion;
 		this.nombreVariable = variable;
 		this.funcionPrincipal = funcionPrincipal;
 		this.id_Placa = idPlaca;
