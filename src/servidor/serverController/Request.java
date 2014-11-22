@@ -224,6 +224,7 @@ final class Request implements Runnable {
 				}
 				else if(requestLine.startsWith("RECHAZAR_ACCION"))
 				{
+					sockManager.Escribir("207 OK ACCION CANCELADA\n");
 					estado = 2;
 					requestLine = sockManager.Leer();
 					System.out.println("RequestLine: " + requestLine);
