@@ -11,6 +11,10 @@ final class Request implements Runnable {
 	SocketManager sockManager;
 	int estado;
 	String usuario;
+
+	String idPlacaAccion;
+	String variableAccion;
+	String accion;
 	// Constructor
 	public Request(SocketManager sockMan) throws Exception {
 		sockManager = sockMan;
@@ -58,7 +62,7 @@ final class Request implements Runnable {
 					else if(respuesta == 401)
 						sockManager.Escribir("401 ERR Usuario desconocido\n");
 					requestLine = sockManager.Leer();
-					System.out.println("0. RequestLine: " + requestLine);
+					System.out.println("RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("SALIR"))
 				{
@@ -68,7 +72,7 @@ final class Request implements Runnable {
 				else{
 					sockManager.Escribir("\n");
 					requestLine = sockManager.Leer();
-					System.out.println("0. RequestLine: " + requestLine);
+					System.out.println("RequestLine: " + requestLine);
 
 				}
 				break; 
@@ -89,7 +93,7 @@ final class Request implements Runnable {
 					else if(respuesta == 403)
 						sockManager.Escribir("403 ERR Falta la clave\n");
 					requestLine = sockManager.Leer();
-					System.out.println("1. RequestLine: " + requestLine);
+					System.out.println("RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("SALIR"))
 				{
@@ -99,7 +103,7 @@ final class Request implements Runnable {
 				else{
 					sockManager.Escribir("\n");
 					requestLine = sockManager.Leer();
-					System.out.println("1. RequestLine: " + requestLine);
+					System.out.println("RequestLine: " + requestLine);
 				}
 				break;
 			case 2:
@@ -126,7 +130,7 @@ final class Request implements Runnable {
 						sockManager.Escribir("404 ERROR "+Variable+" no existe \n");
 					}
 					requestLine = sockManager.Leer();
-					System.out.println("2. RequestLine: " + requestLine);
+					System.out.println("RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("OFF"))
 				{
@@ -148,32 +152,56 @@ final class Request implements Runnable {
 					}
 					catch(SearchException E)
 					{
-						sockManager.Escribir("404 ERROR "+Variable+" no existe \n");
+						sockManager.Escribir("404 ERROR "+Variable+" no existe\n");
 					}
 					requestLine = sockManager.Leer();
-					System.out.println("2. RequestLine: " + requestLine);
+					System.out.println("RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("ACCION"))
 				{
-					estado = 3;
+					String variables = requestLine.substring(requestLine.indexOf(" ") + 1);
+					String idPlaca = variables.substring(0, variables.indexOf(" "));
+					String accionyVariable = variables.substring(variables.indexOf(" ")+1, variables.length());
+					String variable = accionyVariable.substring(0, accionyVariable.indexOf(" "));
+					String accion = accionyVariable.substring(accionyVariable.indexOf(" ")+1, accionyVariable.length());
+					try
+					{
+						if(InteraccionDB.comprobarEstado(variable, idPlaca))
+						{
+							idPlacaAccion = idPlaca;
+							variableAccion = variable;
+							this.accion = accion;
+							estado = 3;
+							sockManager.Escribir("205 OK Esperando confirmación\n");
+						}
+						else
+						{
+							sockManager.Escribir("406 ERROR "+variable+" en estado OFF\n");
+						}
+					}
+					catch(SearchException E)
+					{
+						sockManager.Escribir("404 ERROR "+variable+" no existe\n");
+					}
+
 					requestLine = sockManager.Leer();
-					System.out.println("2. RequestLine: " + requestLine);
+					System.out.println("RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("LISTADO"))
 				{
 					sockManager.Escribir(InteraccionDB.listado(usuario)); //Cuidado con los \n
 					requestLine = sockManager.Leer(); 
-					System.out.println("2. RequestLine: " + requestLine);
+					System.out.println("RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("BUSCAR"))
 				{
 					requestLine = sockManager.Leer();
-					System.out.println("2. RequestLine: " + requestLine);
+					System.out.println("RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("OBTENER_FOTO"))
 				{
 					requestLine = sockManager.Leer();
-					System.out.println("2. RequestLine: " + requestLine);
+					System.out.println("RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("SALIR"))
 				{
@@ -184,7 +212,7 @@ final class Request implements Runnable {
 				{
 					sockManager.Escribir("\n");
 					requestLine = sockManager.Leer();
-					System.out.println("2. RequestLine: " + requestLine);
+					System.out.println("RequestLine: " + requestLine);
 				}
 				break;
 			case 3:
@@ -192,23 +220,24 @@ final class Request implements Runnable {
 				{
 					estado = 2;
 					requestLine = sockManager.Leer();
-					System.out.println("3. RequestLine: " + requestLine);
+					System.out.println("RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("RECHAZAR_ACCION"))
 				{
 					estado = 2;
 					requestLine = sockManager.Leer();
-					System.out.println("0. RequestLine: " + requestLine);
+					System.out.println("RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("SALIR"))
 				{
 					sockManager.Escribir("209 OK Adios\n");
 					estado = 4;
 				}
-				else{
+				else
+				{
 					sockManager.Escribir("\n");
 					requestLine = sockManager.Leer();
-					System.out.println("0. RequestLine: " + requestLine);
+					System.out.println("RequestLine: " + requestLine);
 				}
 				break;
 
