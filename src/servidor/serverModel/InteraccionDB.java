@@ -127,7 +127,10 @@ public class InteraccionDB {
 		return true;
 	}
 	public static void actualizarEstado(String sensor, String placa, String estado) {
-		gestor.enviarComando("UPDATE Sensor SET Estado_la_variable='"+estado+"';");
+		gestor.enviarComando("UPDATE Sensor SET Estado_la_variable='"+estado+"' WHERE Id_Placa='"+placa+"' AND Nombre_Variable='"+sensor+"';");
+	}
+	public static void actualizarAccion(String sensor, String placa, String accion) {
+		gestor.enviarComando("UPDATE Sensor SET Ultima_Accion='"+accion+"' WHERE Id_Placa='"+placa+"' AND Nombre_Variable='"+sensor+"';");
 	}
 
 	public static void main(String []argv)

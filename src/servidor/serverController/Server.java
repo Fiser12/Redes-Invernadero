@@ -2,7 +2,7 @@ package servidor.serverController;
 import java.net.* ;
 import util.*;
 
-public final class WebServer
+public final class Server
 {
 	private static ServerSocket wellcomeSocket;
 

@@ -218,9 +218,30 @@ final class Request implements Runnable {
 			case 3:
 				if(requestLine.startsWith("CONFIRMAR_ACCION"))
 				{
-					estado = 2;
-					requestLine = sockManager.Leer();
-					System.out.println("RequestLine: " + requestLine);
+					try
+					{
+						String variableUsar = requestLine.substring(17);
+						if(variableUsar.equals(" ")||variableUsar.equals("")){
+							sockManager.Escribir("407 ERR Faltan Datos\n");
+							requestLine = sockManager.Leer();
+							System.out.println("RequestLine: " + requestLine);
+						}
+						else
+						{
+							String texto = accion + "durante " + variableUsar + "minutos";
+							InteraccionDB.actualizarAccion(variableAccion, idPlacaAccion, accion);
+							sockManager.Escribir("206 OK Accion sobre el sensor confirmada (" + texto + " )\n");
+							estado = 2;
+							requestLine = sockManager.Leer();
+							System.out.println("RequestLine: " + requestLine);
+						}
+					}
+					catch(Exception E)
+					{
+						sockManager.Escribir("407 ERR Faltan Datos\n");
+						requestLine = sockManager.Leer();
+						System.out.println("RequestLine: " + requestLine);
+					}
 				}
 				else if(requestLine.startsWith("RECHAZAR_ACCION"))
 				{
