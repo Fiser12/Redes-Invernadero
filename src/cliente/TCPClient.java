@@ -23,7 +23,7 @@ public class TCPClient {
                 //El m�todo Escribir, pone en el socket lo introducido por teclado
                 sm.Escribir(sentence + '\n');
                 //El m�todo Leer, lee del socket lo enviado por el Servidor
-                modifiedSentence = sm.Leer();
+                modifiedSentence = sm.Leer().replaceAll("/n", "\n");//Dado que pide en algunos casos mandar \n pero supone que no se envie la linea correcta utilizamos /n como código auxiliar que consideramos así del lado del cliente para convertirlo en el \n real
                 //Saca por consola la frase modificada enviada por el servidor
                 System.out.println("Desde el servidor: " + modifiedSentence);
             }

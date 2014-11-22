@@ -36,7 +36,7 @@ public class SocketManager {
     }
 
     /**
-     * Inicializaci�n de los bufferes de lectura y escritura del socket
+     * Inicializacion de los bufferes de lectura y escritura del socket
      * @throws IOException
      */
     public void InicializaStreams() throws IOException {

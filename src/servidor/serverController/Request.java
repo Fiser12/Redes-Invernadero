@@ -1,5 +1,7 @@
 package servidor.serverController;
 
+import java.io.FileInputStream;
+
 import util.*;
 import servidor.serverModel.InteraccionDB;
 final class Request implements Runnable {
@@ -20,6 +22,17 @@ final class Request implements Runnable {
 		}
 		catch (Exception e) {
 			System.out.println(e);
+		}
+	}
+	@SuppressWarnings("unused")
+	private void sendBytes(FileInputStream fis) throws Exception {
+		// Construct a 1K buffer to hold bytes on their way to the socket.
+		byte[] buffer = new byte[1024];
+		int bytes = 0;
+
+		// Copy requested file into the socket's output stream.
+		while ( (bytes = fis.read(buffer)) != -1) {
+			sockManager.Escribir(buffer, bytes);
 		}
 	}
 	private void processRequest() throws Exception {
@@ -107,8 +120,8 @@ final class Request implements Runnable {
 				}
 				else if(requestLine.startsWith("LISTADO"))
 				{
-					sockManager.Escribir(InteraccionDB.listado(usuario));
-					requestLine = sockManager.Leer(); //Cuidado con los \n
+					sockManager.Escribir(InteraccionDB.listado(usuario)); //Cuidado con los \n
+					requestLine = sockManager.Leer(); 
 					System.out.println("2. RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("BUSCAR"))
