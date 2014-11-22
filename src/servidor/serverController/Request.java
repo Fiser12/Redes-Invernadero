@@ -3,6 +3,7 @@ package servidor.serverController;
 import java.io.FileInputStream;
 
 import util.*;
+import util.excepciones.SearchException;
 import servidor.serverModel.InteraccionDB;
 final class Request implements Runnable {
 
@@ -104,11 +105,51 @@ final class Request implements Runnable {
 			case 2:
 				if (requestLine.startsWith("ON"))
 				{
+					String variables = requestLine.substring(requestLine.indexOf(" ") + 1);
+					String idPlaca = variables.substring(0, variables.indexOf(" "));
+					String Variable = variables.substring(variables.indexOf(" ")+1, variables.length());
+					// Comprobar si está encendido y mandar error 405 y si no existe el 404 sino poner a ON
+					try
+					{
+						if(InteraccionDB.comprobarEstado(Variable, idPlaca))
+						{
+							sockManager.Escribir("405 ERROR "+Variable+" en estado ON \n");
+						}
+						else
+						{//Continuar con el proceso de poner a ON
+							InteraccionDB.actualizarEstado(Variable, idPlaca, "ON");
+							sockManager.Escribir("203 OK "+Variable+" activo \n");
+						}
+					}
+					catch(SearchException E)
+					{
+						sockManager.Escribir("404 ERROR "+Variable+" no existe \n");
+					}
 					requestLine = sockManager.Leer();
 					System.out.println("2. RequestLine: " + requestLine);
 				}
 				else if(requestLine.startsWith("OFF"))
 				{
+					String variables = requestLine.substring(requestLine.indexOf(" ") + 1);
+					String idPlaca = variables.substring(0, variables.indexOf(" "));
+					String Variable = variables.substring(variables.indexOf(" ")+1, variables.length());
+					// Comprobar si está apagado y mandar error 407 y si no existe el 406 sino poner a ON
+					try
+					{
+						if(InteraccionDB.comprobarEstado(Variable, idPlaca))
+						{//Continuar con el proceso de poner a OFF
+							InteraccionDB.actualizarEstado(Variable, idPlaca, "OFF");
+							sockManager.Escribir("204 OK "+Variable+" desactivo \n");
+						}
+						else
+						{
+							sockManager.Escribir("405 ERROR "+Variable+" en estado OFF \n");
+						}
+					}
+					catch(SearchException E)
+					{
+						sockManager.Escribir("404 ERROR "+Variable+" no existe \n");
+					}
 					requestLine = sockManager.Leer();
 					System.out.println("2. RequestLine: " + requestLine);
 				}

@@ -3,7 +3,9 @@ package servidor.serverModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
+
 import servidor.serverModel.ModelClass.Sensor;
+import util.excepciones.SearchException;
 
 /**
  * Clase dedicada a métodos estaticos que haciendo uso de SQLiteManager enmascara el modelo al controlador
@@ -103,6 +105,31 @@ public class InteraccionDB {
 		texto = texto + "/n202 FINLISTA\n";
 		return texto;
 	}
+	public static boolean comprobarEstado(String sensor, String placa) throws SearchException{
+		gestor.enviarComando("SELECT * FROM Sensor WHERE Id_Placa="+placa+" AND Nombre_Variable = '"+sensor+"';");
+		ResultSet resultado = gestor.getResultSet();
+		try {
+			if(resultado.next())
+			{
+				String estado = resultado.getString("Estado_la_variable");
+				System.out.println(estado);
+				if(estado.equals("ON"))
+					return true;
+				else return false;
+			}
+			else
+				System.out.println("asdasdf");
+				throw new SearchException();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return true;
+	}
+	public static void actualizarEstado(String sensor, String placa, String estado) {
+		gestor.enviarComando("UPDATE Sensor SET Estado_la_variable='"+estado+"';");
+	}
+
 	public static void main(String []argv)
 	{
 		reiniciarBase();
