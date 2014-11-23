@@ -2,6 +2,7 @@ package util;
 import java.net.*;
 import java.io.*;
 
+import jdk.nashorn.internal.runtime.ListAdapter;
 import servidor.serverController.Server;
 
 public class SocketManager {
@@ -54,7 +55,8 @@ public class SocketManager {
 
     public void CerrarSocket() throws IOException {
         mySocket.close();
-        Server.lista.remove(this);
+        Server.listaHilos.remove(Server.listaSockets.indexOf(this));
+        Server.listaSockets.remove(this);
 		Server.usuariosConectados--;
     }
 
