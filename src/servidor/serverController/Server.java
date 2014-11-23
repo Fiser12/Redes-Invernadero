@@ -8,7 +8,6 @@ import util.*;
 public final class Server
 {
 	private static ServerSocket wellcomeSocket;
-	public static int usuariosConectados;
 	public static LinkedList<SocketManager> listaSockets;
 	public static LinkedList<Request> listaHilos;
 
@@ -16,12 +15,12 @@ public final class Server
 	{
 		// Set the port number.
 		listaSockets = new LinkedList<SocketManager>();
+		listaHilos = new LinkedList<Request>();
 		int port = 3000; //(new Integer(argv[0])).intValue();
 		wellcomeSocket = new ServerSocket(port);
-		usuariosConectados = 0;
 		while (true)
 		{
-			if(usuariosConectados<Util.usuariosMaximos)
+			if(getUsuariosConectados()<Util.usuariosMaximos)
 			{
 				SocketManager sockManager = new SocketManager(wellcomeSocket.accept());
 				Request request = new Request(sockManager);
@@ -32,7 +31,6 @@ public final class Server
 					listaSockets.add(sockManager);
 					listaHilos.add(request);
 					mostrarUsuario(getUsuariosConectados());
-					usuariosConectados++;
 				}
 			}
 		}
@@ -63,6 +61,6 @@ public final class Server
 	}
 	public static int getUsuariosConectados()
 	{
-		return usuariosConectados;
+		return listaSockets.size();
 	}
 }

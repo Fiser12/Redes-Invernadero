@@ -57,7 +57,6 @@ public class SocketManager {
         mySocket.close();
         Server.listaHilos.remove(Server.listaSockets.indexOf(this));
         Server.listaSockets.remove(this);
-		Server.usuariosConectados--;
     }
 
     /**
