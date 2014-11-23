@@ -24,6 +24,8 @@ import javax.swing.ListSelectionModel;
 import servidor.serverModel.ModelClass.Sensor;
 import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Usuario;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 public class VentanTabla extends JFrame implements FocusListener{
 
 	private JPanel contentPane;
@@ -40,7 +42,8 @@ public class VentanTabla extends JFrame implements FocusListener{
 	private JButton btnListar;
 	private jTable modeloTabla;
 	private JTable tabla;
-	private ArrayList<Placa> Placas=new ArrayList();
+	private ArrayList<Placa> TodasPlacas=new ArrayList();
+	private ArrayList<Placa> PlacasDeBusqueda=new ArrayList();
 	/**
 	 * Launch the application.
 	 */
@@ -62,8 +65,9 @@ public class VentanTabla extends JFrame implements FocusListener{
 	 */
 	public VentanTabla() {
 		/*
-		 * Rellenar el array list De placas
+		 * Rellenar el array list De TodasPlacas
 		 */
+	    PlacasDeBusqueda=TodasPlacas;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 550);
 		contentPane = new JPanel();
@@ -77,8 +81,8 @@ public class VentanTabla extends JFrame implements FocusListener{
 		modeloTabla=new jTable();
 		modeloTabla.setColumnIdentifiers(new String[]{"SENSOR","PLACA","VARIABLE","ESTADO","FUNCION","ULTIMA ACCION"});
 		
-		for(int i=0;i<Placas.size();i++){
-			Placa p=Placas.get(i);
+		for(int i=0;i<TodasPlacas.size();i++){
+			Placa p=TodasPlacas.get(i);
 			for(int j=0;j<p.getSensores().size();j++)
 		/*
 		 * Rellenar tabla
@@ -100,9 +104,28 @@ public class VentanTabla extends JFrame implements FocusListener{
 		textIdSensor.setColumns(10);
 		
 		btnActivar = new JButton("Activar");
+		btnActivar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			int Filaseleccionada=tabla.getSelectedRow();
+			Placa p=PlacasDeBusqueda.get(Filaseleccionada);
+			/*
+			 * Enviar etring al servidor 
+			 */
+			}
+		});
 		BotonesArriba.add(btnActivar);
 		
 		btnDesactivar = new JButton("Desactivar");
+		btnDesactivar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int Filaseleccionada=tabla.getSelectedRow();
+				Placa p=PlacasDeBusqueda.get(Filaseleccionada);
+				/*
+				 * Enviar string al servidor 
+				 */
+				
+			}
+		});
 		BotonesArriba.add(btnDesactivar);
 		
 		JButton btnActuar = new JButton("Actuar\r\n");
@@ -112,31 +135,40 @@ public class VentanTabla extends JFrame implements FocusListener{
 		contentPane.add(BotonesAbajo, BorderLayout.SOUTH);
 		BotonesAbajo.setLayout(new GridLayout(2, 1, 0, 0));
 		
-		JPanel panel = new JPanel();
-		BotonesAbajo.add(panel);
-		panel.setLayout(new GridLayout(0, 3, 0, 0));
+		JPanel Busqueda = new JPanel();
+		BotonesAbajo.add(Busqueda);
+		Busqueda.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		textVariable = new JTextField();
-		panel.add(textVariable);
+		Busqueda.add(textVariable);
 		textVariable.setColumns(10);
 		
 		comboBoxBusqueda = new JComboBox();
-		comboBoxBusqueda.setModel(new DefaultComboBoxModel(new String[] {"Elegir Opcion De Busqueda", "Todas", "IDPlaca", "Variable", "IDPLaca", "En OFF", "EN ON", ""}));
+		comboBoxBusqueda.setModel(new DefaultComboBoxModel(new String[] {"Elegir Opcion De Busqueda", "Todas", "IDPlaca", "Variable", "IDSensor", "En OFF", "EN ON", ""}));
 		comboBoxBusqueda.setToolTipText("Elegir opcion\r\n");
-		panel.add(comboBoxBusqueda);
+		Busqueda.add(comboBoxBusqueda);
 		
 		 btnBuscar = new JButton("Buscar");
-		panel.add(btnBuscar);
+		 btnBuscar.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent arg0) {
+		 	buscar();
+		 	}
+		 });
+		Busqueda.add(btnBuscar);
 		
-		JPanel Busqueda = new JPanel();
-		BotonesAbajo.add(Busqueda);
-		Busqueda.setLayout(new GridLayout(0, 2, 0, 0));
+		JPanel Listar = new JPanel();
+		BotonesAbajo.add(Listar);
+		Listar.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		 btnListar = new JButton("Listar");
-		Busqueda.add(btnListar);
+		Listar.add(btnListar);
 		
 		JButton btnSalir = new JButton("Salir");
-		Busqueda.add(btnSalir);
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			dispose();}
+		});
+		Listar.add(btnSalir);
 		JScrollPane sPTabla = new JScrollPane();
 		tabla=new JTable(modeloTabla);
 		tabla.setModel(modeloTabla);
@@ -174,5 +206,102 @@ public class VentanTabla extends JFrame implements FocusListener{
 	public void focusLost(FocusEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+	public  void buscar(){
+	 modeloTabla=new jTable();
+	 comboBoxBusqueda.setModel(new DefaultComboBoxModel(new String[] {"Elegir Opcion De Busqueda", "Todas", "IDPlaca", "Variable", "IDPLaca", "En OFF", "EN ON", ""}));
+	 if(comboBoxBusqueda.getSelectedIndex()==1){
+			for(int i=0;i<TodasPlacas.size();i++){
+				Placa p=TodasPlacas.get(i);
+				for(int j=0;j<p.getSensores().size();j++){
+					PlacasDeBusqueda.removeAll(null);
+					PlacasDeBusqueda.add(p);
+			 /*
+			 * Rellenar tabla
+			 */
+				modeloTabla.addRow(new String[] {""+p.getId()});}
+			}}
+	 if(comboBoxBusqueda.getSelectedIndex()==2)
+	 { 
+		 for(int i=0;i<TodasPlacas .size();i++){
+			 Placa p=TodasPlacas.get(i);
+			 for(int j=0;j<p.getSensores().size();j++){
+				 if(textVariable.getText().equals(""+p.getId())){
+					 /*
+					  * Rellenar tabla 
+					  */
+						PlacasDeBusqueda.removeAll(null);
+						PlacasDeBusqueda.add(p);
+					 modeloTabla.addRow(new String[] {""+p.getId()});}
+			 }
+		 }
+
+	 }
+	 
+	 if(comboBoxBusqueda.getSelectedIndex()==3)
+	 { 
+		 for(int i=0;i<TodasPlacas.size();i++){
+			 Placa p=TodasPlacas.get(i);
+			 for(int j=0;j<p.getSensores().size();j++){
+				 if(textVariable.getText().equals(""+p.getId())){
+					 /*
+					  * Rellenar tabla con la variable del sensor pero como no se como sacarla
+					  */
+						PlacasDeBusqueda.removeAll(null);
+						PlacasDeBusqueda.add(p);
+					 modeloTabla.addRow(new String[] {""+p.getId()});}
+			 }
+		 }
+
+	 }
+	 
+	 if(comboBoxBusqueda.getSelectedIndex()==4)
+	 { 
+		 for(int i=0;i<TodasPlacas.size();i++){
+			 Placa p=TodasPlacas.get(i);
+			 for(int j=0;j<p.getSensores().size();j++){
+				 if(textVariable.getText().equals(""+p.getId())){
+					 /*
+					  * Rellenar tabla con la id del sensor 
+					  */
+						PlacasDeBusqueda.removeAll(null);
+						PlacasDeBusqueda.add(p);
+					 modeloTabla.addRow(new String[] {""+p.getId()});}
+			 }
+		 }
+
+	 }
+	 if(comboBoxBusqueda.getSelectedIndex()==5)
+	 { 
+		 for(int i=0;i<TodasPlacas.size();i++){
+			 Placa p=TodasPlacas.get(i);
+			 for(int j=0;j<p.getSensores().size();j++){
+				 if("ON".equals(""+p.getId())){
+					 /*
+					  * Rellenar tabla con el estado del sensor
+					  */
+						PlacasDeBusqueda.removeAll(null);
+						PlacasDeBusqueda.add(p);
+					 modeloTabla.addRow(new String[] {""+p.getId()});}
+			 }
+		 }
+
+	 }
+	 if(comboBoxBusqueda.getSelectedIndex()==6)
+	 { 
+		 for(int i=0;i<TodasPlacas.size();i++){
+			 Placa p=TodasPlacas.get(i);
+			 for(int j=0;j<p.getSensores().size();j++){
+				 if("OFF".equals(""+p.getId())){
+					 /*
+					  * Rellenar tabla con el estado del sensor
+					  */
+						PlacasDeBusqueda.removeAll(null);
+						PlacasDeBusqueda.add(p);
+					 modeloTabla.addRow(new String[] {""+p.getId()});}
+			 }
+		 }
+
+	 }
 	}
 }
