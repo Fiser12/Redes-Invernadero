@@ -3,7 +3,9 @@ package servidor.serverModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
+
 import servidor.serverModel.ModelClass.Sensor;
+import util.excepciones.SearchException;
 
 /**
  * Clase dedicada a métodos estaticos que haciendo uso de SQLiteManager enmascara el modelo al controlador
@@ -17,9 +19,9 @@ public class InteraccionDB {
 	{
 		gestor.enviarComando("PRAGMA foreign_keys = ON");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario (Nombre VARCHAR(50) NOT NULL ,Pass VARCHAR(50) NOT NULL, PRIMARY KEY(Nombre));");
-		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Placa (Id INTEGER PRIMARY KEY AUTOINCREMENT, Estado VARCHAR(250) NOT NULL, Foto VARCHAR(250));");
+		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Placa (Id INTEGER PRIMARY KEY, Estado VARCHAR(250) NOT NULL, Foto VARCHAR(250));");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario_Placa(Nombre VARCHAR(50) NOT NULL, Id_Placa INT(10) NOT NULL, CONSTRAINT Nombre FOREIGN KEY (Nombre) REFERENCES Usuario (Nombre) ON DELETE CASCADE, CONSTRAINT Id_Placa FOREIGN KEY (Id_Placa) REFERENCES Placa(Id) ON DELETE CASCADE)");
-		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Sensor (Nombre_Variable VARCHAR(250) NOT NULL, Funcion_Principal VARCHAR(500) NOT NULL, Estado_la_variable VARCHAR(250) NOT NULL,Ultima_Accion VARCHAR(500) NOT NULL, id_Placa INT(10), CONSTRAINT id_Placa FOREIGN KEY (id_Placa) REFERENCES Placa (Id) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(id_Placa, Nombre_Variable));");
+		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Sensor (Id_Sensor INTEGER PRIMARY KEY, Nombre_Variable VARCHAR(250) NOT NULL, Funcion_Principal VARCHAR(500) NOT NULL, Estado_la_variable VARCHAR(250) NOT NULL,Ultima_Accion VARCHAR(500) NOT NULL, id_Placa INT(10), CONSTRAINT id_Placa FOREIGN KEY (id_Placa) REFERENCES Placa (Id) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(id_Placa, Nombre_Variable));");
 	}
 	private static void borrarBaseDeDatos()
 	{
@@ -38,6 +40,14 @@ public class InteraccionDB {
 	public static void cargarDatosIniciales()
 	{
 		gestor.enviarComando("INSERT INTO Usuario VALUES('Fiser', '1234')");
+		gestor.enviarComando("INSERT INTO Placa VALUES(1, 'ON', 'photos/foto1.jpg')");
+		gestor.enviarComando("INSERT INTO Placa VALUES(2, 'ON', 'photos/foto2.png')");
+		gestor.enviarComando("INSERT INTO Placa VALUES(3, 'ON', 'photos/foto3.jpg')");
+		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 1)");
+		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 2)");
+		gestor.enviarComando("INSERT INTO Sensor VALUES(1, 'Temperatura', 'Regulacion climatizacion', 'ON', 'subir a.c.', 1)");
+		gestor.enviarComando("INSERT INTO Sensor VALUES(2, 'Humedad', 'Sistema de Riego', 'ON', 'activar sistema de riego', 1)");
+		gestor.enviarComando("INSERT INTO Sensor VALUES(3, 'Temperatura', 'Regulacion climatizacion', 'OFF', 'subir a.c.', 2)");
 	}
 	public static int metodoUser(String nombre){
 		gestor.enviarComando("SELECT Nombre FROM Usuario WHERE Nombre = '" + nombre + "';");
@@ -74,11 +84,11 @@ public class InteraccionDB {
 	private static LinkedList<Sensor> listadoList(String nombre)
 	{
 		LinkedList<Sensor> lista = new LinkedList<Sensor>();
-		gestor.enviarComando("SELECT * FROM Usuario_Placa U Sensor S WHERE Nombre = '" + nombre +"' AND U.Id_Placa=S.id_Placa;");
+		gestor.enviarComando("SELECT S.* FROM Sensor S, Usuario_Placa P WHERE S.Id_Placa=P.id_placa AND P.Nombre = '"+nombre+"' ORDER BY S.Id_Placa, S.Id_Sensor;");
 		ResultSet resultado = gestor.getResultSet();
 		try {
 			while(resultado.next())
-				lista.add(new Sensor(resultado.getString("Nombre_Variable"), resultado.getString("Funcion_Principal"), resultado.getString("Estado_la_variable"), resultado.getString("Ultima_Accion"), resultado.getInt("id_Placa")));
+				lista.add(new Sensor(resultado.getInt("Id_Sensor"), resultado.getString("Nombre_Variable"), resultado.getString("Funcion_Principal"), resultado.getString("Estado_la_variable"), resultado.getString("Ultima_Accion"), resultado.getInt("id_Placa")));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -89,14 +99,42 @@ public class InteraccionDB {
 		String texto = "";
 		LinkedList<Sensor> lista = listadoList(nombre);
 		for(Sensor temp: lista){
-			String temporal = "ELEM " + temp.getId_sensor() + "Placa" + temp.getId_Placa() + "; " + temp.getVariable() + "; " + temp.getFuncionPrincipal() + "; " + temp.getEstadoVariable() + "; " + temp.getUltimaAccion() + "\n";
+			String temporal = "ELEM" + temp.getId_sensor() + " Placa" + temp.getId_Placa() + "; " + temp.getVariable() + "; " + temp.getFuncionPrincipal() + "; " + temp.getEstadoVariable() + "; " + temp.getUltimaAccion() + "/n";
 			texto = texto + temporal;
 		}
-		texto = texto + "\n\n202 FINLISTA";
+		texto = texto + "/n202 FINLISTA\n";
 		return texto;
 	}
+	public static boolean comprobarEstado(String sensor, String placa) throws SearchException{
+		gestor.enviarComando("SELECT * FROM Sensor WHERE Id_Placa="+placa+" AND Nombre_Variable = '"+sensor+"';");
+		ResultSet resultado = gestor.getResultSet();
+		try {
+			if(resultado.next())
+			{
+				String estado = resultado.getString("Estado_la_variable");
+				System.out.println(estado);
+				if(estado.equals("ON"))
+					return true;
+				else return false;
+			}
+			else
+				throw new SearchException();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return true;
+	}
+	public static void actualizarEstado(String sensor, String placa, String estado) {
+		gestor.enviarComando("UPDATE Sensor SET Estado_la_variable='"+estado+"' WHERE Id_Placa='"+placa+"' AND Nombre_Variable='"+sensor+"';");
+	}
+	public static void actualizarAccion(String sensor, String placa, String accion) {
+		gestor.enviarComando("UPDATE Sensor SET Ultima_Accion='"+accion+"' WHERE Id_Placa='"+placa+"' AND Nombre_Variable='"+sensor+"';");
+	}
+
 	public static void main(String []argv)
 	{
 		reiniciarBase();
+		System.out.println(listado("Fiser").replaceAll("/n", "\n"));
 	}
 }

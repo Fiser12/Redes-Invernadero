@@ -2,6 +2,9 @@ package util;
 import java.net.*;
 import java.io.*;
 
+import jdk.nashorn.internal.runtime.ListAdapter;
+import servidor.serverController.Server;
+
 public class SocketManager {
     private Socket mySocket;
 
@@ -36,7 +39,7 @@ public class SocketManager {
     }
 
     /**
-     * Inicializaci�n de los bufferes de lectura y escritura del socket
+     * Inicializacion de los bufferes de lectura y escritura del socket
      * @throws IOException
      */
     public void InicializaStreams() throws IOException {
@@ -52,6 +55,8 @@ public class SocketManager {
 
     public void CerrarSocket() throws IOException {
         mySocket.close();
+        Server.listaHilos.remove(Server.listaSockets.indexOf(this));
+        Server.listaSockets.remove(this);
     }
 
     /**
@@ -70,4 +75,13 @@ public class SocketManager {
     public void Escribir(byte[] buffer, int bytes) throws IOException {
         bufferEscritura.write(buffer, 0, bytes);
     }
+
+	public Socket getMySocket() {
+		return mySocket;
+	}
+
+	public void setMySocket(Socket mySocket) {
+		this.mySocket = mySocket;
+	}
+    
 }
