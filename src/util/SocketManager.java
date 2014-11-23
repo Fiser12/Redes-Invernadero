@@ -74,4 +74,13 @@ public class SocketManager {
     public void Escribir(byte[] buffer, int bytes) throws IOException {
         bufferEscritura.write(buffer, 0, bytes);
     }
+
+	public Socket getMySocket() {
+		return mySocket;
+	}
+
+	public void setMySocket(Socket mySocket) {
+		this.mySocket = mySocket;
+	}
+    
 }

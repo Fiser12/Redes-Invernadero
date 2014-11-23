@@ -9,7 +9,6 @@ public class TCPClient {
         try {
             SocketManager sm = new SocketManager("127.0.0.1", 3000);
             BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-
             while (!modifiedSentence.startsWith("209")) {
                 System.out.print("String a enviar: ");
                 sentence = inFromUser.readLine();
