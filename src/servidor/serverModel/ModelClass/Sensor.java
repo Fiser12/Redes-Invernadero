@@ -60,6 +60,4 @@ public class Sensor {
 	public void setId_Placa(int id_Placa) {
 		this.id_Placa = id_Placa;
 	}
-	
-	
 }

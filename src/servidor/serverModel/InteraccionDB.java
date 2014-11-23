@@ -93,7 +93,7 @@ public class InteraccionDB {
 			e.printStackTrace();
 		}
 		return lista;
-		
+
 	}
 	public static String listado(String nombre){
 		String texto = "";
