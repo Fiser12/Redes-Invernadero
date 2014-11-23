@@ -118,7 +118,6 @@ public class InteraccionDB {
 				else return false;
 			}
 			else
-				System.out.println("asdasdf");
 				throw new SearchException();
 		} catch (SQLException e) {
 			e.printStackTrace();

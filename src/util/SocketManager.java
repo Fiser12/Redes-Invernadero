@@ -2,6 +2,8 @@ package util;
 import java.net.*;
 import java.io.*;
 
+import servidor.serverController.Server;
+
 public class SocketManager {
     private Socket mySocket;
 
@@ -52,6 +54,8 @@ public class SocketManager {
 
     public void CerrarSocket() throws IOException {
         mySocket.close();
+        Server.lista.remove(this);
+		Server.usuariosConectados--;
     }
 
     /**

@@ -7,15 +7,8 @@ public class TCPClient {
         String sentence=""; //Variable dnd se almacena la frase introducida por el usuario
         String modifiedSentence=""; //Variable dnd se recibe la frase capitalizada
         try {
-            //Se crea el socket, pasando el nombre del servidor y el puerto de conexi�n
             SocketManager sm = new SocketManager("127.0.0.1", 3000);
-            //Se inicializan los streams de lectura y escritura del socket
-
-            //Se declara un buffer de lectura del
-            //dato escrito por el usuario por teclado
-            //es necesario pq no es un buffer propio de los sockets
             BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-            //Se almacena en "sentence" la linea introducida por teclado
 
             while (!modifiedSentence.startsWith("209")) {
                 System.out.print("String a enviar: ");
