@@ -30,6 +30,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.awt.Button;
+import javax.swing.JCheckBox;
 public class VentanaInicioSesion extends JFrame implements FocusListener {
 
 	private JPanel contentPane;
@@ -41,8 +42,7 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
     private JLabel lblUsuario;
     private JLabel lblContraseña;
     private JPanel Botones;
-    private JButton btnLogin;
-    private JButton btnClear;
+    private JButton btnContinuar;
     private JPanel TextoInicial;
     private JLabel lblDatos;
     private SocketManager sm ;
@@ -76,13 +76,10 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 150);
+		setBounds(100, 100, 450, 180);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -106,22 +103,26 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 		Interno.add(lblUsuario);
 		
 		 lblContraseña = new JLabel("Contrase\u00F1a:");
-		lblContraseña.setBounds(21, 56, 74, 14);
+		lblContraseña.setBounds(23, 56, 74, 14);
 		Interno.add(lblContraseña);
 		
 		textUsuario = new JTextField();
-		textUsuario.setBounds(195, 8, 86, 20);
+		textUsuario.setBounds(156, 8, 195, 20);
 		Interno.add(textUsuario);
 		textUsuario.setColumns(10);
 		
 		passwordField = new JPasswordField();
 	
-		passwordField.setBounds(195, 53, 86, 20);
+		passwordField.setBounds(156, 53, 195, 20);
 		Interno.add(passwordField);
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Recordar");
+		chckbxNewCheckBox.setBounds(154, 80, 97, 23);
+		Interno.add(chckbxNewCheckBox);
 	    Botones = new JPanel();
 		inicioSesion.add(Botones, BorderLayout.SOUTH);
-		btnClear = new JButton("Clear");
-		btnClear.addActionListener(new ActionListener() {
+		btnContinuar = new JButton("Continuar");
+		btnContinuar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			try {
 				sm.Escribir(passwordField.getText());
@@ -141,40 +142,13 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 			 //abrir ventana de funciones
 		 }
 		 else{
-			 JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR); 
+			 JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
 		 }
 			}
 		});
-		btnLogin = new JButton("Login");
-		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-		try {
-			sm.Escribir("USER"+textUsuario.getText());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			respuesta=sm.Leer();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	   
-		if(respuesta.equals("200 OK Bienvenido "+textUsuario.getText())){
-			 JOptionPane.showMessageDialog(null,respuesta,"Correcto",JOptionPane.INFORMATION_MESSAGE);
-			 btnClear.setEnabled(true);
-		}
-		else{
-			 JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR);
-		}
-			}
-		});
-		Botones.setLayout(new GridLayout(0, 3, 0, 0));
-		btnLogin.setEnabled(false);
-		Botones.add(btnLogin);
-		btnClear.setEnabled(false);
-		Botones.add(btnClear);
+		Botones.setLayout(new GridLayout(0, 2, 0, 0));
+		btnContinuar.setEnabled(true);
+		Botones.add(btnContinuar);
 		
 		btnSalir = new JButton("Salir");
 		btnSalir.addActionListener(new ActionListener() {
@@ -207,16 +181,9 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 	public void focusLost(FocusEvent arg0) {
 		// TODO Auto-generated method stub
 	
-	    if(textUsuario.getText().equals("")){
-	    	btnLogin.setEnabled(false);
-	    }
-	    else if(!textUsuario.getText().equals("")){
-	    	btnLogin.setEnabled(true);
-	    }
-	    else if(passwordField.getText().equals("")){
-	       btnClear.setEnabled(false);
+
+	
 	    
-	    }
 	    
 	}
 }
