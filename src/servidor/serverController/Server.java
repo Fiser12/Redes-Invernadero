@@ -9,11 +9,13 @@ public final class Server
 {
 	private static ServerSocket wellcomeSocket;
 	public static int usuariosConectados;
-	public static LinkedList<SocketManager> lista;
+	public static LinkedList<SocketManager> listaSockets;
+	public static LinkedList<Request> listaHilos;
+
 	public static void main(String argv[]) throws Exception
 	{
 		// Set the port number.
-		lista = new LinkedList<SocketManager>();
+		listaSockets = new LinkedList<SocketManager>();
 		int port = 3000; //(new Integer(argv[0])).intValue();
 		wellcomeSocket = new ServerSocket(port);
 		usuariosConectados = 0;
@@ -27,25 +29,33 @@ public final class Server
 				thre.start();
 				if(thre.isAlive())
 				{
-					lista.add(sockManager);
+					listaSockets.add(sockManager);
+					listaHilos.add(request);
 					mostrarUsuario(getUsuariosConectados());
 					usuariosConectados++;
 				}
 			}
 		}
 	}
-	public static void mostrarUsuario(int usuario){
+	public static void mostrarUsuario(int usuario)
+	{
+		String usuarioRegistrado = listaHilos.get(usuario).getUsuario();
+		if(usuarioRegistrado.equals(""))
+			usuarioRegistrado = "DESCONECTADO";			
+		System.out.println("USERNAME: " + usuarioRegistrado);
 		System.out.println("NºUSUARIO: " + (usuario+1));
-		System.out.println("DIRECCIÓN: " + lista.get(usuario).getMySocket().getInetAddress().getHostAddress());
-		System.out.println("NOMBRE DEL HOST: " + lista.get(usuario).getMySocket().getInetAddress().getHostName());
-		System.out.println("PUERTO: "+ lista.get(usuario).getMySocket().getPort());
-		System.out.println("NOMBRE CANONICO: " + lista.get(usuario).getMySocket().getInetAddress().getCanonicalHostName());
+		System.out.println("DIRECCIÓN: " + listaSockets.get(usuario).getMySocket().getInetAddress().getHostAddress());
+		System.out.println("NOMBRE DEL HOST: " + listaSockets.get(usuario).getMySocket().getInetAddress().getHostName());
+		System.out.println("PUERTO: "+ listaSockets.get(usuario).getMySocket().getPort());
+		System.out.println("NOMBRE CANONICO: " + listaSockets.get(usuario).getMySocket().getInetAddress().getCanonicalHostName());
 	}
 	public static void desconectarUsuario(int usuario){
 		try
 		{
-			lista.get(usuario).CerrarStreams();
-			lista.get(usuario).CerrarSocket();
+			listaSockets.get(usuario).CerrarStreams();
+			listaSockets.get(usuario).CerrarSocket();
+			listaSockets.remove(usuario);
+			listaHilos.remove(usuario);
 		}
 		catch (IOException e) {
 			e.printStackTrace();

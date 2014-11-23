@@ -10,11 +10,10 @@ final class Request implements Runnable {
 	final static String CRLF = "\r\n";
 	SocketManager sockManager;
 	int estado;
-	String usuario;
-
-	String idPlacaAccion;
-	String variableAccion;
-	String accion;
+	private String usuario;
+	private String idPlacaAccion;
+	private String variableAccion;
+	private String accion;
 	// Constructor
 	public Request(SocketManager sockMan) throws Exception {
 		sockManager = sockMan;
@@ -261,6 +260,9 @@ final class Request implements Runnable {
 					requestLine = sockManager.Leer();
 					System.out.println("RequestLine: " + requestLine);
 				}
+				idPlacaAccion = "";
+				variableAccion = "";
+				accion = "";
 				break;
 
 			case 4:
@@ -271,5 +273,12 @@ final class Request implements Runnable {
 				break;
 			}
 		}
+	}
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 }
