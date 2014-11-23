@@ -1,13 +1,10 @@
 package util;
 import java.net.*;
 import java.io.*;
-
-import jdk.nashorn.internal.runtime.ListAdapter;
 import servidor.serverController.Server;
 
 public class SocketManager {
 	private Socket mySocket;
-
 	private DataOutputStream bufferEscritura;
 	private BufferedReader bufferLectura;
 
@@ -15,7 +12,6 @@ public class SocketManager {
 		this.mySocket = sock;
 		InicializaStreams();
 	}
-
 	/**
 	 *
 	 * @param address InetAddress

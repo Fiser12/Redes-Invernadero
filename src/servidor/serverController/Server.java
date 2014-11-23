@@ -37,15 +37,19 @@ public final class Server
 	}
 	public static void mostrarUsuario(int usuario)
 	{
-		String usuarioRegistrado = listaHilos.get(usuario).getUsuario();
-		if(usuarioRegistrado.equals(""))
-			usuarioRegistrado = "DESCONECTADO";			
+		String usuarioRegistrado = "DESCONECTADO";
+		try{
+		usuarioRegistrado = listaHilos.get(usuario-1).getUsuario();
+		}catch(IndexOutOfBoundsException E){
+			usuarioRegistrado = "DESCONECTADO";
+		}
+		
 		System.out.println("USERNAME: " + usuarioRegistrado);
-		System.out.println("NºUSUARIO: " + (usuario+1));
-		System.out.println("DIRECCIÓN: " + listaSockets.get(usuario).getMySocket().getInetAddress().getHostAddress());
-		System.out.println("NOMBRE DEL HOST: " + listaSockets.get(usuario).getMySocket().getInetAddress().getHostName());
-		System.out.println("PUERTO: "+ listaSockets.get(usuario).getMySocket().getPort());
-		System.out.println("NOMBRE CANONICO: " + listaSockets.get(usuario).getMySocket().getInetAddress().getCanonicalHostName());
+		System.out.println("NºUSUARIO: " + (usuario));
+		System.out.println("DIRECCIÓN: " + listaSockets.get(usuario-1).getMySocket().getInetAddress().getHostAddress());
+		System.out.println("NOMBRE DEL HOST: " + listaSockets.get(usuario-1).getMySocket().getInetAddress().getHostName());
+		System.out.println("PUERTO: "+ listaSockets.get(usuario-1).getMySocket().getPort());
+		System.out.println("NOMBRE CANONICO: " + listaSockets.get(usuario-1).getMySocket().getInetAddress().getCanonicalHostName());
 	}
 	public static void desconectarUsuario(int usuario){
 		try

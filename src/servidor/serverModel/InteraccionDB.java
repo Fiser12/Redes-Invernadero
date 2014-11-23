@@ -1,8 +1,15 @@
 package servidor.serverModel;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import servidor.serverModel.ModelClass.Sensor;
 import util.excepciones.SearchException;
@@ -19,7 +26,7 @@ public class InteraccionDB {
 	{
 		gestor.enviarComando("PRAGMA foreign_keys = ON");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario (Nombre VARCHAR(50) NOT NULL ,Pass VARCHAR(50) NOT NULL, PRIMARY KEY(Nombre));");
-		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Placa (Id INTEGER PRIMARY KEY, Estado VARCHAR(250) NOT NULL, Foto VARCHAR(250));");
+		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Placa (Id INTEGER PRIMARY KEY, Estado VARCHAR(250) NOT NULL, Foto BLOB);");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario_Placa(Nombre VARCHAR(50) NOT NULL, Id_Placa INT(10) NOT NULL, CONSTRAINT Nombre FOREIGN KEY (Nombre) REFERENCES Usuario (Nombre) ON DELETE CASCADE, CONSTRAINT Id_Placa FOREIGN KEY (Id_Placa) REFERENCES Placa(Id) ON DELETE CASCADE)");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Sensor (Id_Sensor INTEGER PRIMARY KEY, Nombre_Variable VARCHAR(250) NOT NULL, Funcion_Principal VARCHAR(500) NOT NULL, Estado_la_variable VARCHAR(250) NOT NULL,Ultima_Accion VARCHAR(500) NOT NULL, id_Placa INT(10), CONSTRAINT id_Placa FOREIGN KEY (id_Placa) REFERENCES Placa (Id) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(id_Placa, Nombre_Variable));");
 	}
@@ -40,9 +47,17 @@ public class InteraccionDB {
 	public static void cargarDatosIniciales()
 	{
 		gestor.enviarComando("INSERT INTO Usuario VALUES('Fiser', '1234')");
-		gestor.enviarComando("INSERT INTO Placa VALUES(1, 'ON', 'photos/foto1.jpg')");
-		gestor.enviarComando("INSERT INTO Placa VALUES(2, 'ON', 'photos/foto2.png')");
-		gestor.enviarComando("INSERT INTO Placa VALUES(3, 'ON', 'photos/foto3.jpg')");
+		gestor.enviarComando("INSERT INTO Placa(Id, Estado) VALUES(1, 'ON')");
+		gestor.enviarComando("INSERT INTO Placa(Id, Estado) VALUES(2, 'ON')");
+		gestor.enviarComando("INSERT INTO Placa(Id, Estado) VALUES(3, 'ON')");
+		try {
+			gestor.setImagen("UPDATE Placa SET Foto=? WHERE Id=1", ImageIO.read(new File("photos/foto1.jpg")));
+			gestor.setImagen("UPDATE Placa SET Foto=? WHERE Id=2", ImageIO.read(new File("photos/foto2.png")));
+			gestor.setImagen("UPDATE Placa SET Foto=? WHERE Id=3", ImageIO.read(new File("photos/foto3.jpg")));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 1)");
 		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 2)");
 		gestor.enviarComando("INSERT INTO Sensor VALUES(1, 'Temperatura', 'Regulacion climatizacion', 'ON', 'subir a.c.', 1)");
@@ -125,6 +140,10 @@ public class InteraccionDB {
 
 		return true;
 	}
+	public static byte[] getImagen(int i)
+	{
+		return gestor.getImagen(i);
+	}
 	public static void actualizarEstado(String sensor, String placa, String estado) {
 		gestor.enviarComando("UPDATE Sensor SET Estado_la_variable='"+estado+"' WHERE Id_Placa='"+placa+"' AND Nombre_Variable='"+sensor+"';");
 	}
@@ -136,5 +155,8 @@ public class InteraccionDB {
 	{
 		reiniciarBase();
 		System.out.println(listado("Fiser").replaceAll("/n", "\n"));
+		JFrame ventana = new JFrame();
+		ventana.setVisible(true);
+		ventana.add(new JLabel(new ImageIcon(getImagen(2))));
 	}
 }
