@@ -67,11 +67,32 @@ public class VentanaElegirAccion extends JFrame {
 		JRadioButton rdbtnCIBLN = new JRadioButton("Capturar imagen a blanco y negro");
 		opciones.add(rdbtnCIBLN);
 		
-		JRadioButton rdbtnDIntensidad = new JRadioButton("Aumentar intensidad de la luz de la imagen");
-		opciones.add(rdbtnDIntensidad);
+		JRadioButton rdbtnAIntensidad = new JRadioButton("Aumentar intensidad de la luz de la imagen");
+		opciones.add(rdbtnAIntensidad);
 		
-		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("Disminuir intensidad de la luz de la imagen");
-		opciones.add(rdbtnNewRadioButton_2);
+		JRadioButton rdbtnDInsensidad = new JRadioButton("Disminuir intensidad de la luz de la imagen");
+		opciones.add(rdbtnDInsensidad);
+		if(radioIColor.isSelected()){
+			rdbtnCIBLN.setSelected(false);
+			rdbtnAIntensidad.setSelected(false);
+			rdbtnDInsensidad.setSelected(false);
+		}
+		else if(rdbtnDInsensidad.isSelected()){
+			rdbtnCIBLN.setSelected(false);
+			rdbtnAIntensidad.setSelected(false);
+			radioIColor.setSelected(false);
+		}
+		else if(rdbtnAIntensidad.isSelected()){
+			rdbtnCIBLN.setSelected(false);
+			rdbtnDInsensidad.setSelected(false);
+			radioIColor.setSelected(false);
+		}
+		else if(rdbtnCIBLN.isSelected()){
+			rdbtnAIntensidad.setSelected(false);
+			rdbtnDInsensidad.setSelected(false);
+			radioIColor.setSelected(false);
+		}
+	
 	}
 
 }

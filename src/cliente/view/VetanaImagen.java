@@ -74,6 +74,7 @@ public class VetanaImagen extends JFrame {
 		
 		JPanel imagen = new JPanel();
 		Central.add(imagen);
+		imagen.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JLabel lblimagen = new JLabel("New label");
 		imagen.add(lblimagen);
