@@ -1,19 +1,13 @@
 package cliente.controller;
 import util.*;
-
-import java.awt.Image;
-import java.io.*;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import cliente.view.*;
 
 public class TCPClient {
 	public static void main(String[] args) throws Exception {
 		String sentence=""; //Variable dnd se almacena la frase introducida por el usuario
 		String modifiedSentence=""; //Variable dnd se recibe la frase capitalizada
-		try {
+		
+/*		try {
 			SocketManager sm = new SocketManager("127.0.0.1", 3000);
 			BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 			while (!modifiedSentence.startsWith("209")) {
@@ -50,6 +44,7 @@ public class TCPClient {
 			System.err.println("main: " + e);
 			e.printStackTrace();
 		}
-
+*/
 	}
+
 }

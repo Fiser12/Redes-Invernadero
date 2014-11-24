@@ -3,6 +3,7 @@ import java.net.*;
 import java.io.*;
 
 import servidor.serverController.Server;
+import servidor.serverModel.SQLiteManager;
 
 public class SocketManager {
 	private Socket mySocket;
