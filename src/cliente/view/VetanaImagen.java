@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import servidor.serverModel.ModelClass.Placa;
+import java.awt.FlowLayout;
 
 public class VetanaImagen extends JFrame {
 
@@ -49,15 +50,15 @@ public class VetanaImagen extends JFrame {
 		
 		JPanel Id = new JPanel();
 		Atributos.add(Id);
-		Id.setLayout(new GridLayout(0, 1, 0, 0));
+		Id.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblestado = new JLabel("ID Placa"+p.getId());
-		lblestado.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		Id.add(lblestado);
+		lblestado.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JPanel Estado = new JPanel();
 		Atributos.add(Estado);
-		Estado.setLayout(new GridLayout(0, 1, 0, 0));
+		Estado.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel = new JLabel(p.getEstado()+"   Estado");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -65,7 +66,7 @@ public class VetanaImagen extends JFrame {
 		
 		JPanel Boton = new JPanel();
 		Atributos.add(Boton);
-		Boton.setLayout(new GridLayout(1, 0, 0, 0));
+		Boton.setLayout(new BorderLayout(0, 0));
 		
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 17));
@@ -73,6 +74,9 @@ public class VetanaImagen extends JFrame {
 		
 		JPanel imagen = new JPanel();
 		Central.add(imagen);
+		
+		JLabel lblimagen = new JLabel("New label");
+		imagen.add(lblimagen);
 	}
 
 }
