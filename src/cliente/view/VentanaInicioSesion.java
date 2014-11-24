@@ -45,7 +45,6 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
     private JButton btnContinuar;
     private JPanel TextoInicial;
     private JLabel lblDatos;
-    private SocketManager sm ;
     private String respuesta;
     private JButton btnSalir;
 	
@@ -70,14 +69,8 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 	 * @throws IOException 
 	 */
 	public VentanaInicioSesion() {
-		try {
-			sm = new SocketManager("127.0.0.1", 3000);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		
 		setResizable(false);
-		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 180);
 		contentPane = new JPanel();
@@ -124,19 +117,7 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 		btnContinuar = new JButton("Continuar");
 		btnContinuar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			try {
-				sm.Escribir(passwordField.getText());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		 try {
-			respuesta=sm.Leer();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	   
+		
 		 if(respuesta.equals("201 OK Bienvenido al sistema.")){
 			 JOptionPane.showMessageDialog(null,respuesta,"Correcto",JOptionPane.INFORMATION_MESSAGE);
 			 //abrir ventana de funciones
