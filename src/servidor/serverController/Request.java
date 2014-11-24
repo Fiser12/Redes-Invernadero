@@ -1,11 +1,6 @@
 package servidor.serverController;
 
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.FileInputStream;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import util.*;
 import util.excepciones.SearchException;
@@ -206,12 +201,7 @@ final class Request implements Runnable {
 				{
 					int id = Integer.parseInt(requestLine.substring(13));
 					byte[] imagen = InteraccionDB.getImagen(id);
-					Image img=Toolkit.getDefaultToolkit().createImage(imagen);
-					JFrame ventana = new JFrame();
-					ventana.setVisible(true);
-					ventana.add(new JLabel(new ImageIcon(img)));
-					sockManager.Escribir(imagen, imagen.length);
-					
+					sockManager.sendBytes(imagen);		
 					requestLine = sockManager.Leer();
 					System.out.println("RequestLine: " + requestLine);
 				}

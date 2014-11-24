@@ -1,11 +1,13 @@
 package util;
 import java.net.*;
 import java.io.*;
+
 import servidor.serverController.Server;
 
 public class SocketManager {
 	private Socket mySocket;
 	private DataOutputStream bufferEscritura;
+	private DataInputStream buffer;
 	private BufferedReader bufferLectura;
 
 	public SocketManager(Socket sock) throws IOException {
@@ -63,7 +65,10 @@ public class SocketManager {
 	public String Leer() throws IOException {
 		return (bufferLectura.readLine());
 	}
-
+	public int Leer2(char[]temp) throws IOException
+	{
+		return bufferLectura.read(temp);
+	}
 	public void Escribir(String contenido) throws IOException {
 		bufferEscritura.writeBytes(contenido);
 	}
@@ -79,4 +84,39 @@ public class SocketManager {
 	public void setMySocket(Socket mySocket) {
 		this.mySocket = mySocket;
 	}
+	//Estos métodos los he conseguido de aquí http://stackoverflow.com/questions/2878867/how-to-send-an-array-of-bytes-over-a-tcp-connection-java-programming
+	public void sendBytes(byte[] myByteArray) throws IOException {
+		sendBytes(myByteArray, 0, myByteArray.length);
+	}
+	public void sendBytes(byte[] myByteArray, int start, int len) throws IOException {
+		if (len < 0)
+			throw new IllegalArgumentException("Negative length not allowed");
+		if (start < 0 || start >= myByteArray.length)
+			throw new IndexOutOfBoundsException("Out of bounds: " + start);
+		// Other checks if needed.
+
+		// May be better to save the streams in the support class;
+		// just like the socket variable.
+		OutputStream out = mySocket.getOutputStream(); 
+		DataOutputStream dos = new DataOutputStream(out);
+
+		dos.writeInt(len);
+		if (len > 0) {
+			dos.write(myByteArray, start, len);
+		}
+	}
+	public byte[] readBytes() throws IOException {
+		// Again, probably better to store these objects references in the support class
+		InputStream in = mySocket.getInputStream();
+		DataInputStream dis = new DataInputStream(in);
+
+		int len = dis.readInt();
+		byte[] data = new byte[len];
+		if (len > 0) {
+			dis.readFully(data);
+		}
+		return data;
+	}
+
+
 }
