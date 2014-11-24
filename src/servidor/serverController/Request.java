@@ -82,7 +82,7 @@ final class Request implements Runnable {
 					int respuesta = InteraccionDB.metodoPass(usuario, pass);
 					System.out.println("PASS: " + pass + "resptuesta= " + respuesta);
 					if(respuesta == 201){
-						sockManager.Escribir("200 OK Bienvenido al sistema\n");
+						sockManager.Escribir("201 OK Bienvenido al sistema\n");
 						estado = 2;
 					}
 					else if(respuesta == 402){

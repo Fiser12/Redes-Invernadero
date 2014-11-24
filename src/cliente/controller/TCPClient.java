@@ -1,4 +1,4 @@
-package cliente;
+package cliente.controller;
 import util.*;
 
 import java.awt.Image;
@@ -27,6 +27,7 @@ public class TCPClient {
 				else
 				{
 					modifiedSentence = sm.Leer();
+					System.out.println(modifiedSentence);
 					if(modifiedSentence.startsWith("206")){
 						byte[] temporal = sm.readBytes();
 						Image temp = ImageIO.read(new ByteArrayInputStream(temporal));
