@@ -26,23 +26,21 @@ import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Usuario;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-public class VentanTabla extends JFrame implements FocusListener{
+public class VentanaTabla extends JFrame implements FocusListener{
 
 	private JPanel contentPane;
 	private JTextField textIDPlaca;
 	private JTextField textIdSensor;
-    private JButton btnActuar;
     private JButton btnImagen;
 	private JButton btnActivar;
 	private JButton btnDesactivar;
-	private JButton btnActua;
 	private JTextField textVariable;
 	private JComboBox comboBoxBusqueda;
 	private JButton btnBuscar;
 	private JButton btnListar;
 	private jTable modeloTabla;
 	private JTable tabla;
-	private ArrayList<Placa> TodasPlacas=new ArrayList();
+	private ArrayList<Placa> TodasPlacas=new ArrayList<Placa>();
 	private ArrayList<Placa> PlacasDeBusqueda=new ArrayList();
 	/**
 	 * Launch the application.
@@ -51,7 +49,7 @@ public class VentanTabla extends JFrame implements FocusListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanTabla frame = new VentanTabla();
+					VentanaTabla frame = new VentanaTabla();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,7 +61,7 @@ public class VentanTabla extends JFrame implements FocusListener{
 	/**
 	 * Create the frame.
 	 */
-	public VentanTabla() {
+	public VentanaTabla() {
 		/*
 		 * Rellenar el array list De TodasPlacas
 		 */
