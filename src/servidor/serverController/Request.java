@@ -68,8 +68,6 @@ final class Request implements Runnable {
 					sockManager.Escribir("209 OK Adios\n");
 					estado = 4;
 				}
-				else if(requestLine.startsWith("PING"))
-					sockManager.Escribir("PING\n");
 				else{
 					sockManager.Escribir("\n");
 					requestLine = sockManager.Leer();
