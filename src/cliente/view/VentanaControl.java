@@ -88,7 +88,7 @@ public class VentanaControl  extends JFrame implements FocusListener {
 		}//despues lo cambiaremos para relaccionar a la otra
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100,300, 200);
+		setBounds(100, 100,300, 170);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -167,24 +167,37 @@ public class VentanaControl  extends JFrame implements FocusListener {
 		contentPane.add(panelCentral, BorderLayout.CENTER);
 		panelCentral.setLayout(new GridLayout(0, 2, 0, 0));
 		
+		JPanel panelopcion = new JPanel();
+		panelCentral.add(panelopcion);
+		
 		JLabel lblOpcion1 = new JLabel("Opcion:");
-		lblOpcion1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblOpcion1.setVerticalAlignment(SwingConstants.BOTTOM);
+		panelopcion.add(lblOpcion1);
+		lblOpcion1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblOpcion1.setHorizontalAlignment(SwingConstants.CENTER);
-		panelCentral.add(lblOpcion1);
+		
+		JPanel panel_1 = new JPanel();
+		panelCentral.add(panel_1);
 		
 		comboBoxOpciones = new JComboBox();
+		panel_1.add(comboBoxOpciones);
 		comboBoxOpciones.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar opcion", "ON", " OFF ", "ACCION", "OBTENER_FOTO"}));
 		comboBoxOpciones.setToolTipText("");
-		panelCentral.add(comboBoxOpciones);
 		
-		JLabel labelOpcion = new JLabel("Opcion: ");
-		labelOpcion.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		JPanel panel_2 = new JPanel();
+		panelCentral.add(panel_2);
+		
+		JLabel labelOpcion = new JLabel("Variable:");
+		panel_2.add(labelOpcion);
+		labelOpcion.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		labelOpcion.setHorizontalAlignment(SwingConstants.CENTER);
-		panelCentral.add(labelOpcion);
+		
+		JPanel panel_3 = new JPanel();
+		panelCentral.add(panel_3);
 		
 		tFVariable = new JTextField();
+		panel_3.add(tFVariable);
 		tFVariable.setForeground(Color.BLACK);
-		panelCentral.add(tFVariable);
 		tFVariable.setColumns(10);
 	}
 
