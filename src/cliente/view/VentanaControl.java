@@ -49,6 +49,7 @@ import util.SocketManager;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
+import java.awt.Toolkit;
 
 public class VentanaControl  extends JFrame implements FocusListener {
 
@@ -80,6 +81,7 @@ public class VentanaControl  extends JFrame implements FocusListener {
 	 * Create the frame.
 	 */
 	public VentanaControl() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaControl.class.getResource("/javax/swing/plaf/metal/icons/Inform.gif")));
 		try {
 			sm = new SocketManager("127.0.0.1", 3000);
 		} catch (IOException e1) {
