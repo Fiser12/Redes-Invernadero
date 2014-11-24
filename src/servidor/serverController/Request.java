@@ -116,7 +116,7 @@ final class Request implements Runnable {
 					{
 						if(InteraccionDB.comprobarEstado(Variable, idPlaca))
 						{
-							sockManager.Escribir("405 ERROR "+Variable+" en estado ON \n");
+							sockManager.Escribir("405 ERR "+Variable+" en estado ON \n");
 						}
 						else
 						{//Continuar con el proceso de poner a ON
@@ -126,7 +126,7 @@ final class Request implements Runnable {
 					}
 					catch(SearchException E)
 					{
-						sockManager.Escribir("404 ERROR "+Variable+" no existe \n");
+						sockManager.Escribir("404 ERR "+Variable+" no existe \n");
 					}
 					requestLine = sockManager.Leer();
 					System.out.println("RequestLine: " + requestLine);
@@ -146,12 +146,12 @@ final class Request implements Runnable {
 						}
 						else
 						{
-							sockManager.Escribir("405 ERROR "+Variable+" en estado OFF \n");
+							sockManager.Escribir("405 ERR "+Variable+" en estado OFF \n");
 						}
 					}
 					catch(SearchException E)
 					{
-						sockManager.Escribir("404 ERROR "+Variable+" no existe\n");
+						sockManager.Escribir("404 ERR "+Variable+" no existe\n");
 					}
 					requestLine = sockManager.Leer();
 					System.out.println("RequestLine: " + requestLine);
@@ -200,8 +200,13 @@ final class Request implements Runnable {
 				else if(requestLine.startsWith("OBTENER_FOTO"))
 				{
 					int id = Integer.parseInt(requestLine.substring(13));
-					byte[] imagen = InteraccionDB.getImagen(id);
-					sockManager.sendBytes(imagen);		
+					try{
+						byte[] imagen = InteraccionDB.getImagen(id);
+						sockManager.Escribir("206 OK Transmitiendo "+ imagen.length + " bytes\n");
+						sockManager.sendBytes(imagen);		
+					}catch(SearchException E){
+						sockManager.Escribir("403 ERROR Identificador no existe\n");
+					}
 					requestLine = sockManager.Leer();
 					System.out.println("RequestLine: " + requestLine);
 				}

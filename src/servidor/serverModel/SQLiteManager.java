@@ -14,6 +14,7 @@ import java.sql.Statement;
 import javax.imageio.ImageIO;
 
 import util.Util;
+import util.excepciones.SearchException;
 
 public class SQLiteManager
 {
@@ -111,7 +112,7 @@ public class SQLiteManager
 			return false;
 		}               
 	}
-	public byte[] getImagen(int codigo)
+	public byte[] getImagen(int codigo) throws SearchException
 	{
 		String query="SELECT Foto FROM Placa WHERE Id="+codigo;
 		Statement stmt=null;
@@ -122,9 +123,10 @@ public class SQLiteManager
 			if(rslt.next()){
 				imgArr= rslt.getBytes("Foto");
 			}
-			
+			else
+				throw new SearchException();
 		}catch(Exception e){
-			System.out.println("No hay imagen");
+			throw new SearchException();
 		}
 
 		return imgArr;

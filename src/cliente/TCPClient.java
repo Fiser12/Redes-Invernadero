@@ -26,11 +26,19 @@ public class TCPClient {
 					modifiedSentence = sm.Leer().replaceAll("/n", "\n");//Dado que pide en algunos casos mandar \n pero supone que no se envie la linea correcta utilizamos /n como código auxiliar que consideramos así del lado del cliente para convertirlo en el \n real
 				else
 				{
-					byte[] temporal = sm.readBytes();
-					Image temp = ImageIO.read(new ByteArrayInputStream(temporal));
-					JFrame ventana = new JFrame();
-					ventana.setVisible(true);
-					ventana.add(new JLabel(new ImageIcon(temp)));
+					modifiedSentence = sm.Leer();
+					if(modifiedSentence.startsWith("206")){
+						byte[] temporal = sm.readBytes();
+						Image temp = ImageIO.read(new ByteArrayInputStream(temporal));
+						JFrame ventana = new JFrame();
+						ventana.setVisible(true);
+						try{
+						ventana.add(new JLabel(new ImageIcon(temp)));
+						}catch(Exception E)
+						{
+							
+						}
+					}
 				}
 				//Saca por consola la frase modificada enviada por el servidor
 				System.out.println("Desde el servidor: " + modifiedSentence);

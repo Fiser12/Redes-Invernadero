@@ -140,7 +140,7 @@ public class InteraccionDB {
 
 		return true;
 	}
-	public static byte[] getImagen(int i)
+	public static byte[] getImagen(int i) throws SearchException
 	{
 		return gestor.getImagen(i);
 	}
@@ -157,6 +157,5 @@ public class InteraccionDB {
 		System.out.println(listado("Fiser").replaceAll("/n", "\n"));
 		JFrame ventana = new JFrame();
 		ventana.setVisible(true);
-		ventana.add(new JLabel(new ImageIcon(getImagen(2))));
 	}
 }
