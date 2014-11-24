@@ -104,7 +104,7 @@ public class VentanaConexion extends JFrame {
 	    formatter.setMaximum(65535);
 	    // If you want the value to be committed on each keystroke instead of focus lost
 	    formatter.setCommitsOnValidEdit(true);
-	    JFormattedTextField tFpuerto = new JFormattedTextField(formatter);
+	    tFpuerto = new JFormattedTextField(formatter);
 
 		tFpuerto.setText(""+Util.puerto);
 		panel_5.add(tFpuerto);
