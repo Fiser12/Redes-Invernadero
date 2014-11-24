@@ -3,31 +3,44 @@ package cliente.view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
 import servidor.serverModel.ModelClass.Placa;
+
 import javax.swing.SwingConstants;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+
 import javax.swing.BoxLayout;
+
 import java.awt.GridLayout;
+
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
 import javax.swing.JRadioButton;
 
 public class VentanaElegirAccion extends JFrame {
 
 	private JPanel contentPane;
-
-	/**
+    private JRadioButton radioIColor;
+    private JRadioButton rdbtnCIBLN;
+	private JRadioButton rdbtnAIntensidad;
+    private JRadioButton rdbtnDInsensidad;
+    /**
 	 * Launch the application.
 	 */
 
-	public VentanaElegirAccion(Placa p) {
+	public VentanaElegirAccion() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 200);
 		contentPane = new JPanel();
@@ -61,38 +74,33 @@ public class VentanaElegirAccion extends JFrame {
 		contentPane.add(opciones, BorderLayout.CENTER);
 		opciones.setLayout(new GridLayout(4, 1, 0, 0));
 		
-		JRadioButton radioIColor = new JRadioButton("Capturar imagen a color");
+		 radioIColor = new JRadioButton("Capturar imagen a color");
 		opciones.add(radioIColor);
-		
-		JRadioButton rdbtnCIBLN = new JRadioButton("Capturar imagen a blanco y negro");
+		 rdbtnCIBLN = new JRadioButton("Capturar imagen a blanco y negro");
 		opciones.add(rdbtnCIBLN);
-		
-		JRadioButton rdbtnAIntensidad = new JRadioButton("Aumentar intensidad de la luz de la imagen");
+		rdbtnAIntensidad = new JRadioButton("Aumentar intensidad de la luz de la imagen");
 		opciones.add(rdbtnAIntensidad);
-		
-		JRadioButton rdbtnDInsensidad = new JRadioButton("Disminuir intensidad de la luz de la imagen");
+		rdbtnDInsensidad = new JRadioButton("Disminuir intensidad de la luz de la imagen");
 		opciones.add(rdbtnDInsensidad);
-		if(radioIColor.isSelected()){
-			rdbtnCIBLN.setSelected(false);
-			rdbtnAIntensidad.setSelected(false);
-			rdbtnDInsensidad.setSelected(false);
-		}
-		else if(rdbtnDInsensidad.isSelected()){
-			rdbtnCIBLN.setSelected(false);
-			rdbtnAIntensidad.setSelected(false);
-			radioIColor.setSelected(false);
-		}
-		else if(rdbtnAIntensidad.isSelected()){
-			rdbtnCIBLN.setSelected(false);
-			rdbtnDInsensidad.setSelected(false);
-			radioIColor.setSelected(false);
-		}
-		else if(rdbtnCIBLN.isSelected()){
-			rdbtnAIntensidad.setSelected(false);
-			rdbtnDInsensidad.setSelected(false);
-			radioIColor.setSelected(false);
-		}
+		ButtonGroup b=new ButtonGroup();
+		b.add(radioIColor);
+		b.add(rdbtnCIBLN);
+		b.add(rdbtnAIntensidad);
+		b.add(rdbtnDInsensidad );
 	
 	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VentanaElegirAccion frame = new VentanaElegirAccion();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 
 }
