@@ -1,4 +1,4 @@
-package Ventanas;
+package cliente.view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -40,7 +40,7 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
     private JPanel Inicio;
     private JPanel Interno;
     private JLabel lblUsuario;
-    private JLabel lblContraseña;
+    private JLabel lblContrasena;
     private JPanel Botones;
     private JButton btnContinuar;
     private JPanel TextoInicial;
@@ -102,9 +102,9 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 		lblUsuario.setBounds(23, 11, 87, 14);
 		Interno.add(lblUsuario);
 		
-		 lblContraseña = new JLabel("Contrase\u00F1a:");
-		lblContraseña.setBounds(23, 56, 74, 14);
-		Interno.add(lblContraseña);
+		 lblContrasena = new JLabel("Contrase\u00F1a:");
+		lblContrasena.setBounds(23, 56, 74, 14);
+		Interno.add(lblContrasena);
 		
 		textUsuario = new JTextField();
 		textUsuario.setBounds(156, 8, 195, 20);

@@ -1,4 +1,4 @@
-package Ventanas;
+package cliente.view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -189,7 +189,7 @@ public class VentanTabla extends JFrame implements FocusListener{
 		 */
 		public boolean isCellEditable (int row, int column)
 		{
-			// Aquí devolvemos true o false según queramos que una celda
+			// Aquï¿½ devolvemos true o false segï¿½n queramos que una celda
 			// identificada por fila,columna (row,column), sea o no editable
 			if (column >=0)
 				return false;
