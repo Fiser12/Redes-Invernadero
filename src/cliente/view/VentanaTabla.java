@@ -26,6 +26,11 @@ import util.Util;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import javax.swing.SwingConstants;
+import javax.swing.JToggleButton;
+import javax.swing.JLabel;
 public class VentanaTabla extends JFrame{
 
 	/**
@@ -33,8 +38,6 @@ public class VentanaTabla extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textIDPlaca;
-	private JTextField textIdSensor;
     private JButton btnImagen;
 	private JButton btnActivar;
 	private JButton btnDesactivar;
@@ -77,36 +80,27 @@ public class VentanaTabla extends JFrame{
 		setContentPane(contentPane);
 		
 		JPanel BotonesArriba = new JPanel();
-		contentPane.add(BotonesArriba, BorderLayout.NORTH);
-		BotonesArriba.setLayout(new GridLayout(0, 6, 0, 0));
+		contentPane.add(BotonesArriba, BorderLayout.EAST);
+	    BotonesArriba.setLayout(new GridLayout(14, 1, 0, 0));
+	    
+	    btnActivar = new JButton("Activar");
+	    BotonesArriba.add(btnActivar);
+	    btnActivar.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		activar();
+	    	}
+	    });
+	    
+	    btnDesactivar = new JButton("Desactivar");
+	    btnDesactivar.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		desactivar();
+	    	}
+	    });
+	    BotonesArriba.add(btnDesactivar);
 			
 	    btnImagen = new JButton("Imagen Placa");
 		BotonesArriba.add(btnImagen);
-		
-		textIDPlaca = new JTextField();
-		BotonesArriba.add(textIDPlaca);
-		textIDPlaca.setColumns(10);
-		
-		textIdSensor = new JTextField();
-		textIdSensor.setText("IDSensor");
-		BotonesArriba.add(textIdSensor);
-		textIdSensor.setColumns(10);
-		
-		btnActivar = new JButton("Activar");
-		BotonesArriba.add(btnActivar);
-		btnActivar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				activar();
-			}
-		});
-		
-		btnDesactivar = new JButton("Desactivar");
-		btnDesactivar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				desactivar();
-			}
-		});
-		BotonesArriba.add(btnDesactivar);
 		
 		JButton btnActuar = new JButton("Actuar");
 		BotonesArriba.add(btnActuar);
