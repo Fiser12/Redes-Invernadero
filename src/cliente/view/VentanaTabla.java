@@ -264,13 +264,13 @@ public class VentanaTabla extends JFrame{
 		{
 			return false;
 		}
-		public void addRow(Sensor añadir){
-			String idSensor = ""+añadir.getId_sensor();
-			String idPlaca = ""+añadir.getId_Placa();
-			String variable = añadir.getVariable();
-			String estado = añadir.getEstadoVariable();
-			String funcion = añadir.getFuncionPrincipal();
-			String accion = añadir.getUltimaAccion();
+		public void addRow(Sensor anadir){
+			String idSensor = ""+anadir.getId_sensor();
+			String idPlaca = ""+anadir.getId_Placa();
+			String variable = anadir.getVariable();
+			String estado = anadir.getEstadoVariable();
+			String funcion = anadir.getFuncionPrincipal();
+			String accion = anadir.getUltimaAccion();
 			Object [] add = {idSensor, idPlaca, variable, estado, funcion, accion};
 			this.addRow(add);
 		}
