@@ -18,7 +18,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import servidor.serverModel.ModelClass.Placa;
+
 import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VetanaImagen extends JFrame {
 
@@ -32,7 +35,10 @@ public class VetanaImagen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VetanaImagen(Placa p) {
+	public VetanaImagen(Placa p,boolean color) {
+		/*
+		 * Si es en blanco y negro false si
+		 */
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -69,6 +75,13 @@ public class VetanaImagen extends JFrame {
 		Boton.setLayout(new BorderLayout(0, 0));
 		
 		JButton btnNewButton = new JButton("Aceptar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			VentanaTabla nueva = new VentanaTabla();
+			nueva.setVisible(true);
+			dispose();
+			}
+		});
 		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 17));
 		Boton.add(btnNewButton);
 		

@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
 import servidor.serverModel.ModelClass.Placa;
+import servidor.serverModel.ModelClass.Sensor;
 
 import javax.swing.SwingConstants;
 
@@ -36,11 +37,12 @@ public class VentanaElegirAccion extends JFrame {
     private JRadioButton rdbtnCIBLN;
 	private JRadioButton rdbtnAIntensidad;
     private JRadioButton rdbtnDInsensidad;
+    private ButtonGroup b;
     /**
 	 * Launch the application.
 	 */
 
-	public VentanaElegirAccion() {
+	public VentanaElegirAccion(final Sensor s) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 200);
 		contentPane = new JPanel();
@@ -63,11 +65,42 @@ public class VentanaElegirAccion extends JFrame {
 		JButton btnContinuar = new JButton("Continuar");
 		btnContinuar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+			if(radioIColor.isSelected()){
+			VetanaImagen i=new VetanaImagen(null,true)	;
+			i.setVisible(true);
+			dispose();
+			/*
+				 * La imagen a de ser de la placa pero aqui pasamos el sensor
+				 */
 			}
+			if(rdbtnCIBLN.isSelected()){
+				VetanaImagen i=new VetanaImagen(null,false)	;
+				i.setVisible(true);
+				dispose();	
+			}
+			if(rdbtnAIntensidad.isSelected()){
+				VentanaIncrementar i=new VentanaIncrementar(s,true);//sumar 
+				i.setVisible(true);
+				dispose();
+			}
+			if(rdbtnDInsensidad.isSelected()){
+				VentanaIncrementar i=new VentanaIncrementar(s,false);//restar
+				i.setVisible(true);
+				dispose();
+				
+			}
+			}
+			
 		});
 		botones.add(btnContinuar);
 		
 		JButton btnRegresar = new JButton("Regresar");
+		btnRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaTabla nueva = new VentanaTabla();
+				nueva.setVisible(true);
+				dispose();}
+		});
 		botones.add(btnRegresar);
 		
 		JPanel opciones = new JPanel();
@@ -82,7 +115,7 @@ public class VentanaElegirAccion extends JFrame {
 		opciones.add(rdbtnAIntensidad);
 		rdbtnDInsensidad = new JRadioButton("Disminuir intensidad de la luz de la imagen");
 		opciones.add(rdbtnDInsensidad);
-		ButtonGroup b=new ButtonGroup();
+	    b=new ButtonGroup();
 		b.add(radioIColor);
 		b.add(rdbtnCIBLN);
 		b.add(rdbtnAIntensidad);
@@ -93,8 +126,8 @@ public class VentanaElegirAccion extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaElegirAccion frame = new VentanaElegirAccion();
-					frame.setVisible(true);
+				//	VentanaElegirAccion frame = new VentanaElegirAccion();
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

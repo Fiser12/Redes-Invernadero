@@ -16,6 +16,8 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+import servidor.serverModel.ModelClass.Sensor;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.text.NumberFormat;
@@ -33,8 +35,8 @@ public class VentanaIncrementar extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaIncrementar frame = new VentanaIncrementar();
-					frame.setVisible(true);
+				//	VentanaIncrementar frame = new VentanaIncrementar(true);
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -45,7 +47,10 @@ public class VentanaIncrementar extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaIncrementar() {
+	public VentanaIncrementar(Sensor s,boolean t) {
+		/*
+		 * Si el boolea no esta a true se suma se asta a false se resta
+		 */
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 200);
 		contentPane = new JPanel();
@@ -61,7 +66,7 @@ public class VentanaIncrementar extends JFrame {
 		panel.add(panel_1);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JLabel lblParametro = new JLabel("Indique el incremento o decremento de la variable");
+		JLabel lblParametro = new JLabel("Indique el incremento o decremento de la variable:");
 		panel_1.add(lblParametro);
 		
 		JPanel incremento = new JPanel();
