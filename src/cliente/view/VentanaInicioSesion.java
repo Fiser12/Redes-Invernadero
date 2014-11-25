@@ -8,31 +8,26 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-
 import java.awt.GridLayout;
-
 import javax.swing.JButton;
-
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
-
-import util.SocketManager;
-
+import util.Util;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.awt.Button;
 import javax.swing.JCheckBox;
+
 public class VentanaInicioSesion extends JFrame implements FocusListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textUsuario;
 	private JPasswordField passwordField;
@@ -108,33 +103,27 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 	
 		passwordField.setBounds(156, 53, 195, 20);
 		Interno.add(passwordField);
-		
+
 		JCheckBox chckbxNewCheckBox = new JCheckBox("Recordar");
 		chckbxNewCheckBox.setBounds(154, 80, 97, 23);
 		Interno.add(chckbxNewCheckBox);
-	    Botones = new JPanel();
+		Botones = new JPanel();
 		inicioSesion.add(Botones, BorderLayout.SOUTH);
 		btnContinuar = new JButton("Continuar");
 		btnContinuar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-		
-		 if(respuesta.equals("201 OK Bienvenido al sistema.")){
-			 JOptionPane.showMessageDialog(null,respuesta,"Correcto",JOptionPane.INFORMATION_MESSAGE);
-			 //abrir ventana de funciones
-		 }
-		 else{
-			 JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
-		 }
+				mandarUsuarioPass();
 			}
 		});
+		
 		Botones.setLayout(new GridLayout(0, 2, 0, 0));
 		btnContinuar.setEnabled(true);
 		Botones.add(btnContinuar);
-		
+
 		btnSalir = new JButton("Salir");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			dispose();
+				desconexion();
 			}
 		});
 		Botones.add(btnSalir);
@@ -151,20 +140,50 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 		passwordField.addFocusListener( this);
 		
 	}
+	public void mandarUsuarioPass()
+	{
+		try {
+			Util.claseSocketCliente.Escribir("USER " + textUsuario.getText()+"\n");
+			respuesta = Util.claseSocketCliente.Leer();
+			if(respuesta.contains("200"))
+			{
+				Util.claseSocketCliente.Escribir("PASS " + new String(passwordField.getPassword())+"\n");
+				respuesta = Util.claseSocketCliente.Leer();
+				if(respuesta.contains("201"))
+				{
+					VentanaTabla nueva = new VentanaTabla();
+					nueva.setVisible(true);
+					dispose();
+				}
+				else
+					JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+			}
+			else
+				JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+		}
+	}
+	public void desconexion()
+	{
+		try {
+			Util.claseSocketCliente.Escribir("SALIR\n");
+			respuesta = Util.claseSocketCliente.Leer();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+		}
 
+		dispose();
+	}
 	@Override
-	public void focusGained(FocusEvent arg0) {
+	public void focusGained(FocusEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void focusLost(FocusEvent arg0) {
+	public void focusLost(FocusEvent e) {
 		// TODO Auto-generated method stub
-	
-
-	
-	    
-	    
+		
 	}
 }

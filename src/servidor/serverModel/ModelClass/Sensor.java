@@ -24,6 +24,14 @@ public class Sensor {
 	public Sensor() {
 
 	}
+	
+	@Override
+	public String toString() {
+		return "Sensor [id_sensor=" + id_sensor + ", estadoVariable="
+				+ estadoVariable + ", ultimaAccion=" + ultimaAccion
+				+ ", nombreVariable=" + nombreVariable + ", funcionPrincipal="
+				+ funcionPrincipal + ", id_Placa=" + id_Placa + "]";
+	}
 	public String getEstadoVariable() {
 		return estadoVariable;
 	}

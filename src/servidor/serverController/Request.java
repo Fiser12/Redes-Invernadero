@@ -89,8 +89,10 @@ final class Request implements Runnable {
 						sockManager.Escribir("402 ERR La clave es incorrecta\n");
 						estado = 0;
 					}
-					else if(respuesta == 403)
+					else if(respuesta == 403){
 						sockManager.Escribir("403 ERR Falta la clave\n");
+						estado = 0;
+					}
 					requestLine = sockManager.Leer();
 					System.out.println("RequestLine: " + requestLine);
 				}
