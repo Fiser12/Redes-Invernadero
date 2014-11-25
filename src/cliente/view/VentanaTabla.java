@@ -26,11 +26,6 @@ import util.Util;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import javax.swing.SwingConstants;
-import javax.swing.JToggleButton;
-import javax.swing.JLabel;
 public class VentanaTabla extends JFrame{
 
 	/**
@@ -118,7 +113,7 @@ public class VentanaTabla extends JFrame{
 		textVariable.setColumns(10);
 
 		comboBoxBusqueda = new JComboBox<String>();
-		comboBoxBusqueda.setModel(new DefaultComboBoxModel(new String[] {"Elegir Opcion De Busqueda", "Todas", "IDPlaca", "Variable", "IDSensor", "En OFF", "EN ON", ""}));
+		comboBoxBusqueda.setModel(new DefaultComboBoxModel<String>(new String[] {"Elegir Opcion De Busqueda", "Todas", "IDPlaca", "Variable", "IDSensor", "En OFF", "EN ON", ""}));
 		comboBoxBusqueda.setToolTipText("Elegir opcion\r\n");
 		Busqueda.add(comboBoxBusqueda);
 
@@ -174,7 +169,7 @@ public class VentanaTabla extends JFrame{
 	public void activar(){
         int rowIndex = tabla.getSelectedRow();
         Sensor seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
-        
+        System.out.println(seleccionado.toString());
 	}
 	public void desactivar(){
 		
