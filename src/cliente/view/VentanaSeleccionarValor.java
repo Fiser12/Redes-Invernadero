@@ -5,27 +5,33 @@ import java.awt.EventQueue;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 import javax.swing.JLabel;
 
 import java.awt.GridLayout;
-import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
-import javax.swing.JTextField;
 
 import servidor.serverModel.ModelClass.Sensor;
+import util.Util;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.text.NumberFormat;
 
-public class VentanaIncrementar extends JFrame {
+public class VentanaSeleccionarValor extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
-	
+	String respuesta = "";
 	private JFormattedTextField txIncremento;
 
 	/**
@@ -47,7 +53,7 @@ public class VentanaIncrementar extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaIncrementar(Sensor s) {
+	public VentanaSeleccionarValor(Sensor s, VentanaTabla control) {
 		/*
 		 * Si el boolea no esta a true se suma se asta a false se resta
 		 */
@@ -104,6 +110,15 @@ public class VentanaIncrementar extends JFrame {
 		JButton btnContinuar = new JButton("Continuar");
 		btnContinuar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Util.claseSocketCliente.Escribir("CONFIRMAR_ACCION "+ txIncremento.getText() +"\n");
+					respuesta = Util.claseSocketCliente.Leer();
+					JOptionPane.showMessageDialog(null,respuesta);
+					control.recargarTabla();
+					dispose();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		panel_2.add(btnContinuar);
@@ -112,6 +127,18 @@ public class VentanaIncrementar extends JFrame {
 		botones.add(panel_3);
 		
 		JButton btnRegresar = new JButton("Regresar");
+		btnRegresar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Util.claseSocketCliente.Escribir("RECHAZAR_ACCION\n");
+					respuesta = Util.claseSocketCliente.Leer();
+					dispose();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		panel_3.add(btnRegresar);
 	}
 

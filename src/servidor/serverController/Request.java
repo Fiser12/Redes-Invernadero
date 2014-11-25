@@ -238,7 +238,7 @@ final class Request implements Runnable {
 						}
 						else
 						{
-							String texto = accion + "durante " + variableUsar + "minutos";
+							String texto = accion + " durante " + variableUsar + "minutos";
 							InteraccionDB.actualizarAccion(variableAccion, idPlacaAccion, accion);
 							sockManager.Escribir("206 OK Accion sobre el sensor confirmada (" + texto + " )\n");
 							estado = 2;

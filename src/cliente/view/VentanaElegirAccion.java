@@ -5,12 +5,14 @@ import java.awt.EventQueue;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
 import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Sensor;
+import util.Util;
 
 import javax.swing.SwingConstants;
 
@@ -27,6 +29,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.swing.JRadioButton;
@@ -43,7 +46,7 @@ public class VentanaElegirAccion extends JFrame implements ActionListener {
 	 * Launch the application.
 	 */
 
-	public VentanaElegirAccion(Sensor s) {
+	public VentanaElegirAccion(Sensor s, VentanaTabla control) {
 		accionSobre = s;
 		opciones = new JPanel();
 		radioButtonGroup = new LinkedList<JRadioButton>();
@@ -74,10 +77,22 @@ public class VentanaElegirAccion extends JFrame implements ActionListener {
 		btnContinuar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String respuesta = "";
 				accionSobre.setUltimaAccion(seleccion);
-				VentanaIncrementar nuevaVentana = new VentanaIncrementar(accionSobre);
-				nuevaVentana.setVisible(true);
-				dispose();
+				try {
+					Util.claseSocketCliente.Escribir("ACCION "+ accionSobre.getId_Placa() + " "+ accionSobre.getVariable() + " " + accionSobre.getUltimaAccion()+"\n");
+					respuesta = Util.claseSocketCliente.Leer();
+					if(!respuesta.contains("ERR")){
+						VentanaSeleccionarValor nuevaVentana = new VentanaSeleccionarValor(accionSobre, control);
+						nuevaVentana.setVisible(true);
+						dispose();
+					}
+					else
+						JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		botones.add(btnContinuar);

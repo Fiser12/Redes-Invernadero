@@ -118,7 +118,7 @@ public class InteraccionDB {
 		return texto;
 	}
 	public static boolean comprobarEstado(String sensor, String placa) throws SearchException{
-		gestor.enviarComando("SELECT * FROM Sensor WHERE Id_Placa="+placa+" AND Nombre_Variable = '"+sensor+"';");
+		gestor.enviarComando("SELECT * FROM Sensor WHERE id_Placa="+placa+" AND Nombre_Variable = '"+sensor+"';");
 		ResultSet resultado = gestor.getResultSet();
 		try {
 			if(resultado.next())

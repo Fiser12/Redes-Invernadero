@@ -187,10 +187,18 @@ public class VentanaTabla extends JFrame{
 		dispose();
 	}
 	public void activar(){
-        int rowIndex = tabla.getSelectedRow();
-        Sensor seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
-        System.out.println(rowIndex);
-        try {
+		int rowIndex = tabla.getSelectedRow();
+		Sensor seleccionado;
+		try
+		{
+			seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
+		}
+		catch(ArrayIndexOutOfBoundsException E)
+		{
+			seleccionado = new Sensor();
+		}
+		try
+		{
 			Util.claseSocketCliente.Escribir("ON " + seleccionado.getId_Placa() + " " + seleccionado.getVariable()+"\n");
 			respuesta = Util.claseSocketCliente.Leer();
 			System.out.println(respuesta);
@@ -200,15 +208,24 @@ public class VentanaTabla extends JFrame{
 			{
 				recargarTabla();
 			}
-        } catch (IOException e) {
-    		JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
 		}
 		recargarTabla();
 	}
 	public void desactivar(){
-        int rowIndex = tabla.getSelectedRow();
-        Sensor seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
-        try {
+		int rowIndex = tabla.getSelectedRow();
+		Sensor seleccionado;
+		try
+		{
+			seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
+		}
+		catch(ArrayIndexOutOfBoundsException E)
+		{
+			seleccionado = new Sensor();
+		}
+		try
+		{
 			Util.claseSocketCliente.Escribir("OFF " + seleccionado.getId_Placa() + " " + seleccionado.getVariable()+"\n");
 			respuesta = Util.claseSocketCliente.Leer();
 			System.out.println(respuesta);
@@ -223,9 +240,17 @@ public class VentanaTabla extends JFrame{
 		}
 	}
 	public void actuar(){
-        int rowIndex = tabla.getSelectedRow();
-        Sensor seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
-		VentanaElegirAccion nuevaVentana = new VentanaElegirAccion(seleccionado);
+		int rowIndex = tabla.getSelectedRow();
+		Sensor seleccionado;
+		try
+		{
+			seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
+		}
+		catch(ArrayIndexOutOfBoundsException E)
+		{
+			seleccionado = new Sensor();
+		}
+		VentanaElegirAccion nuevaVentana = new VentanaElegirAccion(seleccionado, this);
 		nuevaVentana.setVisible(true);
 	}
 	public void listar(){
@@ -309,10 +334,6 @@ public class VentanaTabla extends JFrame{
 		}
         
 
-	}
-	public void accion()
-	{
-		
 	}
 	public void recargarTabla()
 	{
