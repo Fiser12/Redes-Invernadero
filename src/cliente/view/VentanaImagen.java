@@ -1,7 +1,6 @@
 package cliente.view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,17 +13,18 @@ import javax.swing.JButton;
 import java.awt.Font;
 
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
 import servidor.serverModel.ModelClass.Placa;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VetanaImagen extends JFrame {
+public class VentanaImagen extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
@@ -35,11 +35,7 @@ public class VetanaImagen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VetanaImagen(Placa p,boolean color) {
-		/*
-		 * Si es en blanco y negro false si
-		 */
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public VentanaImagen(Placa p) {
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

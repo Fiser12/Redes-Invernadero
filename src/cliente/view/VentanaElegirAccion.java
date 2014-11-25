@@ -66,16 +66,12 @@ public class VentanaElegirAccion extends JFrame {
 		btnContinuar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			if(radioIColor.isSelected()){
-			VetanaImagen i=new VetanaImagen(null,true)	;
-			i.setVisible(true);
 			dispose();
 			/*
 				 * La imagen a de ser de la placa pero aqui pasamos el sensor
 				 */
 			}
 			if(rdbtnCIBLN.isSelected()){
-				VetanaImagen i=new VetanaImagen(null,false)	;
-				i.setVisible(true);
 				dispose();	
 			}
 			if(rdbtnAIntensidad.isSelected()){

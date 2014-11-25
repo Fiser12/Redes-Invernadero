@@ -1,25 +1,26 @@
 package servidor.serverModel.ModelClass;
+import java.awt.Image;
 import java.util.LinkedList;
 
 public class Placa {
 	private int id;
 	private String estado;
-	private String foto;
+	private Image foto;
 	private LinkedList<Integer>sensores;
 	private LinkedList<String>usuarios;
 	private String nombreVariable;
 	
-	public Placa(int id, String estado, String foto, LinkedList<Integer> sensores, LinkedList<String> usuarios, String variable) {
+	public Placa(int id, String estado, Image foto, LinkedList<Integer> sensores, LinkedList<String> usuarios, String variable) {
 		this.id = id;
 		this.estado = estado;
 		this.foto = foto;
 		this.sensores = sensores;
 		this.usuarios = usuarios;
 	}
-	public Placa(int id, String estado, String foto) {
+	public Placa(int id, String estado, Image temp) {
 		this.id = id;
 		this.estado = estado;
-		this.foto = foto;
+		this.foto = temp;
 	}
 	public Placa() {
 
@@ -36,10 +37,10 @@ public class Placa {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	public String getFoto() {
+	public Image getFoto() {
 		return foto;
 	}
-	public void setFoto(String foto) {
+	public void setFoto(Image foto) {
 		this.foto = foto;
 	}
 	public LinkedList<Integer> getSensores() {

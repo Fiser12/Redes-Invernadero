@@ -2,7 +2,9 @@ package cliente.view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Image;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -20,11 +22,13 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ListSelectionModel;
 
+import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Sensor;
 import util.Util;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 public class VentanaTabla extends JFrame{
 
@@ -95,6 +99,12 @@ public class VentanaTabla extends JFrame{
 	    BotonesArriba.add(btnDesactivar);
 			
 	    btnImagen = new JButton("Imagen Placa");
+	    btnImagen.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				obtenerFoto();
+			}
+		});
 		BotonesArriba.add(btnImagen);
 		
 		JButton btnActuar = new JButton("Actuar");
@@ -170,11 +180,12 @@ public class VentanaTabla extends JFrame{
 	public void activar(){
         int rowIndex = tabla.getSelectedRow();
         Sensor seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
+        System.out.println(rowIndex);
         try {
 			Util.claseSocketCliente.Escribir("ON " + seleccionado.getId_Placa() + " " + seleccionado.getVariable()+"\n");
 			respuesta = Util.claseSocketCliente.Leer();
 			System.out.println(respuesta);
-			if(respuesta.startsWith("ERR"))
+			if(respuesta.contains("ERR"))
 				JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
 			else
 			{
@@ -191,7 +202,8 @@ public class VentanaTabla extends JFrame{
         try {
 			Util.claseSocketCliente.Escribir("OFF " + seleccionado.getId_Placa() + " " + seleccionado.getVariable()+"\n");
 			respuesta = Util.claseSocketCliente.Leer();
-			if(respuesta.startsWith("ERR"))
+			System.out.println(respuesta);
+			if(respuesta.contains("ERR"))
 				JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
 			else
 			{
@@ -254,7 +266,26 @@ public class VentanaTabla extends JFrame{
 	}
 	public void obtenerFoto()
 	{
-		
+        int rowIndex = tabla.getSelectedRow();
+        Sensor seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
+        try {
+			Util.claseSocketCliente.Escribir("OBTENER_FOTO " + seleccionado.getId_Placa()+"\n");
+			respuesta = Util.claseSocketCliente.Leer();
+			
+			if(respuesta.contains("ERR"))
+				JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
+			else
+			{
+				byte[] imagen = Util.claseSocketCliente.readBytes();
+				Image temp = ImageIO.read(new ByteArrayInputStream(imagen));
+				Placa visualizar = new Placa(seleccionado.getId_Placa(), "", temp);
+				VentanaImagen ventana = new VentanaImagen(visualizar);
+				ventana.setVisible(true);
+			}
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+		}
+
 	}
 	public void accion()
 	{
