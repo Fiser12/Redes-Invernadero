@@ -171,7 +171,7 @@ public class VentanaTabla extends JFrame{
         int rowIndex = tabla.getSelectedRow();
         Sensor seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
         try {
-			Util.claseSocketCliente.Escribir("ON " + seleccionado.getId_Placa() + " " + seleccionado.getId_sensor()+"\n");
+			Util.claseSocketCliente.Escribir("ON " + seleccionado.getId_Placa() + " " + seleccionado.getVariable()+"\n");
 			respuesta = Util.claseSocketCliente.Leer();
 			System.out.println(respuesta);
 			if(respuesta.startsWith("ERR"))
@@ -189,7 +189,7 @@ public class VentanaTabla extends JFrame{
         int rowIndex = tabla.getSelectedRow();
         Sensor seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
         try {
-			Util.claseSocketCliente.Escribir("OFF " + seleccionado.getId_Placa() + " " + seleccionado.getId_sensor()+"\n");
+			Util.claseSocketCliente.Escribir("OFF " + seleccionado.getId_Placa() + " " + seleccionado.getVariable()+"\n");
 			respuesta = Util.claseSocketCliente.Leer();
 			if(respuesta.startsWith("ERR"))
 				JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
