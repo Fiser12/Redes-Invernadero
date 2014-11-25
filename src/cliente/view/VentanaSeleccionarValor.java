@@ -2,7 +2,6 @@ package cliente.view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -10,14 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 import javax.swing.JLabel;
-
 import java.awt.GridLayout;
-
 import javax.swing.JButton;
-
 import servidor.serverModel.ModelClass.Sensor;
 import util.Util;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -54,9 +49,6 @@ public class VentanaSeleccionarValor extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaSeleccionarValor(Sensor s, VentanaTabla control) {
-		/*
-		 * Si el boolea no esta a true se suma se asta a false se resta
-		 */
 		setBounds(100, 100, 450, 200);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -70,8 +62,21 @@ public class VentanaSeleccionarValor extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel.add(panel_1);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		JLabel lblParametro = new JLabel("Indique el incremento o decremento de la variable:");
+		String accion = s.getUltimaAccion();
+		JLabel lblParametro = new JLabel("Indique el valor de la variable:");
+		if(accion.equals("Subir a.c")||accion.equals("Bajar a.c"))
+			lblParametro.setText("Seleccionar temperatura a " + accion);
+		else if(accion.equals("Activar sistemas de riego"))
+			lblParametro.setText("Accionar sistemas de riego durante ");
+		else if(accion.equals("Aumentar zoom")||accion.equals("Aumentar intensidad de la luz"))
+			lblParametro.setText(accion + " en las veces que se indique");
+		else if(accion.equals("Disminuir zoom")||accion.equals("Disminuir intensidad de la luz"))
+			lblParametro.setText(accion + " las veces que se indique");
+		else{
+			lblParametro.setText("Continuar para descargar imagen");
+			txIncremento.setVisible(false);
+		}
+
 		panel_1.add(lblParametro);
 		
 		JPanel incremento = new JPanel();
@@ -81,7 +86,7 @@ public class VentanaSeleccionarValor extends JFrame {
 		JPanel panel_4 = new JPanel();
 		incremento.add(panel_4);
 		
-		JLabel lblNewLabel = new JLabel("Incremento");
+		JLabel lblNewLabel = new JLabel("Valor");
 		panel_4.add(lblNewLabel);
 		
 		JPanel panel_5 = new JPanel();

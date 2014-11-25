@@ -1,18 +1,13 @@
 package cliente.view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Image;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-
 import java.awt.GridLayout;
 import java.util.LinkedList;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -21,20 +16,16 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ListSelectionModel;
-
 import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Sensor;
+import cliente.view.componentes.*;
 import util.Util;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 public class VentanaTabla extends JFrame{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
     private JButton btnImagen;
@@ -50,25 +41,6 @@ public class VentanaTabla extends JFrame{
 	private int ultimaCarga = 0;
     private String respuesta;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaTabla frame = new VentanaTabla();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public VentanaTabla() {
 		/*
 		 * Rellenar el array list De TodasPlacas
@@ -339,38 +311,5 @@ public class VentanaTabla extends JFrame{
 	{
 		if(ultimaCarga==1)
 			listar();
-	}
-	/**
-	 * Clase creada para hacer no editable una tabla
-	 *
-	 */
-	public class ModeloSensor extends DefaultTableModel
-	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		/**
-		 * Metodo utilizado para no editar la tabla
-		 */
-		public ModeloSensor(){
-			setColumnIdentifiers(new String[]{"Sensor","Placa","Variable","Estado","Funcion","Ultima Accion"});
-		}
-		public boolean isCellEditable (int row, int column)
-		{
-			return false;
-		}
-		public void addRow(Sensor anadir){
-			String idSensor = ""+anadir.getId_sensor();
-			String idPlaca = ""+anadir.getId_Placa();
-			String variable = anadir.getVariable();
-			String estado = anadir.getEstadoVariable();
-			String funcion = anadir.getFuncionPrincipal();
-			String accion = anadir.getUltimaAccion();
-			Object [] add = {idSensor, idPlaca, variable, estado, funcion, accion};
-			this.addRow(add);
-		}
 	}
 }

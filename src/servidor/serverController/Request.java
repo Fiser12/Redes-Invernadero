@@ -238,9 +238,23 @@ final class Request implements Runnable {
 						}
 						else
 						{
-							String texto = accion + " durante " + variableUsar + "minutos";
-							InteraccionDB.actualizarAccion(variableAccion, idPlacaAccion, accion);
-							sockManager.Escribir("206 OK Accion sobre el sensor confirmada (" + texto + " )\n");
+							String texto = "";
+							System.out.println(accion);
+							if(!accion.contains("imagen")){
+								if(accion.equals("Subir a.c")||accion.equals("Bajar a.c"))
+									texto = "("+accion + " en " + variableUsar + " grados)";
+								else if(accion.equals("Activar sistemas de riego"))
+									texto = "("+accion + " durante " + variableUsar + " minutos)";
+								else if(accion.equals("Aumentar zoom")||accion.equals("Aumentar intensidad de la luz"))
+									texto = "("+accion + " en X" + variableUsar + " veces)";
+								else if(accion.equals("Disminuir zoom")||accion.equals("Disminuir intensidad de la luz"))
+									texto = "("+accion + " entre " + variableUsar + ")";
+								InteraccionDB.actualizarAccion(variableAccion, idPlacaAccion, accion);
+								sockManager.Escribir("206 OK Accion sobre el sensor confirmada " + texto + " \n");
+							}
+							else{
+								
+							}
 							estado = 2;
 							requestLine = sockManager.Leer();
 							System.out.println("RequestLine: " + requestLine);

@@ -1,51 +1,22 @@
 package cliente.view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import java.awt.GridBagLayout;
-
-import javax.swing.SpringLayout;
-
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-
-import net.miginfocom.swing.MigLayout;
-
-import java.awt.FlowLayout;
-
 import javax.swing.JLabel;
-import javax.swing.BoxLayout;
-
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
 import javax.swing.JComboBox;
 import javax.swing.JButton;
-
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
-import javax.swing.Box;
-
-import com.jgoodies.forms.factories.FormFactory;
-
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
-
 import util.SocketManager;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
@@ -53,6 +24,7 @@ import java.awt.Toolkit;
 
 public class VentanaControl  extends JFrame implements FocusListener {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField tFVariable;
     private JButton btnBuscar;
@@ -61,25 +33,7 @@ public class VentanaControl  extends JFrame implements FocusListener {
     private SocketManager sm ;
     private String respuesta;
     
-    /**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaControl frame = new VentanaControl();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the frame.
-	 */
 	public VentanaControl() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaControl.class.getResource("/javax/swing/plaf/metal/icons/Inform.gif")));
 		try {

@@ -1,50 +1,33 @@
 package cliente.view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-
-import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Sensor;
 import util.Util;
-
 import javax.swing.SwingConstants;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-
 import javax.swing.BoxLayout;
-
 import java.awt.GridLayout;
-
 import javax.swing.JButton;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.io.IOException;
 import java.util.LinkedList;
-
 import javax.swing.JRadioButton;
 
 public class VentanaElegirAccion extends JFrame implements ActionListener {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
     private LinkedList<JRadioButton> radioButtonGroup;
     private ButtonGroup group = new ButtonGroup();
     private Sensor accionSobre;
     private String seleccion;
     private JPanel opciones;
-    /**
-	 * Launch the application.
-	 */
 
 	public VentanaElegirAccion(Sensor s, VentanaTabla control) {
 		accionSobre = s;
@@ -55,7 +38,8 @@ public class VentanaElegirAccion extends JFrame implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		cargarRadioButtons();
+		try{
+		cargarRadioButtons();}catch(NullPointerException E){opciones.add(new JLabel("ERROR No has seleccionado ninguno"));}
 		JPanel opcion = new JPanel();
 		contentPane.add(opcion, BorderLayout.NORTH);
 		opcion.setLayout(new BoxLayout(opcion, BoxLayout.X_AXIS));
@@ -184,16 +168,6 @@ public class VentanaElegirAccion extends JFrame implements ActionListener {
 			opciones.add(cuatro);
 			seleccion = uno.getActionCommand();
 		}
-	}
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
