@@ -44,6 +44,7 @@ public class VentanaTabla extends JFrame{
 	private JComboBox<String> comboBoxBusqueda;
 	private JButton btnBuscar;
 	private JButton btnListar;
+	private JButton btnActuar;
 	private ModeloSensor modeloTabla;
 	private JTable tabla;
 	private int ultimaCarga = 0;
@@ -107,7 +108,7 @@ public class VentanaTabla extends JFrame{
 		});
 		BotonesArriba.add(btnImagen);
 		
-		JButton btnActuar = new JButton("Actuar");
+		btnActuar = new JButton("Actuar");
 		BotonesArriba.add(btnActuar);
 		
 		JPanel BotonesAbajo = new JPanel();
@@ -154,6 +155,14 @@ public class VentanaTabla extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				salir();
+			}
+		});
+		btnActuar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				actuar();
+				
 			}
 		});
 		Listar.add(btnSalir);
@@ -213,6 +222,12 @@ public class VentanaTabla extends JFrame{
 			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
 		}
 	}
+	public void actuar(){
+        int rowIndex = tabla.getSelectedRow();
+        Sensor seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
+		VentanaElegirAccion nuevaVentana = new VentanaElegirAccion(seleccionado);
+		nuevaVentana.setVisible(true);
+	}
 	public void listar(){
 		try {
 			Util.claseSocketCliente.Escribir("LISTADO\n");
@@ -266,12 +281,19 @@ public class VentanaTabla extends JFrame{
 	}
 	public void obtenerFoto()
 	{
-        int rowIndex = tabla.getSelectedRow();
-        Sensor seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
-        try {
+		int rowIndex = tabla.getSelectedRow();
+		Sensor seleccionado;
+		try {
+			seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
+		}
+		catch(ArrayIndexOutOfBoundsException E)
+		{
+			seleccionado = new Sensor();
+		}
+		try {
 			Util.claseSocketCliente.Escribir("OBTENER_FOTO " + seleccionado.getId_Placa()+"\n");
 			respuesta = Util.claseSocketCliente.Leer();
-			
+
 			if(respuesta.contains("ERR"))
 				JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
 			else
@@ -285,6 +307,7 @@ public class VentanaTabla extends JFrame{
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
 		}
+        
 
 	}
 	public void accion()

@@ -11,15 +11,8 @@ import java.awt.GridLayout;
 
 import javax.swing.JButton;
 
-import java.awt.Font;
-
 import javax.swing.JLabel;
-
 import servidor.serverModel.ModelClass.Placa;
-
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class VentanaImagen extends JFrame {
 
