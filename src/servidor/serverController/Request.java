@@ -205,9 +205,10 @@ final class Request implements Runnable {
 					try{
 						byte[] imagen = InteraccionDB.getImagen(id);
 						sockManager.Escribir("206 OK Transmitiendo "+ imagen.length + " bytes\n");
+						System.out.println(imagen.length);
 						sockManager.sendBytes(imagen);		
 					}catch(SearchException E){
-						sockManager.Escribir("403 ERROR Identificador no existe\n");
+						sockManager.Escribir("403 ERR Identificador no existe\n");
 					}
 					requestLine = sockManager.Leer();
 					System.out.println("RequestLine: " + requestLine);

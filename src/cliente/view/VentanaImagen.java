@@ -2,6 +2,7 @@ package cliente.view;
 
 import java.awt.BorderLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import java.awt.Font;
 
 import javax.swing.JLabel;
+
 import servidor.serverModel.ModelClass.Placa;
 
 import java.awt.FlowLayout;
@@ -36,7 +38,7 @@ public class VentanaImagen extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaImagen(Placa p) {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, new ImageIcon(p.getFoto()).getIconWidth(), new ImageIcon(p.getFoto()).getIconHeight()+70);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -44,49 +46,23 @@ public class VentanaImagen extends JFrame {
 		
 		JPanel Central = new JPanel();
 		contentPane.add(Central, BorderLayout.CENTER);
-		Central.setLayout(new GridLayout(0, 2, 0, 0));
+		Central.setLayout(new BorderLayout(0, 0));
 		
-		JPanel Atributos = new JPanel();
-		Central.add(Atributos);
-		Atributos.setLayout(new GridLayout(3, 0, 0, 0));
+		JPanel panel = new JPanel();
+		Central.add(panel, BorderLayout.CENTER);
 		
-		JPanel Id = new JPanel();
-		Atributos.add(Id);
-		Id.setLayout(new BorderLayout(0, 0));
+		JLabel label = new JLabel(new ImageIcon(p.getFoto()));
+		label.setSize(300, 300);
+		panel.add(label);
 		
-		JLabel lblestado = new JLabel("ID Placa"+p.getId());
-		Id.add(lblestado);
-		lblestado.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, BorderLayout.NORTH);
 		
-		JPanel Estado = new JPanel();
-		Atributos.add(Estado);
-		Estado.setLayout(new BorderLayout(0, 0));
+		JLabel lblIdPlaca = new JLabel("ID Placa:");
+		panel_1.add(lblIdPlaca);
 		
-		JLabel lblNewLabel = new JLabel(p.getEstado()+"   Estado");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		Estado.add(lblNewLabel);
-		
-		JPanel Boton = new JPanel();
-		Atributos.add(Boton);
-		Boton.setLayout(new BorderLayout(0, 0));
-		
-		JButton btnNewButton = new JButton("Aceptar");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			VentanaTabla nueva = new VentanaTabla();
-			nueva.setVisible(true);
-			dispose();
-			}
-		});
-		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		Boton.add(btnNewButton);
-		
-		JPanel imagen = new JPanel();
-		Central.add(imagen);
-		imagen.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JLabel lblimagen = new JLabel("New label");
-		imagen.add(lblimagen);
+		JLabel label_1 = new JLabel(""+p.getId());
+		panel_1.add(label_1);
 	}
 
 }
