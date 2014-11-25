@@ -7,9 +7,9 @@ public class Sensor {
 	private String nombreVariable;
 	private String funcionPrincipal;
 	private int id_Placa;
-	public Sensor(String estadoVariable, String ultimaAcción, String variable, String funcionPrincipal) {
+	public Sensor(String estadoVariable, String ultimaAccion, String variable, String funcionPrincipal) {
 		this.estadoVariable = estadoVariable;
-		this.ultimaAccion = ultimaAcción;
+		this.ultimaAccion = ultimaAccion;
 		this.nombreVariable = variable;
 		this.funcionPrincipal = funcionPrincipal;
 	}
