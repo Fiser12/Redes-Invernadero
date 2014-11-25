@@ -42,6 +42,7 @@ public class VentanaTabla extends JFrame{
 	private JButton btnListar;
 	private ModeloSensor modeloTabla;
 	private JTable tabla;
+	private int ultimaCarga = 0;
     private String respuesta;
 
 	/**
@@ -77,7 +78,6 @@ public class VentanaTabla extends JFrame{
 		JPanel BotonesArriba = new JPanel();
 		contentPane.add(BotonesArriba, BorderLayout.EAST);
 	    BotonesArriba.setLayout(new GridLayout(14, 1, 0, 0));
-	    
 	    btnActivar = new JButton("Activar");
 	    BotonesArriba.add(btnActivar);
 	    btnActivar.addActionListener(new ActionListener() {
@@ -151,6 +151,7 @@ public class VentanaTabla extends JFrame{
 		tabla=new JTable(modeloTabla);
 	    tabla.setCellSelectionEnabled(true);
 	    tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	    tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		JScrollPane scroll = new JScrollPane(tabla);
 		contentPane.add(scroll, BorderLayout.CENTER);
 	}
@@ -169,10 +170,36 @@ public class VentanaTabla extends JFrame{
 	public void activar(){
         int rowIndex = tabla.getSelectedRow();
         Sensor seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
-        System.out.println(seleccionado.toString());
+        try {
+			Util.claseSocketCliente.Escribir("ON " + seleccionado.getId_Placa() + " " + seleccionado.getId_sensor()+"\n");
+			respuesta = Util.claseSocketCliente.Leer();
+			System.out.println(respuesta);
+			if(respuesta.startsWith("ERR"))
+				JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
+			else
+			{
+				recargarTabla();
+			}
+        } catch (IOException e) {
+    		JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+		}
+		recargarTabla();
 	}
 	public void desactivar(){
-		
+        int rowIndex = tabla.getSelectedRow();
+        Sensor seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
+        try {
+			Util.claseSocketCliente.Escribir("OFF " + seleccionado.getId_Placa() + " " + seleccionado.getId_sensor()+"\n");
+			respuesta = Util.claseSocketCliente.Leer();
+			if(respuesta.startsWith("ERR"))
+				JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
+			else
+			{
+				recargarTabla();
+			}
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+		}
 	}
 	public void listar(){
 		try {
@@ -184,7 +211,9 @@ public class VentanaTabla extends JFrame{
 			}
 			modeloTabla.fireTableDataChanged();
 			tabla.setModel(modeloTabla);
+			ultimaCarga = 1;
 			repaint();
+		    tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
 		}
@@ -230,6 +259,11 @@ public class VentanaTabla extends JFrame{
 	public void accion()
 	{
 		
+	}
+	public void recargarTabla()
+	{
+		if(ultimaCarga==1)
+			listar();
 	}
 	/**
 	 * Clase creada para hacer no editable una tabla
