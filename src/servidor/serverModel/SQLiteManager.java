@@ -150,6 +150,25 @@ public class SQLiteManager
 
 		return imgArr;
 	}
+	public byte[] getImagenSensor(int sensor) throws SearchException
+	{
+		String query="SELECT Foto FROM Sensor WHERE Id_Sensor="+sensor;
+		Statement stmt=null;
+		byte[] imgArr = new byte[1];
+		try{
+			stmt=connection.createStatement();
+			ResultSet rslt=stmt.executeQuery(query);
+			if(rslt.next()){
+				imgArr= rslt.getBytes("Foto");
+			}
+			else
+				throw new SearchException();
+		}catch(Exception e){
+			throw new SearchException();
+		}
+
+		return imgArr;
+	}
 	public boolean setImagen(String sql, Image image)
 	{
 		boolean funciona = true; 

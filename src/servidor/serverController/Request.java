@@ -1,6 +1,16 @@
 package servidor.serverController;
 
+import java.awt.Image;
+import java.awt.color.ColorSpace;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorConvertOp;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import util.*;
 import util.excepciones.SearchException;
@@ -205,6 +215,7 @@ final class Request implements Runnable {
 					if(tipo.equals("Placa"))
 					{
 						int id = Integer.parseInt(requestLine.substring(18));
+						System.out.println("ID: "+id);
 						try{
 							byte[] imagen = InteraccionDB.getImagen(id);
 							sockManager.Escribir("206 OK Transmitiendo "+ imagen.length + " bytes\n");
@@ -214,9 +225,10 @@ final class Request implements Runnable {
 							sockManager.Escribir("403 ERR Identificador no existe\n");
 						}
 					}
-					else
+					else if(tipo.equals("Varia"))
 					{//Método de extracción de la imagen del sensor
-						String id = requestLine.substring(19);
+						String id = requestLine.substring(21);
+						System.out.println("ID: "+id);
 						try{
 							byte[] imagen = InteraccionDB.getImagenVariable(id);
 							sockManager.Escribir("206 OK Transmitiendo "+ imagen.length + " bytes\n");
@@ -225,6 +237,10 @@ final class Request implements Runnable {
 						}catch(SearchException E){
 							sockManager.Escribir("403 ERR Identificador no existe\n");
 						}
+					}
+					else if(tipo.equals("Senso"))
+					{
+
 					}
 					requestLine = sockManager.Leer();
 					System.out.println("RequestLine: " + requestLine);
@@ -247,30 +263,58 @@ final class Request implements Runnable {
 					try
 					{
 						String variableUsar = requestLine.substring(17);
-						if(variableUsar.equals(" ")||variableUsar.equals("")){
-							sockManager.Escribir("407 ERR Faltan Datos\n");
+						System.out.println("VAR: "+ variableUsar);
+						if(variableUsar.equals(" ")||variableUsar.equals("")&&!accion.contains("imagen")){
+							sockManager.Escribir("407 ERR 1 Faltan Datos\n");
 							requestLine = sockManager.Leer();
-							System.out.println("RequestLine: " + requestLine);
+							System.out.println("RequestLine: " + requestLine + "prueba");
 						}
 						else
 						{
 							String texto = "";
-							System.out.println(accion);
-							if(!accion.contains("imagen")){
-								if(accion.equals("Subir a.c")||accion.equals("Bajar a.c"))
-									texto = "("+accion + " en " + variableUsar + " grados)";
-								else if(accion.equals("Activar sistemas de riego"))
-									texto = "("+accion + " durante " + variableUsar + " minutos)";
-								else if(accion.equals("Aumentar zoom")||accion.equals("Aumentar intensidad de la luz"))
-									texto = "("+accion + " en X" + variableUsar + " veces)";
-								else if(accion.equals("Disminuir zoom")||accion.equals("Disminuir intensidad de la luz"))
-									texto = "("+accion + " entre " + variableUsar + ")";
-								InteraccionDB.actualizarAccion(variableAccion, idPlacaAccion, accion);
+							if(accion.equals("Subir a.c")||accion.equals("Bajar a.c")){
+								texto = "("+accion + " en " + variableUsar + " grados)";
+								sockManager.Escribir("206 OK Accion sobre el sensor confirmada " + texto + " \n");	
+							}
+							else if(accion.equals("Activar sistemas de riego")){
+								texto = "("+accion + " durante " + variableUsar + " minutos)";
 								sockManager.Escribir("206 OK Accion sobre el sensor confirmada " + texto + " \n");
 							}
-							else{
-								
+							else if(accion.equals("Aumentar zoom")||accion.equals("Aumentar intensidad de la luz")){
+								texto = "("+accion + " en X" + variableUsar + " veces)";
+								sockManager.Escribir("206 OK Accion sobre el sensor confirmada " + texto + " \n");
 							}
+							else if(accion.equals("Disminuir zoom")||accion.equals("Disminuir intensidad de la luz")){
+								texto = "("+accion + " entre " + variableUsar + ")";
+								sockManager.Escribir("206 OK Accion sobre el sensor confirmada " + texto + " \n");
+							}
+							else if(accion.contains("imagen"))
+							{
+								int id = Integer.parseInt(requestLine.substring(17));
+								try{
+									byte[] imagen = InteraccionDB.getImagenSensor(id);
+									sockManager.Escribir("206 OK Transmitiendo "+ imagen.length + " bytes\n");
+									if(!accion.contains("color"))//método para convertir la foto en blanco y negro una vez salida de la BD
+									{
+										BufferedImage temp = ImageIO.read(new ByteArrayInputStream(imagen));
+										ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_GRAY);  
+										ColorConvertOp op = new ColorConvertOp(cs, null);  
+										Image image = op.filter(temp, null);  
+										ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+										try {
+											ImageIO.write((RenderedImage)image, "png", baos);
+										} catch (IOException e) {
+											e.printStackTrace();
+										}  
+										imagen = baos.toByteArray();
+									}
+									sockManager.sendBytes(imagen);		
+								}catch(SearchException E){
+									sockManager.Escribir("403 ERR Identificador no existe\n");
+								}
+							}
+							InteraccionDB.actualizarAccion(variableAccion, idPlacaAccion, accion);
+
 							estado = 2;
 							requestLine = sockManager.Leer();
 							System.out.println("RequestLine: " + requestLine);
@@ -278,7 +322,7 @@ final class Request implements Runnable {
 					}
 					catch(Exception E)
 					{
-						sockManager.Escribir("407 ERR Faltan Datos\n");
+						sockManager.Escribir("407 ERR Faltan Datos "+E.getMessage()+"\n");
 						requestLine = sockManager.Leer();
 						System.out.println("RequestLine: " + requestLine);
 					}

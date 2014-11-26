@@ -25,7 +25,7 @@ public class InteraccionDB {
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario (Nombre VARCHAR(50) NOT NULL ,Pass VARCHAR(50) NOT NULL, PRIMARY KEY(Nombre));");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Placa (Id INTEGER PRIMARY KEY, Estado VARCHAR(250) NOT NULL, Foto BLOB);");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario_Placa(Nombre VARCHAR(50) NOT NULL, Id_Placa INT(10) NOT NULL, CONSTRAINT Nombre FOREIGN KEY (Nombre) REFERENCES Usuario (Nombre) ON DELETE CASCADE, CONSTRAINT Id_Placa FOREIGN KEY (Id_Placa) REFERENCES Placa(Id) ON DELETE CASCADE)");
-		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Sensor (Id_Sensor INTEGER PRIMARY KEY, Nombre_Variable VARCHAR(250) NOT NULL, Funcion_Principal VARCHAR(500) NOT NULL, Estado_la_variable VARCHAR(250) NOT NULL,Ultima_Accion VARCHAR(500) NOT NULL, id_Placa INT(10), CONSTRAINT id_Placa FOREIGN KEY (id_Placa) REFERENCES Placa (Id) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT Nombre_Variable FOREIGN KEY (Nombre_Variable) REFERENCES Variable (Nombre_variable) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(id_Placa, Nombre_Variable));");
+		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Sensor (Id_Sensor INTEGER PRIMARY KEY, Nombre_Variable VARCHAR(250) NOT NULL, Funcion_Principal VARCHAR(500) NOT NULL, Estado_la_variable VARCHAR(250) NOT NULL,Ultima_Accion VARCHAR(500) NOT NULL, id_Placa INT(10), Foto BLOB, CONSTRAINT id_Placa FOREIGN KEY (id_Placa) REFERENCES Placa (Id) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT Nombre_Variable FOREIGN KEY (Nombre_Variable) REFERENCES Variable (Nombre_variable) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(id_Placa, Nombre_Variable));");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Variable (Nombre_Variable VARCHAR(250) PRIMARY KEY, Foto BLOB)");
 	}
 	private static void borrarBaseDeDatos()
@@ -53,6 +53,15 @@ public class InteraccionDB {
 		gestor.enviarComando("INSERT INTO Variable(Nombre_Variable) VALUES('Zoom')");
 		gestor.enviarComando("INSERT INTO Variable(Nombre_Variable) VALUES('Humedad')");
 		
+		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 1)");
+		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 2)");
+		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 3)");
+		gestor.enviarComando("INSERT INTO Sensor(Id_Sensor, Nombre_Variable, Funcion_Principal, Estado_la_variable, Ultima_Accion, id_Placa) VALUES(1, 'Temperatura', 'Regulacion climatizacion', 'ON', 'Subir a.c.', 1)");
+		gestor.enviarComando("INSERT INTO Sensor(Id_Sensor, Nombre_Variable, Funcion_Principal, Estado_la_variable, Ultima_Accion, id_Placa) VALUES(2, 'Humedad', 'Sistema de Riego', 'ON', 'Activar sistema de riego', 1)");
+		gestor.enviarComando("INSERT INTO Sensor(Id_Sensor, Nombre_Variable, Funcion_Principal, Estado_la_variable, Ultima_Accion, id_Placa) VALUES(3, 'Temperatura', 'Regulacion climatizacion', 'OFF', 'Subir a.c.', 2)");
+		gestor.enviarComando("INSERT INTO Sensor(Id_Sensor, Nombre_Variable, Funcion_Principal, Estado_la_variable, Ultima_Accion, id_Placa) VALUES(4, 'Humedad', 'Sistema de riego', 'OFF', 'Activar sistema de riego', 2)");
+		gestor.enviarComando("INSERT INTO Sensor(Id_Sensor, Nombre_Variable, Funcion_Principal, Estado_la_variable, Ultima_Accion, id_Placa) VALUES(5, 'Zoom', 'Controlar el zoom de la camara', 'ON', 'Aumentar zoom', 3)");
+		gestor.enviarComando("INSERT INTO Sensor(Id_Sensor, Nombre_Variable, Funcion_Principal, Estado_la_variable, Ultima_Accion, id_Placa) VALUES(6, 'Imagen', 'Vigilancia', 'OFF', 'Capturar imagen color', 2)");
 		try {
 			gestor.setImagen("UPDATE Placa SET Foto=? WHERE Id=1", ImageIO.read(new File("photos/foto1.jpg")));
 			gestor.setImagen("UPDATE Placa SET Foto=? WHERE Id=2", ImageIO.read(new File("photos/foto2.png")));
@@ -61,18 +70,10 @@ public class InteraccionDB {
 			gestor.setImagen("UPDATE Variable SET Foto=? WHERE Nombre_Variable='Imagen'", ImageIO.read(new File("photos/image.png")));
 			gestor.setImagen("UPDATE Variable SET Foto=? WHERE Nombre_Variable='Zoom'", ImageIO.read(new File("photos/zoom.png")));
 			gestor.setImagen("UPDATE Variable SET Foto=? WHERE Nombre_Variable='Humedad'", ImageIO.read(new File("photos/humedad.png")));
+			gestor.setImagen("UPDATE Sensor SET Foto=? WHERE Id_Sensor = 6", ImageIO.read(new File("photos/invernadero.png")));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 1)");
-		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 2)");
-		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 3)");
-		gestor.enviarComando("INSERT INTO Sensor VALUES(1, 'Temperatura', 'Regulacion climatizacion', 'ON', 'subir a.c.', 1)");
-		gestor.enviarComando("INSERT INTO Sensor VALUES(2, 'Humedad', 'Sistema de Riego', 'ON', 'activar sistema de riego', 1)");
-		gestor.enviarComando("INSERT INTO Sensor VALUES(3, 'Temperatura', 'Regulacion climatizacion', 'OFF', 'subir a.c.', 2)");
-		gestor.enviarComando("INSERT INTO Sensor VALUES(4, 'Humedad', 'Sistema de riego', 'OFF', 'activar sistema de riego', 2)");
-		gestor.enviarComando("INSERT INTO Sensor VALUES(5, 'Zoom', 'Controlar el zoom de la camara', 'ON', 'aumentar zoom', 3)");
 
 	}
 	public static int metodoUser(String nombre){
@@ -158,6 +159,10 @@ public class InteraccionDB {
 	public static byte[] getImagenVariable(String i) throws SearchException
 	{
 		return gestor.getImagenVariable(i);
+	}
+	public static byte[] getImagenSensor(int sensor) throws SearchException
+	{
+		return gestor.getImagenSensor(sensor);
 	}
 	public static void actualizarEstado(String sensor, String placa, String estado) {
 		gestor.enviarComando("UPDATE Sensor SET Estado_la_variable='"+estado+"' WHERE Id_Placa='"+placa+"' AND Nombre_Variable='"+sensor+"';");

@@ -2,6 +2,9 @@ package cliente.view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Image;
+
+import javax.imageio.ImageIO;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -9,16 +12,23 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 import javax.swing.JLabel;
+
 import java.awt.GridLayout;
+
 import javax.swing.JButton;
+
 import servidor.serverModel.ModelClass.Sensor;
 import util.Util;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
+
 import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
+
 import java.awt.FlowLayout;
 
 public class VentanaSeleccionarValor extends JFrame {
@@ -68,6 +78,16 @@ public class VentanaSeleccionarValor extends JFrame {
 		String accion = s.getUltimaAccion();
 		JLabel lblParametro = new JLabel("Indique el valor de la variable:");
 		lblParametro.setHorizontalAlignment(SwingConstants.CENTER);
+		NumberFormat format = NumberFormat.getInstance();
+		 NumberFormatter formatter = new NumberFormatter(format);
+		 formatter.setValueClass(Integer.class);
+		 txIncremento = new JFormattedTextField(formatter);
+		 txIncremento.setColumns(10);
+		 formatter.setMinimum(0);
+		 formatter.setMaximum(Integer.MAX_VALUE);
+		 // If you want the value to be committed on each keystroke instead of focus lost
+		 formatter.setCommitsOnValidEdit(true);
+
 		if(accion.equals("Subir a.c")||accion.equals("Bajar a.c"))
 			lblParametro.setText("Seleccionar temperatura a " + accion);
 		else if(accion.equals("Activar sistemas de riego"))
@@ -89,20 +109,7 @@ public class VentanaSeleccionarValor extends JFrame {
 		
 		JPanel panel_5 = new JPanel();
 		incremento.add(panel_5);
-		
-		
-		
-		
-		NumberFormat format = NumberFormat.getInstance();
-		 NumberFormatter formatter = new NumberFormatter(format);
-		 formatter.setValueClass(Integer.class);
-		 txIncremento = new JFormattedTextField(formatter);
-		 txIncremento.setColumns(10);
-		 formatter.setMinimum(0);
-		 formatter.setMaximum(Integer.MAX_VALUE);
-		 // If you want the value to be committed on each keystroke instead of focus lost
-		 formatter.setCommitsOnValidEdit(true);
-		 
+				 
 		 JLabel lblNewLabel = new JLabel("Valor");
 		 panel_5.add(lblNewLabel);
 		 panel_5.add(txIncremento);
@@ -115,11 +122,30 @@ public class VentanaSeleccionarValor extends JFrame {
 		btnContinuar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Util.claseSocketCliente.Escribir("CONFIRMAR_ACCION "+ txIncremento.getText() +"\n");
-					respuesta = Util.claseSocketCliente.Leer();
-					JOptionPane.showMessageDialog(null,respuesta);
-					control.recargarTabla();
-					dispose();
+					if(!accion.contains("imagen"))
+					{
+						Util.claseSocketCliente.Escribir("CONFIRMAR_ACCION "+ txIncremento.getText() +"\n");
+						respuesta = Util.claseSocketCliente.Leer();
+						JOptionPane.showMessageDialog(null,respuesta);
+						control.recargarTabla();
+						dispose();
+					}
+					else
+					{
+						Util.claseSocketCliente.Escribir("CONFIRMAR_ACCION "+ s.getId_sensor() +"\n");
+						respuesta = Util.claseSocketCliente.Leer();
+						System.out.println(respuesta);
+						if(respuesta.contains("ERR"))
+							JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
+						else
+						{
+							byte[] imagen = Util.claseSocketCliente.readBytes();
+							Image temp = ImageIO.read(new ByteArrayInputStream(imagen));
+							VentanaCamara ventana = new VentanaCamara(temp, s.getId_sensor()+"");
+							ventana.setVisible(true);
+						}
+
+					}
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}

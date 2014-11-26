@@ -7,16 +7,22 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import servidor.serverModel.ModelClass.Sensor;
 import util.Util;
+
 import javax.swing.SwingConstants;
 import javax.swing.BoxLayout;
+
 import java.awt.GridLayout;
+
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.LinkedList;
+
 import javax.swing.JRadioButton;
 
 public class VentanaElegirAccion extends JFrame implements ActionListener {

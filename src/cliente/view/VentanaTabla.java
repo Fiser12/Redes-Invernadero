@@ -327,9 +327,9 @@ public class VentanaTabla extends JFrame{
 			seleccionado = new Sensor();
 		}
 		try {
-			Util.claseSocketCliente.Escribir("OBTENER_FOTO Sensor" + seleccionado.getVariable()+"\n");
+			Util.claseSocketCliente.Escribir("OBTENER_FOTO Variable" + seleccionado.getVariable()+"\n");
 			respuesta = Util.claseSocketCliente.Leer();
-
+			System.out.println(respuesta);
 			if(respuesta.contains("ERR"))
 				JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
 			else
@@ -344,6 +344,9 @@ public class VentanaTabla extends JFrame{
 		}
 
 	}
+	/**
+	 * Permite recargar la tabla teniendo en cuenta el último patron con el que se ha cargado, para así actualizarlo con el
+	 */
 	public void recargarTabla()
 	{
 		if(ultimaCarga==1)
