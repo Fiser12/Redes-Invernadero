@@ -16,11 +16,49 @@ import java.awt.CardLayout;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ventanaServidor extends JFrame {
 
 	private JPanel contentPane;
-
+    private JPanel panelSuperior;
+	private JLabel lblS;
+	private JPanel panelcentral;
+	private JPanel botoneraInicial;
+	private JButton btnAUsuarios;
+	private JButton btnPlacas;
+	private JButton btnASensores;
+	private JButton btnAVariables;
+	private JPanel panelUsuarios;
+	private JPanel panelBotonesUsuario ;
+	private JButton btnAUsuarioPlaca;
+	private JButton btnFUsuario;
+	private JButton btnCUsuario;
+	private JButton btnAtras;
+	private JPanel panelPlacas;
+	private JPanel panelCPlacas;
+	private JButton btnLPlaca;
+	private JButton btnCPlaca;
+	private JPanel panelAtras;
+	private JButton btnAtras1;
+	private JPanel panelSensores;
+	private JPanel panelCSensores;
+	private JButton btnLSensores;
+	private JButton btnCSensor;
+	private JButton btnASPlacas;
+	private JPanel panelAtras2;
+	private JButton btnAtras2;
+	private JPanel panelVariables;
+	private JPanel panelCVariables;
+	private JButton btnLVariables;
+	private JButton btnAVPlacas;
+	private JButton btnCVariable;
+	private JPanel panelAtras3;
+	private JButton btnAtras3;
+	private JPanel panelApagar;
+	private JButton btnConexiones;
+	private JButton btnAServidor;
 	/**
 	 * Launch the application.
 	 */
@@ -48,143 +86,177 @@ public class ventanaServidor extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JPanel panelSuperior = new JPanel();
+		panelSuperior = new JPanel();
 		contentPane.add(panelSuperior, BorderLayout.NORTH);
 		panelSuperior.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblS = new JLabel("Seleccionar una opcion:");
+		lblS = new JLabel("Seleccionar una opcion:");
 		panelSuperior.add(lblS);
 		
-		JPanel panelcentral = new JPanel();
+		panelcentral = new JPanel();
 		contentPane.add(panelcentral, BorderLayout.CENTER);
 		panelcentral.setLayout(new CardLayout(0, 0));
 		
-		JPanel botoneraInicial = new JPanel();
+		botoneraInicial = new JPanel();
 		panelcentral.add(botoneraInicial, "name_117604164092399");
 		botoneraInicial.setLayout(new GridLayout(2, 2, 0, 0));
+	    
+	    btnASensores = new JButton("Administrar Sensores");
+	    btnASensores.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		botoneraInicial.setVisible(false);
+	    		panelSensores.setVisible(true);
+	    	}
+	    });
+	    
+	    btnAUsuarios = new JButton("Administrar usuarios");
+	    botoneraInicial.add(btnAUsuarios);
+	    btnAUsuarios.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		botoneraInicial.setVisible(false);
+	    	    panelUsuarios.setVisible(true);	
+	    	}
+	    });
+	    
+	    btnPlacas = new JButton("Administrar Placas");
+	    btnPlacas.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		botoneraInicial.setVisible(false);
+	    		panelPlacas.setVisible(true);
+	    	}
+	    });
+	    botoneraInicial.add(btnPlacas);
+	    
+	    btnAVariables = new JButton("Administrar Variables");
+	    btnAVariables.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		botoneraInicial.setVisible(false);
+	    		panelVariables.setVisible(true);
+	    	}
+	    });
+	    botoneraInicial.add(btnAVariables);
+	    botoneraInicial.add(btnASensores);
 		
-		JPanel panelAU = new JPanel();
-		botoneraInicial.add(panelAU);
-		panelAU.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JButton btnAUsuarios = new JButton("Administrar usuarios");
-		panelAU.add(btnAUsuarios);
-		
-		JPanel panelAP = new JPanel();
-		botoneraInicial.add(panelAP);
-		
-		JButton btnPlacas = new JButton("Administrar Placas");
-		panelAP.add(btnPlacas);
-		
-		JPanel panelAs = new JPanel();
-		botoneraInicial.add(panelAs);
-		
-		JButton btnASensores = new JButton("Administrar Sensores");
-		panelAs.add(btnASensores);
-		
-		JPanel panelAd = new JPanel();
-		botoneraInicial.add(panelAd);
-		
-		JButton btnAVariables = new JButton("Administrar Variables");
-		btnAVariables.setHorizontalAlignment(SwingConstants.RIGHT);
-		panelAd.add(btnAVariables);
-		
-		JPanel panelUsuarios = new JPanel();
+		panelUsuarios = new JPanel();
 		panelcentral.add(panelUsuarios, "name_117609091157597");
 		panelUsuarios.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelBotonesUsuario = new JPanel();
+		panelBotonesUsuario = new JPanel();
 		panelUsuarios.add(panelBotonesUsuario);
 		
-		JButton btnAUsuarioPlaca = new JButton("Asociciar Usuarios a placas");
+		btnAUsuarioPlaca = new JButton("Asociciar Usuarios a placas");
 		
-		JButton btnFUsuario = new JButton("Funcionalidades de usuario");
+		btnFUsuario = new JButton("Funcionalidades de usuario");
 		panelBotonesUsuario.setLayout(new GridLayout(3, 1, 0, 0));
 		panelBotonesUsuario.add(btnAUsuarioPlaca);
 		panelBotonesUsuario.add(btnFUsuario);
 		
-		JButton btnCUsuario = new JButton("Crear Usuario");
+		btnCUsuario = new JButton("Crear Usuario");
 		panelBotonesUsuario.add(btnCUsuario);
 		
-		JButton btnAtras = new JButton("Atras");
+		btnAtras = new JButton("Atras");
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelUsuarios.setVisible(false);
+				botoneraInicial.setVisible(true);
+			}
+		});
 		panelUsuarios.add(btnAtras, BorderLayout.SOUTH);
 		
-		JPanel panelPlacas = new JPanel();
+		panelPlacas = new JPanel();
 		panelcentral.add(panelPlacas, "name_119314737616723");
 		panelPlacas.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelCPlacas = new JPanel();
+		panelCPlacas = new JPanel();
 		panelPlacas.add(panelCPlacas, BorderLayout.CENTER);
 		panelCPlacas.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnLPlaca = new JButton("Lista de Placas");
+		btnLPlaca = new JButton("Lista de Placas");
 		panelCPlacas.add(btnLPlaca);
 		
-		JButton btnCPlaca = new JButton("Crear placa");
+		btnCPlaca = new JButton("Crear placa");
 		panelCPlacas.add(btnCPlaca);
 		
-		JPanel panelAtras = new JPanel();
+		panelAtras = new JPanel();
 		panelPlacas.add(panelAtras, BorderLayout.SOUTH);
 		panelAtras.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnAtras1 = new JButton("Atras");
+		btnAtras1 = new JButton("Atras");
+		btnAtras1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			panelPlacas.setVisible(false);
+			botoneraInicial.setVisible(true);
+			}
+		});
 		panelAtras.add(btnAtras1);
 		
-		JPanel panelSensores = new JPanel();
+		panelSensores = new JPanel();
 		panelcentral.add(panelSensores, "name_120084261205515");
 		panelSensores.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelCSensores = new JPanel();
+		panelCSensores = new JPanel();
 		panelSensores.add(panelCSensores, BorderLayout.CENTER);
 		panelCSensores.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnLSensores = new JButton("Lista de sensores");
+		btnLSensores = new JButton("Lista de sensores");
 		panelCSensores.add(btnLSensores);
 		
-		JButton btnCSensor = new JButton("Crear Sensor");
+		btnCSensor = new JButton("Crear Sensor");
 		panelCSensores.add(btnCSensor);
 		
-		JButton btnNewButton_1 = new JButton("Asocciar sensores a placas");
-		panelCSensores.add(btnNewButton_1);
+		btnASPlacas = new JButton("Asocciar sensores a placas");
+		panelCSensores.add(btnASPlacas);
 		
-		JPanel panelAtras2 = new JPanel();
+		 panelAtras2 = new JPanel();
 		panelSensores.add(panelAtras2, BorderLayout.SOUTH);
 		panelAtras2.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JButton btnAtras2 = new JButton("Atras");
+	    btnAtras2 = new JButton("Atras");
+	    btnAtras2.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    	panelSensores.setVisible(false);
+	    	botoneraInicial.setVisible(true);
+	    	}
+	    });
 		panelAtras2.add(btnAtras2);
 		
-		JPanel panelVariables = new JPanel();
+		panelVariables = new JPanel();
 		panelcentral.add(panelVariables, "name_120457173488400");
 		panelVariables.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelCVariables = new JPanel();
+		 panelCVariables = new JPanel();
 		panelVariables.add(panelCVariables, BorderLayout.CENTER);
 		panelCVariables.setLayout(new GridLayout(3, 1, 0, 0));
 		
-		JButton btnLVariables = new JButton("Lista de Variables");
+		btnLVariables = new JButton("Lista de Variables");
 		panelCVariables.add(btnLVariables);
 		
-		JButton btnAVPlacas = new JButton("Asocciar variables a las placas");
+		btnAVPlacas = new JButton("Asocciar variables a las placas");
 		panelCVariables.add(btnAVPlacas);
 		
-		JButton btnCVariable = new JButton("Crear Variable");
+		btnCVariable = new JButton("Crear Variable");
 		panelCVariables.add(btnCVariable);
 		
-		JPanel panelAtras3 = new JPanel();
+		panelAtras3 = new JPanel();
 		panelVariables.add(panelAtras3, BorderLayout.SOUTH);
 		panelAtras3.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnAtras3 = new JButton("Atras");
+		 btnAtras3 = new JButton("Atras");
+		btnAtras3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			panelVariables.setVisible(false);
+			botoneraInicial.setVisible(true);
+			}
+		});
 		panelAtras3.add(btnAtras3);
 		
-		JPanel panelApagar = new JPanel();
+	      panelApagar = new JPanel();
 		contentPane.add(panelApagar, BorderLayout.SOUTH);
 		
-		JButton btnConexiones = new JButton("Administrar conexiones");
+		btnConexiones = new JButton("Administrar conexiones");
 		panelApagar.add(btnConexiones);
 		
-		JButton btnAServidor = new JButton("Apagar servidor");
+		btnAServidor = new JButton("Apagar servidor");
 		panelApagar.add(btnAServidor);
 	}
 
