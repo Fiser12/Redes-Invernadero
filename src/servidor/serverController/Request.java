@@ -201,14 +201,30 @@ final class Request implements Runnable {
 				}
 				else if(requestLine.startsWith("OBTENER_FOTO"))
 				{
-					int id = Integer.parseInt(requestLine.substring(13));
-					try{
-						byte[] imagen = InteraccionDB.getImagen(id);
-						sockManager.Escribir("206 OK Transmitiendo "+ imagen.length + " bytes\n");
-						System.out.println(imagen.length);
-						sockManager.sendBytes(imagen);		
-					}catch(SearchException E){
-						sockManager.Escribir("403 ERR Identificador no existe\n");
+					String tipo = requestLine.substring(13,18);
+					if(tipo.equals("Placa"))
+					{
+						int id = Integer.parseInt(requestLine.substring(18));
+						try{
+							byte[] imagen = InteraccionDB.getImagen(id);
+							sockManager.Escribir("206 OK Transmitiendo "+ imagen.length + " bytes\n");
+							System.out.println(imagen.length);
+							sockManager.sendBytes(imagen);		
+						}catch(SearchException E){
+							sockManager.Escribir("403 ERR Identificador no existe\n");
+						}
+					}
+					else
+					{//Método de extracción de la imagen del sensor
+						String id = requestLine.substring(19);
+						try{
+							byte[] imagen = InteraccionDB.getImagenVariable(id);
+							sockManager.Escribir("206 OK Transmitiendo "+ imagen.length + " bytes\n");
+							System.out.println(imagen.length);
+							sockManager.sendBytes(imagen);		
+						}catch(SearchException E){
+							sockManager.Escribir("403 ERR Identificador no existe\n");
+						}
 					}
 					requestLine = sockManager.Leer();
 					System.out.println("RequestLine: " + requestLine);

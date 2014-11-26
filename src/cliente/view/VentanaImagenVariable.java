@@ -1,15 +1,14 @@
 package cliente.view;
 
 import java.awt.BorderLayout;
-
+import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import servidor.serverModel.ModelClass.Placa;
 
-public class VentanaImagen extends JFrame {
+public class VentanaImagenVariable extends JFrame {
 
 	/**
 	 * 
@@ -25,8 +24,8 @@ public class VentanaImagen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaImagen(Placa p) {
-		setBounds(100, 100, new ImageIcon(p.getFoto()).getIconWidth(), new ImageIcon(p.getFoto()).getIconHeight()+70);
+	public VentanaImagenVariable(Image i, String variable) {
+		setBounds(100, 100, new ImageIcon(i).getIconWidth(), new ImageIcon(i).getIconHeight()+70);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -39,17 +38,17 @@ public class VentanaImagen extends JFrame {
 		JPanel panel = new JPanel();
 		Central.add(panel, BorderLayout.CENTER);
 		
-		JLabel label = new JLabel(new ImageIcon(p.getFoto()));
+		JLabel label = new JLabel(new ImageIcon(i));
 		label.setSize(300, 300);
 		panel.add(label);
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.NORTH);
 		
-		JLabel lblIdPlaca = new JLabel("ID Placa:");
+		JLabel lblIdPlaca = new JLabel("Variable:");
 		panel_1.add(lblIdPlaca);
 		
-		JLabel label_1 = new JLabel(""+p.getId());
+		JLabel label_1 = new JLabel(""+variable);
 		panel_1.add(label_1);
 	}
 

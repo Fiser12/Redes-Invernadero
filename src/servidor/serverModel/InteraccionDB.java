@@ -155,6 +155,10 @@ public class InteraccionDB {
 	{
 		return gestor.getImagen(i);
 	}
+	public static byte[] getImagenVariable(String i) throws SearchException
+	{
+		return gestor.getImagenVariable(i);
+	}
 	public static void actualizarEstado(String sensor, String placa, String estado) {
 		gestor.enviarComando("UPDATE Sensor SET Estado_la_variable='"+estado+"' WHERE Id_Placa='"+placa+"' AND Nombre_Variable='"+sensor+"';");
 	}

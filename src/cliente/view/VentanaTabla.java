@@ -16,10 +16,12 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ListSelectionModel;
+
 import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Sensor;
 import cliente.view.componentes.*;
 import util.Util;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.ByteArrayInputStream;
@@ -29,6 +31,7 @@ public class VentanaTabla extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
     private JButton btnImagen;
+    private JButton btnImagenVar;
 	private JButton btnActivar;
 	private JButton btnDesactivar;
 	private JTextField textVariable;
@@ -79,7 +82,14 @@ public class VentanaTabla extends JFrame{
 			}
 		});
 		BotonesArriba.add(btnImagen);
-		
+	    btnImagenVar = new JButton("Imagen Variable");
+	    btnImagenVar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				obtenerFotoVariable();
+			}
+		});
+		BotonesArriba.add(btnImagenVar);
 		btnActuar = new JButton("Actuar");
 		BotonesArriba.add(btnActuar);
 		
@@ -288,7 +298,7 @@ public class VentanaTabla extends JFrame{
 			seleccionado = new Sensor();
 		}
 		try {
-			Util.claseSocketCliente.Escribir("OBTENER_FOTO " + seleccionado.getId_Placa()+"\n");
+			Util.claseSocketCliente.Escribir("OBTENER_FOTO Placa" + seleccionado.getId_Placa()+"\n");
 			respuesta = Util.claseSocketCliente.Leer();
 
 			if(respuesta.contains("ERR"))
@@ -304,7 +314,34 @@ public class VentanaTabla extends JFrame{
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
 		}
-        
+	}
+	public void obtenerFotoVariable()
+	{
+		int rowIndex = tabla.getSelectedRow();
+		Sensor seleccionado;
+		try {
+			seleccionado = new Sensor(Integer.parseInt((String) tabla.getValueAt(rowIndex, 0)), (String)tabla.getValueAt(rowIndex, 2), (String)tabla.getValueAt(rowIndex, 4), (String)tabla.getValueAt(rowIndex, 3), (String)tabla.getValueAt(rowIndex, 5), Integer.parseInt((String) tabla.getValueAt(rowIndex, 1)));
+		}
+		catch(ArrayIndexOutOfBoundsException E)
+		{
+			seleccionado = new Sensor();
+		}
+		try {
+			Util.claseSocketCliente.Escribir("OBTENER_FOTO Sensor" + seleccionado.getVariable()+"\n");
+			respuesta = Util.claseSocketCliente.Leer();
+
+			if(respuesta.contains("ERR"))
+				JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
+			else
+			{
+				byte[] imagen = Util.claseSocketCliente.readBytes();
+				Image temp = ImageIO.read(new ByteArrayInputStream(imagen));
+				VentanaImagenVariable ventana = new VentanaImagenVariable(temp, seleccionado.getVariable());
+				ventana.setVisible(true);
+			}
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+		}
 
 	}
 	public void recargarTabla()
