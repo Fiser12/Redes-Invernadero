@@ -106,7 +106,7 @@ public class VentanaTabla extends JFrame{
 		textVariable.setColumns(10);
 
 		comboBoxBusqueda = new JComboBox<String>();
-		comboBoxBusqueda.setModel(new DefaultComboBoxModel<String>(new String[] {"Elegir Opcion De Busqueda", "Todas", "IDPlaca", "Variable", "IDSensor", "En OFF", "EN ON", ""}));
+		comboBoxBusqueda.setModel(new DefaultComboBoxModel<String>(new String[] {"Placa", "Variable", "Estado", "Funcion", "Accion"}));
 		comboBoxBusqueda.setToolTipText("Elegir opcion\r\n");
 		Busqueda.add(comboBoxBusqueda);
 

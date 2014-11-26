@@ -6,21 +6,30 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
+
 import java.awt.GridLayout;
+
 import javax.swing.JButton;
-import javax.swing.JTextPane;
 import javax.swing.JLabel;
+
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
-import javax.swing.SwingConstants;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
+import servidor.serverController.*;
+import util.SocketManager;
+import util.Util;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.LinkedList;
 
 public class ventanaServidor extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
     private JPanel panelSuperior;
 	private JLabel lblS;
@@ -59,10 +68,15 @@ public class ventanaServidor extends JFrame {
 	private JPanel panelApagar;
 	private JButton btnConexiones;
 	private JButton btnAServidor;
+	
+	private static ServerSocket wellcomeSocket;
+	public static LinkedList<SocketManager> listaSockets;
+	public static LinkedList<Request> listaHilos;
+
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -73,12 +87,32 @@ public class ventanaServidor extends JFrame {
 				}
 			}
 		});
+		listaSockets = new LinkedList<SocketManager>();
+		listaHilos = new LinkedList<Request>();
+		int port = 3000; //(new Integer(argv[0])).intValue();
+		wellcomeSocket = new ServerSocket(port);
+		while (true)
+		{
+			if(getUsuariosConectados()<Util.usuariosMaximos)
+			{
+				SocketManager sockManager = new SocketManager(wellcomeSocket.accept());
+				Request request = new Request(sockManager);
+				Thread thre = new Thread(request);
+				thre.start();
+				if(thre.isAlive())
+				{
+					listaSockets.add(sockManager);
+					listaHilos.add(request);
+					mostrarUsuario(getUsuariosConectados());
+				}
+			}
+		}
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public ventanaServidor() {
+	public ventanaServidor() throws Exception{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -257,7 +291,46 @@ public class ventanaServidor extends JFrame {
 		panelApagar.add(btnConexiones);
 		
 		btnAServidor = new JButton("Apagar servidor");
-		panelApagar.add(btnAServidor);
+		btnAServidor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				desconectar();
+			}
+		});
+		panelApagar.add(btnAServidor);	
 	}
-
+	public static void mostrarUsuario(int usuario)
+	{
+		String usuarioRegistrado = "DESCONECTADO";
+		try{
+		usuarioRegistrado = listaHilos.get(usuario-1).getUsuario();
+		}catch(IndexOutOfBoundsException E){
+			usuarioRegistrado = "DESCONECTADO";
+		}
+		
+		System.out.println("USERNAME: " + usuarioRegistrado);
+		System.out.println("NºUSUARIO: " + (usuario));
+		System.out.println("DIRECCIÓN: " + listaSockets.get(usuario-1).getMySocket().getInetAddress().getHostAddress());
+		System.out.println("NOMBRE DEL HOST: " + listaSockets.get(usuario-1).getMySocket().getInetAddress().getHostName());
+		System.out.println("PUERTO: "+ listaSockets.get(usuario-1).getMySocket().getPort());
+		System.out.println("NOMBRE CANONICO: " + listaSockets.get(usuario-1).getMySocket().getInetAddress().getCanonicalHostName());
+	}
+	public static void desconectarUsuario(int usuario){
+		try
+		{
+			listaSockets.get(usuario).CerrarStreams();
+			listaSockets.get(usuario).CerrarSocket();
+			listaSockets.remove(usuario);
+			listaHilos.remove(usuario);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public static int getUsuariosConectados()
+	{
+		return listaSockets.size();
+	}
+	public static void desconectar(){
+		System.exit(0);
+	}
 }

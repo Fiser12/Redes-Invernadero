@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 import util.*;
 import util.excepciones.SearchException;
 import servidor.serverModel.InteraccionDB;
-final class Request implements Runnable {
+public final class Request implements Runnable {
 
 	final static String CRLF = "\r\n";
 	SocketManager sockManager;
