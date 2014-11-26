@@ -17,6 +17,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.text.NumberFormat;
+import javax.swing.BoxLayout;
+import javax.swing.SwingConstants;
+import java.awt.FlowLayout;
 
 public class VentanaSeleccionarValor extends JFrame {
 
@@ -57,13 +60,14 @@ public class VentanaSeleccionarValor extends JFrame {
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new GridLayout(3, 0, 0, 0));
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
 		JPanel panel_1 = new JPanel();
 		panel.add(panel_1);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
 		String accion = s.getUltimaAccion();
 		JLabel lblParametro = new JLabel("Indique el valor de la variable:");
+		lblParametro.setHorizontalAlignment(SwingConstants.CENTER);
 		if(accion.equals("Subir a.c")||accion.equals("Bajar a.c"))
 			lblParametro.setText("Seleccionar temperatura a " + accion);
 		else if(accion.equals("Activar sistemas de riego"))
@@ -81,13 +85,7 @@ public class VentanaSeleccionarValor extends JFrame {
 		
 		JPanel incremento = new JPanel();
 		panel.add(incremento);
-		incremento.setLayout(new GridLayout(0, 2, 0, 0));
-		
-		JPanel panel_4 = new JPanel();
-		incremento.add(panel_4);
-		
-		JLabel lblNewLabel = new JLabel("Valor");
-		panel_4.add(lblNewLabel);
+		incremento.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JPanel panel_5 = new JPanel();
 		incremento.add(panel_5);
@@ -104,15 +102,16 @@ public class VentanaSeleccionarValor extends JFrame {
 		 formatter.setMaximum(Integer.MAX_VALUE);
 		 // If you want the value to be committed on each keystroke instead of focus lost
 		 formatter.setCommitsOnValidEdit(true);
+		 
+		 JLabel lblNewLabel = new JLabel("Valor");
+		 panel_5.add(lblNewLabel);
 		 panel_5.add(txIncremento);
 		JPanel botones = new JPanel();
 		panel.add(botones);
-		botones.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JPanel panel_2 = new JPanel();
-		botones.add(panel_2);
+		botones.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnContinuar = new JButton("Continuar");
+		botones.add(btnContinuar);
 		btnContinuar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -126,12 +125,9 @@ public class VentanaSeleccionarValor extends JFrame {
 				}
 			}
 		});
-		panel_2.add(btnContinuar);
-		
-		JPanel panel_3 = new JPanel();
-		botones.add(panel_3);
 		
 		JButton btnRegresar = new JButton("Regresar");
+		botones.add(btnRegresar);
 		btnRegresar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -144,7 +140,6 @@ public class VentanaSeleccionarValor extends JFrame {
 				}
 			}
 		});
-		panel_3.add(btnRegresar);
 	}
 
 }
