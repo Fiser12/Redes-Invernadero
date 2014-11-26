@@ -51,7 +51,7 @@ public class VentanaSeleccionarValor extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaSeleccionarValor(Sensor s, VentanaTabla control) {
+	public VentanaSeleccionarValor(Sensor s, final VentanaTabla control) {
 		setBounds(100, 100, 450, 200);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

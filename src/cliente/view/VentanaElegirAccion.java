@@ -29,7 +29,7 @@ public class VentanaElegirAccion extends JFrame implements ActionListener {
     private String seleccion;
     private JPanel opciones;
 
-	public VentanaElegirAccion(Sensor s, VentanaTabla control) {
+	public VentanaElegirAccion(Sensor s, final VentanaTabla control) {
 		accionSobre = s;
 		opciones = new JPanel();
 		radioButtonGroup = new LinkedList<JRadioButton>();
