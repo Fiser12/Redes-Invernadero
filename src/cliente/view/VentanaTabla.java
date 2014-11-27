@@ -157,7 +157,22 @@ public class VentanaTabla extends JFrame{
 		contentPane.add(scroll, BorderLayout.CENTER);
 	}
 	public  void buscar(){
+		try{
+			Util.claseSocketCliente.Escribir("BUSCAR "+ comboBoxBusqueda.getSelectedItem().toString() + " " + textVariable.getText() + "\n");
+			respuesta = Util.claseSocketCliente.Leer().replace("/n", "\n");
+			LinkedList<Sensor> sensores = convertirASensor(sacarRespuesta(respuesta));
+			for(Sensor temp: sensores){
+				modeloTabla.addRow(temp);
+			}
+			modeloTabla.fireTableDataChanged();
+			tabla.setModel(modeloTabla);
+			ultimaCarga = 1;
+			repaint();
+		    tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
+		} catch(IOException e){
+			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+		}
 	}
 	public void salir(){
 		try {

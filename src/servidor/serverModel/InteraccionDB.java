@@ -52,7 +52,7 @@ public class InteraccionDB {
 		gestor.enviarComando("INSERT INTO Variable(Nombre_Variable) VALUES('Imagen')");
 		gestor.enviarComando("INSERT INTO Variable(Nombre_Variable) VALUES('Zoom')");
 		gestor.enviarComando("INSERT INTO Variable(Nombre_Variable) VALUES('Humedad')");
-		
+
 		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 1)");
 		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 2)");
 		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 3)");
@@ -122,6 +122,18 @@ public class InteraccionDB {
 		return lista;
 
 	}
+	private static LinkedList<Sensor> buscarSacar(String nombre, String patron, String columna){
+		LinkedList<Sensor> lista = new LinkedList<Sensor>();
+		gestor.enviarComando("SELECT S.* FROM Sensor S, Usuario_Placa P WHERE S.Id_Placa=P.id_placa AND P.Nombre = '"+nombre+"' AND S."+columna+" Like '"+patron+"' ORDER BY S.Id_Placa, S.Id_Sensor;");
+		ResultSet resultado = gestor.getResultSet();
+		try {
+			while(resultado.next())
+				lista.add(new Sensor(resultado.getInt("Id_Sensor"), resultado.getString("Nombre_Variable"), resultado.getString("Funcion_Principal"), resultado.getString("Estado_la_variable"), resultado.getString("Ultima_Accion"), resultado.getInt("id_Placa")));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
 	public static String listado(String nombre){
 		String texto = "";
 		LinkedList<Sensor> lista = listadoList(nombre);
@@ -130,6 +142,18 @@ public class InteraccionDB {
 			texto = texto + temporal;
 		}
 		texto = texto + "/n202 FINLISTA\n";
+		return texto;
+	}
+	public static String buscar(String nombre, String patron, String columna){
+		String texto = "";
+		LinkedList<Sensor> lista = buscarSacar(nombre, patron, columna);
+
+		for(Sensor temp: lista){
+			String temporal = "ELEM" + temp.getId_sensor() + " Placa" + temp.getId_Placa() + "; " + temp.getVariable() + "; " + temp.getFuncionPrincipal() + "; " + temp.getEstadoVariable() + "; " + temp.getUltimaAccion() + "/n";
+			texto = texto + temporal;
+		}
+		texto = texto + "/n202 FINLISTA\n";
+		System.out.println(texto);
 		return texto;
 	}
 	public static boolean comprobarEstado(String sensor, String placa) throws SearchException{
@@ -170,7 +194,6 @@ public class InteraccionDB {
 	public static void actualizarAccion(String sensor, String placa, String accion) {
 		gestor.enviarComando("UPDATE Sensor SET Ultima_Accion='"+accion+"' WHERE Id_Placa='"+placa+"' AND Nombre_Variable='"+sensor+"';");
 	}
-
 	public static void main(String []argv)
 	{
 		reiniciarBase();

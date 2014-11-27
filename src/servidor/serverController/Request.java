@@ -24,6 +24,7 @@ public final class Request implements Runnable {
 	private String idPlacaAccion;
 	private String variableAccion;
 	private String accion;
+	private String requestLine;
 	// Constructor
 	public Request(SocketManager sockMan) throws Exception {
 		sockManager = sockMan;
@@ -50,7 +51,7 @@ public final class Request implements Runnable {
 		}
 	}
 	private void processRequest() throws Exception {
-		String requestLine = sockManager.Leer();
+		requestLine = sockManager.Leer();
 		System.out.println("RequestLine: " + requestLine);
 		boolean stop = false;
 		while(!stop)
@@ -206,8 +207,25 @@ public final class Request implements Runnable {
 				}
 				else if(requestLine.startsWith("BUSCAR"))
 				{
+					String columna = requestLine.substring(7, requestLine.indexOf(" ", 7));
+					String patron = requestLine.substring(requestLine.indexOf(" ", 7)+1);
+					patron = patron.replace('?', '_');
+					patron = patron.replace('*', '%');
+
+					if(columna.equals("Placa"))
+						columna = "Id_Placa";
+					else if(columna.equals("Variable"))
+						columna = "Nombre_Variable";
+					else if(columna.equals("Estado"))
+						columna = "Estado_la_variable";
+					else if(columna.equals("Funcion"))
+						columna = "Funcion_Principal";
+					else if(columna.equals("Accion"))
+						columna = "Ultima_Accion";
+
+					sockManager.Escribir(InteraccionDB.buscar(usuario, patron, columna));
 					requestLine = sockManager.Leer();
-					System.out.println("RequestLine: " + requestLine);
+
 				}
 				else if(requestLine.startsWith("OBTENER_FOTO"))
 				{
@@ -237,10 +255,6 @@ public final class Request implements Runnable {
 						}catch(SearchException E){
 							sockManager.Escribir("403 ERR Identificador no existe\n");
 						}
-					}
-					else if(tipo.equals("Senso"))
-					{
-
 					}
 					requestLine = sockManager.Leer();
 					System.out.println("RequestLine: " + requestLine);
