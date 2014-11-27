@@ -32,6 +32,14 @@ import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
+import javax.swing.border.BevelBorder;
+import java.awt.Color;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
 
 public class ventanaServidor extends JFrame implements FocusListener {
 
@@ -85,6 +93,10 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	private JTable tPlaca;
 	private JTable tSensor;
 	private JTable tVariable;
+	private JTable tUsuario1;
+	private JTable tPlaca1;
+	private JTable tSensor1;
+	private JTable tVariable1;
 	private static ServerSocket wellcomeSocket;
 	public static LinkedList<SocketManager> listaSockets;
 	public static LinkedList<Request> listaHilos;
@@ -104,6 +116,51 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	private JButton btnAtras5;
 	private JButton btnInicio2;
 	private JButton btnUBorrar;
+	private JPanel panelCrUsuario;
+	private JPanel panelCreaccionU;
+	private JPanel panelAtras6;
+	private JPanel panelCamposuser;
+	private JButton btnInicio3;
+	private JButton btnAtras6;
+	private JButton btnCrearU;
+	private JPanel panelcamposUser;
+	private JLabel lblNombre;
+	private JLabel lblPass;
+	private JTextField tFNombre;
+	private JPasswordField pFUser;
+	private JPanel panelLPlaca;
+	private JPanel panelAtras7;
+	private JPanel panelLplaca;
+	private JButton btnAtras7;
+	private JButton btnInicio4;
+	private JPanel panelBPlaca;
+	private JButton btnBPlaca;
+	private JScrollPane scrollPane;
+	private JPanel panelCPlaca;
+	private JPanel panelAtras8;
+	private JButton btnAtras8;
+	private JButton btnMenuInicio4;
+	private JPanel panelCreplaca;
+	private JPanel panelCreaccionP;
+	private JButton btnCreaccionPlaca;
+	private JPanel panelCreaccionPla;
+	private JLabel lblPNombre;
+	private JTextField textID;
+	private JLabel lbNombrep;
+	private JTextField textNombre;
+	private JPanel panelLSensores;
+	private JPanel panelListac;
+	private JPanel panelAtras9;
+	private JButton btnAtras9;
+	private JButton btnInicio5;
+	private JPanel panelBSensor;
+	private JButton btnBSensor;
+	private JScrollPane scrollLSensor;
+	private JPanel panelCSensor;
+	private JPanel panel_1;
+	private JPanel panelAtras10;
+	private JButton btnAtras10;
+	private JButton btnNewButton_1;
 
 	/**
 	 * Launch the application.
@@ -167,27 +224,27 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			/*
 			 * Inicializaccion de las tablas
 			 */
-			//tabla Usuario
-			tUsuario=new JTable(mUsuario);
-			tUsuario.addFocusListener(this);
-			tUsuario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			tUsuario.setModel(mUsuario);
 			//tabla variable
 			tVariable=new JTable(mVariable);
 			tVariable.addFocusListener(this);
 			tVariable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tVariable.setModel(mVariable);
+			//variable2
+			tVariable1=new JTable(mVariable);
+			tVariable1.addFocusListener(this);
+			tVariable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			tVariable1.setModel(mVariable);
 			//tabla Sensor
 			tSensor=new JTable(mSensor);
 			tSensor.addFocusListener(this);
 			tSensor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tSensor.setModel(mSensor);
-			//tabla Placa
-			tPlaca=new JTable(mPlaca);
-			tPlaca.addFocusListener(this);
-			tPlaca.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			tPlaca.setModel(mPlaca);
-			
+			//sensor 2
+			tSensor1=new JTable(mSensor);
+			tSensor1.addFocusListener(this);
+			tSensor1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			tSensor1.setModel(mSensor);
+		
 		panelSuperior = new JPanel();
 		contentPane.add(panelSuperior, BorderLayout.NORTH);
 		panelSuperior.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -280,6 +337,13 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelBotonesUsuario.add(btnFUsuario);
 		
 		btnCUsuario = new JButton("Crear Usuario");
+		btnCUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCrUsuario.setVisible(true);
+				panelUsuarios.setVisible(false);
+				lblS.setText("Rellenar campos");
+			}
+		});
 		panelBotonesUsuario.add(btnCUsuario);
 		
 		btnAtras = new JButton("Atras");
@@ -302,9 +366,23 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelCPlacas.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		btnLPlaca = new JButton("Lista de Placas");
+		btnLPlaca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			panelPlacas.setVisible(false);
+			panelLPlaca.setVisible(true);
+			lblS.setText("Seleccionar el usuario a borrar:");
+			}
+		});
 		panelCPlacas.add(btnLPlaca);
 		
 		btnCPlaca = new JButton("Crear placa");
+		btnCPlaca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCPlaca.setVisible(true);
+				panelPlacas.setVisible(false);
+				lblS.setText("Rellenar campos para crear una placa:");
+			}
+		});
 		panelCPlacas.add(btnCPlaca);
 		
 		panelAtras = new JPanel();
@@ -329,6 +407,14 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelCSensores.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		btnLSensores = new JButton("Lista de sensores");
+		btnLSensores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			panelLSensores.setVisible(true);
+			panelSensores.setVisible(false);
+			lblS.setText("Seleccionar sensor a borrar:");
+			
+			}
+		});
 		panelCSensores.add(btnLSensores);
 		
 		btnCSensor = new JButton("Crear Sensor");
@@ -382,7 +468,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		panelAtras3.add(btnAtras3);
 		/*
-		 * Panel Asocciaccion Placas Usuario
+		 * Panel Asocciaccion Placas Usuario No carga la tabla usuario
 		 */
 		panelAUsuarioPlacas = new JPanel();
 		panelcentral.add(panelAUsuarioPlacas, "name_5095721302242");
@@ -421,17 +507,15 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelBotonesU.add(panelTablas);
 		panelTablas.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		scrollPaneTUsuario = new JScrollPane(tUsuario);
-		panelTablas.add(scrollPaneTUsuario);
-		
-		scrollPanePlaca = new JScrollPane(tPlaca);
-		panelTablas.add(scrollPanePlaca);
-		
 		panelCombinar = new JPanel();
 		panelBotonesU.add(panelCombinar, BorderLayout.SOUTH);
 		panelCombinar.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		btnAUPlacas = new JButton("Asocciar usuarios a placa");
+		btnAUPlacas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		panelCombinar.add(btnAUPlacas);
 		/*
 		 * Lista Usuario
@@ -446,6 +530,31 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		
 		btnUBorrar = new JButton("Borrar Usuario");
 		panelCUsuario.add(btnUBorrar, BorderLayout.SOUTH);
+		//tabla Placa
+		tPlaca=new JTable(mPlaca);
+		tPlaca.addFocusListener(this);
+		tPlaca.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tPlaca.setModel(mPlaca);
+		//tabla PLaca
+		tPlaca1=new JTable(mPlaca);
+		tPlaca1.addFocusListener(this);
+		tPlaca1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tPlaca1.setModel(mPlaca);
+		
+		scrollPanePlaca = new JScrollPane(tPlaca1);
+		panelTablas.add(scrollPanePlaca);
+		//tabla Usuario
+		tUsuario=new JTable(mUsuario);
+		tUsuario.addFocusListener(this);
+		tUsuario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tUsuario.setModel(mUsuario);
+		tUsuario1=new JTable(mUsuario);
+		tUsuario1.addFocusListener(this);
+		tUsuario1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tUsuario1.setModel(mUsuario);
+		
+		scrollPaneTUsuario = new JScrollPane(tUsuario1);
+		panelTablas.add(scrollPaneTUsuario);
 		
 		JScrollPane scroLUsuario = new JScrollPane(tUsuario);
 		panelCUsuario.add(scroLUsuario, BorderLayout.CENTER);
@@ -473,6 +582,279 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			}
 		});
 		panelAtras5.add(btnInicio2);
+		/*
+		 * Creaccion de usuario
+		 */
+		panelCrUsuario = new JPanel();
+		panelcentral.add(panelCrUsuario, "name_22220760681955");
+		panelCrUsuario.setLayout(new BorderLayout(0, 0));
+		
+		panelCreaccionU = new JPanel();
+		panelCrUsuario.add(panelCreaccionU, BorderLayout.CENTER);
+		panelCreaccionU.setLayout(new BorderLayout(0, 0));
+		
+		panelCamposuser = new JPanel();
+		panelCreaccionU.add(panelCamposuser, BorderLayout.SOUTH);
+		panelCamposuser.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		btnCrearU = new JButton("Crear Usuario");
+		btnCrearU.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//			tFNombre
+				//pFUser
+			}
+		});
+		panelCamposuser.add(btnCrearU);
+		
+		panelcamposUser = new JPanel();
+		panelCreaccionU.add(panelcamposUser, BorderLayout.CENTER);
+		GridBagLayout gbl_panelcamposUser = new GridBagLayout();
+		gbl_panelcamposUser.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panelcamposUser.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gbl_panelcamposUser.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panelcamposUser.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panelcamposUser.setLayout(gbl_panelcamposUser);
+		
+		lblNombre = new JLabel("Nombre:");
+		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
+		gbc_lblNombre.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNombre.gridx = 2;
+		gbc_lblNombre.gridy = 1;
+		panelcamposUser.add(lblNombre, gbc_lblNombre);
+		
+		tFNombre = new JTextField();
+		GridBagConstraints gbc_tFNombre = new GridBagConstraints();
+		gbc_tFNombre.insets = new Insets(0, 0, 5, 0);
+		gbc_tFNombre.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tFNombre.gridx = 7;
+		gbc_tFNombre.gridy = 1;
+		panelcamposUser.add(tFNombre, gbc_tFNombre);
+		tFNombre.setColumns(10);
+		
+		lblPass = new JLabel("Contrase\u00F1a");
+		GridBagConstraints gbc_lblPass = new GridBagConstraints();
+		gbc_lblPass.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPass.gridx = 2;
+		gbc_lblPass.gridy = 2;
+		panelcamposUser.add(lblPass, gbc_lblPass);
+		
+		pFUser = new JPasswordField();
+		GridBagConstraints gbc_pFUser = new GridBagConstraints();
+		gbc_pFUser.insets = new Insets(0, 0, 5, 0);
+		gbc_pFUser.fill = GridBagConstraints.HORIZONTAL;
+		gbc_pFUser.gridx = 7;
+		gbc_pFUser.gridy = 2;
+		panelcamposUser.add(pFUser, gbc_pFUser);
+		
+		panelAtras6 = new JPanel();
+		panelCrUsuario.add(panelAtras6, BorderLayout.SOUTH);
+		panelAtras6.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		btnInicio3 = new JButton("Atras");
+		btnInicio3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			panelCrUsuario.setVisible(false);
+			panelUsuarios.setVisible(true);
+			lblS.setText("Seleccionar una opccion");
+			}
+		});
+		panelAtras6.add(btnInicio3);
+		
+		btnAtras6 = new JButton("Menu inicio");
+		btnAtras6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCrUsuario.setVisible(false);
+				botoneraInicial.setVisible(true);
+				lblS.setText("Seleccionar una opccion");
+			}
+		});
+		panelAtras6.add(btnAtras6);
+		/*
+		 * Listado Placas
+		 */
+		panelLPlaca = new JPanel();
+		panelcentral.add(panelLPlaca, "name_23593973357549");
+		panelLPlaca.setLayout(new BorderLayout(0, 0));
+		
+		panelAtras7 = new JPanel();
+		panelLPlaca.add(panelAtras7, BorderLayout.SOUTH);
+		panelAtras7.setLayout(new GridLayout(1, 1, 0, 0));
+		
+		btnAtras7 = new JButton("Atras");
+		btnAtras7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			panelLPlaca.setVisible(false);
+			panelPlacas.setVisible(true);
+			lblS.setText("Seleccionar una opcion");
+			}
+		});
+		panelAtras7.add(btnAtras7);
+		
+		btnInicio4 = new JButton("Menu inicio");
+		btnInicio4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelLPlaca.setVisible(false);
+				botoneraInicial.setVisible(true);
+				lblS.setText("Seleccionar una opcion");
+			}
+		});
+		panelAtras7.add(btnInicio4);
+		
+		panelLplaca = new JPanel();
+		panelLPlaca.add(panelLplaca, BorderLayout.CENTER);
+		panelLplaca.setLayout(new BorderLayout(0, 0));
+		
+		panelBPlaca = new JPanel();
+		panelLplaca.add(panelBPlaca, BorderLayout.SOUTH);
+		panelBPlaca.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		btnBPlaca = new JButton("Borrar placa");
+		btnBPlaca.addActionListener(new ActionListener() {
+			
+			/*borrar placa
+			 */
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		panelBPlaca.add(btnBPlaca);
+		
+		scrollPane = new JScrollPane(tPlaca);
+		panelLplaca.add(scrollPane, BorderLayout.CENTER);
+		/*
+		 * Crear Placa
+		 */
+		panelCPlaca = new JPanel();
+		panelcentral.add(panelCPlaca, "name_24645888711459");
+		panelCPlaca.setLayout(new BorderLayout(0, 0));
+		
+		panelAtras8 = new JPanel();
+		panelCPlaca.add(panelAtras8, BorderLayout.SOUTH);
+		panelAtras8.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		btnAtras8 = new JButton("Atras");
+		btnAtras8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCPlaca.setVisible(false);
+				panelPlacas.setVisible(true);
+				lblS.setText("Seleccionar una Opcion:");
+			}
+		});
+		panelAtras8.add(btnAtras8);
+		
+		btnMenuInicio4 = new JButton("Menu Inicio");
+		btnMenuInicio4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCPlaca.setVisible(false);
+				botoneraInicial.setVisible(true);
+				lblS.setText("Seleccionar una Opcion:");
+				}
+		});
+		panelAtras8.add(btnMenuInicio4);
+	
+		panelCreplaca = new JPanel();
+		panelCPlaca.add(panelCreplaca, BorderLayout.CENTER);
+		panelCreplaca.setLayout(new BorderLayout(0, 0));
+		
+		panelCreaccionP = new JPanel();
+		panelCreplaca.add(panelCreaccionP, BorderLayout.SOUTH);
+		panelCreaccionP.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		btnCreaccionPlaca = new JButton("Creaccion Placa");
+		btnCreaccionPlaca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			//textID
+		    //textNombre
+			// rdbtnEstadoinicial
+			}
+		});
+		panelCreaccionP.add(btnCreaccionPlaca);
+		
+		panelCreaccionPla = new JPanel();
+		panelCreplaca.add(panelCreaccionPla, BorderLayout.CENTER);
+		panelCreaccionPla.setLayout(null);
+		
+		lblPNombre = new JLabel("ID:");
+		lblPNombre.setBounds(88, 33, 15, 14);
+		panelCreaccionPla.add(lblPNombre);
+		
+		textID = new JTextField();
+		textID.setBounds(192, 30, 158, 20);
+		panelCreaccionPla.add(textID);
+		textID.setColumns(10);
+		
+		lbNombrep = new JLabel("Nombre:");
+		lbNombrep.setBounds(88, 58, 94, 14);
+		panelCreaccionPla.add(lbNombrep);
+		
+		textNombre = new JTextField();
+		textNombre.setBounds(192, 55, 158, 20);
+		panelCreaccionPla.add(textNombre);
+		textNombre.setColumns(10);
+		
+		JRadioButton rdbtnEstadoinicial = new JRadioButton("Encendido");
+		rdbtnEstadoinicial.setBounds(139, 79, 109, 23);
+		panelCreaccionPla.add(rdbtnEstadoinicial);
+		/*
+		 * Lista de sensores
+		 */
+		panelLSensores = new JPanel();
+		panelcentral.add(panelLSensores, "name_26661603695533");
+		panelLSensores.setLayout(new BorderLayout(0, 0));
+		
+		panelListac = new JPanel();
+		panelLSensores.add(panelListac);
+		panelListac.setLayout(new BorderLayout(0, 0));
+		
+		panelBSensor = new JPanel();
+		panelListac.add(panelBSensor, BorderLayout.SOUTH);
+		panelBSensor.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		btnBSensor = new JButton("Borrar Sensor");
+		panelBSensor.add(btnBSensor);
+		
+		scrollLSensor = new JScrollPane(tSensor);
+		panelListac.add(scrollLSensor, BorderLayout.CENTER);
+		
+		panelAtras9 = new JPanel();
+		panelLSensores.add(panelAtras9, BorderLayout.SOUTH);
+		panelAtras9.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		btnAtras9 = new JButton("Atras");
+		btnAtras9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelLSensores.setVisible(false);
+				panelSensores.setVisible(true);
+				lblS.setText("Seleccionar opcion:");
+			}
+		});
+		panelAtras9.add(btnAtras9);
+		
+		btnInicio5 = new JButton("Menu inicio");
+		btnInicio5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelLSensores.setVisible(false);
+				botoneraInicial.setVisible(true);
+				lblS.setText("Seleccionar opcion:");
+				}
+		});
+		panelAtras9.add(btnInicio5);
+		
+		panelCSensor = new JPanel();
+		panelcentral.add(panelCSensor, "name_27780962298831");
+		panelCSensor.setLayout(new BorderLayout(0, 0));
+		
+		panel_1 = new JPanel();
+		panelCSensor.add(panel_1);
+		
+		panelAtras10 = new JPanel();
+		panelCSensor.add(panelAtras10, BorderLayout.SOUTH);
+		panelAtras10.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		btnAtras10 = new JButton("New button");
+		panelAtras10.add(btnAtras10);
+		
+		btnNewButton_1 = new JButton("New button");
+		panelAtras10.add(btnNewButton_1);
 		
 	      panelApagar = new JPanel();
 		contentPane.add(panelApagar, BorderLayout.SOUTH);
