@@ -424,6 +424,13 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelCSensores.add(btnLSensores);
 		
 		btnCSensor = new JButton("Crear Sensor");
+		btnCSensor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCSensor.setVisible(true);
+				panelSensores.setVisible(false);
+				lblS.setText("Rellenar campos para la creaccion del sensor");
+				}
+		});
 		panelCSensores.add(btnCSensor);
 		
 		btnASPlacas = new JButton("Asocciar sensores a placas");
