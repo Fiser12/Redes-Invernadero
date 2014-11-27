@@ -96,6 +96,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	private JTable tUsuario1;
 	private JTable tPlaca1;
 	private JTable tSensor1;
+	private JTable tPlaca2;
 	private JTable tVariable1;
 	private static ServerSocket wellcomeSocket;
 	public static LinkedList<SocketManager> listaSockets;
@@ -167,6 +168,16 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	private JTextField textFSensor;
 	private JTextField textNSensor;
 	private JTextField textIDSensor;
+	private JPanel panelSensoresPlaca;
+	private JPanel panelAtras11;
+	private JPanel panelTVarPla;
+	private JButton btnAtras11;
+	private JButton btnMenuInicio;
+	private JPanel panelASENSPLAca;
+	private JPanel panelAsociarSP;
+	private JButton btnAsociarSP;
+	private JScrollPane scrollUTablaPlaca;
+	private JScrollPane scrolltablaSensor;
 
 	/**
 	 * Launch the application.
@@ -433,7 +444,13 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		panelCSensores.add(btnCSensor);
 		
-		btnASPlacas = new JButton("Asocciar sensores a placas");
+		btnASPlacas = new JButton("Asociar sensores a placas");
+		btnASPlacas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelSensoresPlaca.setVisible(true);
+				panelSensores.setVisible(false);
+			lblS.setText("Seleccionar Ambas tablas para realizar la asociaciom de sensores con placas:");	}
+		});
 		panelCSensores.add(btnASPlacas);
 		
 		 panelAtras2 = new JPanel();
@@ -462,11 +479,11 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		btnLVariables = new JButton("Lista de Variables");
 		panelCVariables.add(btnLVariables);
 		
-		btnAVPlacas = new JButton("Asocciar variables a las placas");
-		panelCVariables.add(btnAVPlacas);
-		
 		btnCVariable = new JButton("Crear Variable");
 		panelCVariables.add(btnCVariable);
+		
+		btnAVPlacas = new JButton("Asocciar variables a las placas");
+		panelCVariables.add(btnAVPlacas);
 		
 		panelAtras3 = new JPanel();
 		panelVariables.add(panelAtras3, BorderLayout.SOUTH);
@@ -936,6 +953,63 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			}
 		});
 		panelAtras10.add(btnInicio);
+		/*
+		 * Asociar Sensores a placa
+		 */
+		panelSensoresPlaca = new JPanel();
+		panelcentral.add(panelSensoresPlaca, "name_46903230953549");
+		panelSensoresPlaca.setLayout(new BorderLayout(0, 0));
+		
+		panelTVarPla = new JPanel();
+		panelSensoresPlaca.add(panelTVarPla, BorderLayout.CENTER);
+		panelTVarPla.setLayout(new BorderLayout(0, 0));
+		
+		panelASENSPLAca = new JPanel();
+		panelTVarPla.add(panelASENSPLAca, BorderLayout.CENTER);
+		panelASENSPLAca.setLayout(new GridLayout(1, 0, 0, 0));
+		tPlaca2=new JTable(mPlaca);
+		tPlaca2.addFocusListener(this);
+		tPlaca2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tPlaca2.setModel(mPlaca);
+		scrollUTablaPlaca = new JScrollPane(tPlaca2);
+		panelASENSPLAca.add(scrollUTablaPlaca);
+		
+		scrolltablaSensor = new JScrollPane(tSensor1);
+		panelASENSPLAca.add(scrolltablaSensor);
+		
+		panelAsociarSP = new JPanel();
+		panelTVarPla.add(panelAsociarSP, BorderLayout.SOUTH);
+		panelAsociarSP.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		btnAsociarSP = new JButton("Asociar sensor a placa");
+		btnAsociarSP.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		panelAsociarSP.add(btnAsociarSP);
+		
+		panelAtras11 = new JPanel();
+		panelSensoresPlaca.add(panelAtras11, BorderLayout.SOUTH);
+		panelAtras11.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		btnAtras11 = new JButton("Atras");
+		btnAtras11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelSensoresPlaca.setVisible(false);
+				panelSensores.setVisible(true);
+			lblS.setText("Seleccionar opccion");	
+			}
+		});
+		panelAtras11.add(btnAtras11);
+		
+		btnMenuInicio = new JButton("Menu inicio");
+		btnMenuInicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelSensoresPlaca.setVisible(false);
+				botoneraInicial.setVisible(true);
+			lblS.setText("Seleccionar opccion");	}
+		});
+		panelAtras11.add(btnMenuInicio);
 		
 	      panelApagar = new JPanel();
 		contentPane.add(panelApagar, BorderLayout.SOUTH);
