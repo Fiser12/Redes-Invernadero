@@ -157,10 +157,16 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	private JButton btnBSensor;
 	private JScrollPane scrollLSensor;
 	private JPanel panelCSensor;
-	private JPanel panel_1;
+	private JPanel panelCrSensor;
 	private JPanel panelAtras10;
 	private JButton btnAtras10;
-	private JButton btnNewButton_1;
+	private JButton btnInicio;
+	private JPanel panelBCSe;
+	private JPanel panelCreSensor;
+	private JButton btnCrSensor;
+	private JTextField textFSensor;
+	private JTextField textNSensor;
+	private JTextField textIDSensor;
 
 	/**
 	 * Launch the application.
@@ -838,23 +844,91 @@ public class ventanaServidor extends JFrame implements FocusListener {
 				}
 		});
 		panelAtras9.add(btnInicio5);
-		
+		/*
+		 * Crear sensor
+		 */
 		panelCSensor = new JPanel();
 		panelcentral.add(panelCSensor, "name_27780962298831");
 		panelCSensor.setLayout(new BorderLayout(0, 0));
 		
-		panel_1 = new JPanel();
-		panelCSensor.add(panel_1);
+		panelCrSensor = new JPanel();
+		panelCSensor.add(panelCrSensor);
+		panelCrSensor.setLayout(new BorderLayout(0, 0));
+		
+		panelBCSe = new JPanel();
+		panelCrSensor.add(panelBCSe, BorderLayout.SOUTH);
+		panelBCSe.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		btnCrSensor = new JButton("Crear Sensor");
+		btnCrSensor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			/*
+			 * rdbtnEISensor
+			 * textFSensor textNSensor textIDSensor
+			 */
+			}
+		});
+		panelBCSe.add(btnCrSensor);
+		
+		panelCreSensor = new JPanel();
+		panelCrSensor.add(panelCreSensor, BorderLayout.CENTER);
+		panelCreSensor.setLayout(null);
+		
+		JLabel lblSensorId = new JLabel("Sensor ID:");
+		lblSensorId.setBounds(10, 27, 73, 14);
+		panelCreSensor.add(lblSensorId);
+		
+		JLabel lblNSensor = new JLabel("Sensor Nombre:");
+		lblNSensor.setBounds(10, 64, 94, 14);
+		panelCreSensor.add(lblNSensor);
+		
+		JLabel lblFuncionPrincipal = new JLabel("Funcion Principal:");
+		lblFuncionPrincipal.setBounds(10, 89, 114, 14);
+		panelCreSensor.add(lblFuncionPrincipal);
+		
+		JRadioButton rdbtnEISensor = new JRadioButton("Estodo inicial activado");
+		rdbtnEISensor.setBounds(121, 118, 157, 23);
+		panelCreSensor.add(rdbtnEISensor);
+		
+		textFSensor = new JTextField();
+		textFSensor.setBounds(208, 86, 172, 20);
+		panelCreSensor.add(textFSensor);
+		textFSensor.setColumns(10);
+		
+		textNSensor = new JTextField();
+		textNSensor.setBounds(207, 55, 172, 20);
+		panelCreSensor.add(textNSensor);
+		textNSensor.setColumns(10);
+		
+		textIDSensor = new JTextField();
+		textIDSensor.setBounds(207, 24, 86, 20);
+		panelCreSensor.add(textIDSensor);
+		textIDSensor.setColumns(10);
 		
 		panelAtras10 = new JPanel();
 		panelCSensor.add(panelAtras10, BorderLayout.SOUTH);
 		panelAtras10.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		btnAtras10 = new JButton("New button");
+		btnAtras10 = new JButton("Atras");
+		btnAtras10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCSensor.setVisible(false);
+				panelSensores.setVisible(true);
+				lblS.setText("Seleccionar opccion");
+			
+			}
+		});
 		panelAtras10.add(btnAtras10);
 		
-		btnNewButton_1 = new JButton("New button");
-		panelAtras10.add(btnNewButton_1);
+		btnInicio = new JButton("Menu inicio");
+		btnInicio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCSensor.setVisible(false);
+				botoneraInicial.setVisible(true);
+				lblS.setText("Seleccionar opccion");
+			}
+		});
+		panelAtras10.add(btnInicio);
 		
 	      panelApagar = new JPanel();
 		contentPane.add(panelApagar, BorderLayout.SOUTH);
