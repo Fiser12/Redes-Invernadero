@@ -87,6 +87,7 @@ public class VentanaSeleccionarValor extends JFrame {
 		 formatter.setMaximum(Integer.MAX_VALUE);
 		 // If you want the value to be committed on each keystroke instead of focus lost
 		 formatter.setCommitsOnValidEdit(true);
+		 JLabel lblNewLabel = new JLabel("Valor");
 
 		if(accion.equals("Subir a.c")||accion.equals("Bajar a.c"))
 			lblParametro.setText("Seleccionar temperatura a " + accion);
@@ -99,6 +100,7 @@ public class VentanaSeleccionarValor extends JFrame {
 		else{
 			lblParametro.setText("Continuar para descargar imagen");
 			txIncremento.setVisible(false);
+			lblNewLabel.setVisible(false);
 		}
 
 		panel_1.add(lblParametro);
@@ -110,7 +112,6 @@ public class VentanaSeleccionarValor extends JFrame {
 		JPanel panel_5 = new JPanel();
 		incremento.add(panel_5);
 				 
-		 JLabel lblNewLabel = new JLabel("Valor");
 		 panel_5.add(lblNewLabel);
 		 panel_5.add(txIncremento);
 		JPanel botones = new JPanel();
@@ -144,7 +145,7 @@ public class VentanaSeleccionarValor extends JFrame {
 							VentanaCamara ventana = new VentanaCamara(temp, s.getId_sensor()+"");
 							ventana.setVisible(true);
 						}
-
+						dispose();
 					}
 				} catch (IOException e1) {
 					e1.printStackTrace();
