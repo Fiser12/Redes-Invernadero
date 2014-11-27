@@ -61,7 +61,7 @@ public class VentanaSeleccionarValor extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaSeleccionarValor(Sensor s, final VentanaTabla control) {
+	public VentanaSeleccionarValor(final Sensor s, final VentanaTabla control) {
 		setBounds(100, 100, 450, 200);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -75,7 +75,7 @@ public class VentanaSeleccionarValor extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel.add(panel_1);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
-		String accion = s.getUltimaAccion();
+		final String accion = s.getUltimaAccion();
 		JLabel lblParametro = new JLabel("Indique el valor de la variable:");
 		lblParametro.setHorizontalAlignment(SwingConstants.CENTER);
 		NumberFormat format = NumberFormat.getInstance();

@@ -5,7 +5,10 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.GridLayout;
 
@@ -14,17 +17,23 @@ import javax.swing.JLabel;
 
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
+
 import servidor.serverController.*;
 import util.SocketManager;
 import util.Util;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.LinkedList;
 
-public class ventanaServidor extends JFrame {
+import javax.swing.BoxLayout;
+import javax.swing.JScrollPane;
+
+public class ventanaServidor extends JFrame implements FocusListener {
 
 	/**
 	 * 
@@ -68,10 +77,33 @@ public class ventanaServidor extends JFrame {
 	private JPanel panelApagar;
 	private JButton btnConexiones;
 	private JButton btnAServidor;
-	
+	private JModel mUsuario;
+	private JModel mPlaca;
+	private JModel mVariable;
+	private JModel mSensor;
+	private JTable tUsuario;
+	private JTable tPlaca;
+	private JTable tSensor;
+	private JTable tVariable;
 	private static ServerSocket wellcomeSocket;
 	public static LinkedList<SocketManager> listaSockets;
 	public static LinkedList<Request> listaHilos;
+	private JPanel panelAUsuarioPlacas;
+	private JPanel panelTablas;
+	private JPanel panelAtras4;
+	private JButton btnAtras4;
+	private JButton btnInicio1;
+	private JScrollPane scrollPaneTUsuario;
+	private JScrollPane scrollPanePlaca;
+	private JPanel panelBotonesU;
+	private JPanel panelCombinar;
+	private JButton btnAUPlacas;
+	private JPanel panelLUsuario;
+	private JPanel panelCUsuario;
+	private JPanel panelAtras5;
+	private JButton btnAtras5;
+	private JButton btnInicio2;
+	private JButton btnUBorrar;
 
 	/**
 	 * Launch the application.
@@ -113,13 +145,49 @@ public class ventanaServidor extends JFrame {
 	 * Create the frame.
 	 */
 	public ventanaServidor() throws Exception{
+	
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+		/*
+		 * Inicializaccion de modelos de tabla
+		 */
+			JModel mUsuario=new JModel();
+			mUsuario.setColumnIdentifiers(new String[]{"Nombre Usuario"});
+			JModel mPlaca=new JModel();
+			mPlaca.setColumnIdentifiers(new String[]{"ID","Estado"});
+			JModel mSensor=new JModel();
+			mSensor.setColumnIdentifiers(new String[]{"ID","Estado variable","Nombre Variable","Ultima Accion","Funcion principal"});
+			JModel mVariable=new JModel();
+			mVariable.setColumnIdentifiers(new String[]{"Nombre"});
+			/*
+			 * Inicializaccion de las tablas
+			 */
+			//tabla Usuario
+			tUsuario=new JTable(mUsuario);
+			tUsuario.addFocusListener(this);
+			tUsuario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			tUsuario.setModel(mUsuario);
+			//tabla variable
+			tVariable=new JTable(mVariable);
+			tVariable.addFocusListener(this);
+			tVariable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			tVariable.setModel(mVariable);
+			//tabla Sensor
+			tSensor=new JTable(mSensor);
+			tSensor.addFocusListener(this);
+			tSensor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			tSensor.setModel(mSensor);
+			//tabla Placa
+			tPlaca=new JTable(mPlaca);
+			tPlaca.addFocusListener(this);
+			tPlaca.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			tPlaca.setModel(mPlaca);
+			
 		panelSuperior = new JPanel();
 		contentPane.add(panelSuperior, BorderLayout.NORTH);
 		panelSuperior.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -130,12 +198,15 @@ public class ventanaServidor extends JFrame {
 		panelcentral = new JPanel();
 		contentPane.add(panelcentral, BorderLayout.CENTER);
 		panelcentral.setLayout(new CardLayout(0, 0));
-		
+		/*
+		 * Botonera inicial
+		 */
 		botoneraInicial = new JPanel();
 		panelcentral.add(botoneraInicial, "name_117604164092399");
 		botoneraInicial.setLayout(new GridLayout(2, 2, 0, 0));
 	    
-	    btnASensores = new JButton("Administrar Sensores");
+	    btnASensores = 
+	    		new JButton("Administrar Sensores");
 	    btnASensores.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		botoneraInicial.setVisible(false);
@@ -149,6 +220,7 @@ public class ventanaServidor extends JFrame {
 	    	public void actionPerformed(ActionEvent e) {
 	    		botoneraInicial.setVisible(false);
 	    	    panelUsuarios.setVisible(true);	
+	    	 
 	    	}
 	    });
 	    
@@ -170,7 +242,9 @@ public class ventanaServidor extends JFrame {
 	    });
 	    botoneraInicial.add(btnAVariables);
 	    botoneraInicial.add(btnASensores);
-		
+		/*
+		 * Opciones Usuario
+		 */
 		panelUsuarios = new JPanel();
 		panelcentral.add(panelUsuarios, "name_117609091157597");
 		panelUsuarios.setLayout(new BorderLayout(0, 0));
@@ -179,8 +253,28 @@ public class ventanaServidor extends JFrame {
 		panelUsuarios.add(panelBotonesUsuario);
 		
 		btnAUsuarioPlaca = new JButton("Asociciar Usuarios a placas");
+		btnAUsuarioPlaca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			     panelAUsuarioPlacas.setVisible(true);
+			     /*
+			      * Cargar los datos de la tabla placa y usuario
+			      */
+				panelUsuarios.setVisible(false);
+				lblS.setText("Seleccionar ambas tablas para poder relaccionar:");	
+			}
+		});
 		
 		btnFUsuario = new JButton("Funcionalidades de usuario");
+		btnFUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			panelUsuarios.setVisible(false);
+			panelLUsuario.setVisible(true);
+			lblS.setText("Seleccionar una Usuario a borrar");
+			/*
+			 * Rellenar tabla usuario
+			 */
+			}
+		});
 		panelBotonesUsuario.setLayout(new GridLayout(3, 1, 0, 0));
 		panelBotonesUsuario.add(btnAUsuarioPlaca);
 		panelBotonesUsuario.add(btnFUsuario);
@@ -196,7 +290,9 @@ public class ventanaServidor extends JFrame {
 			}
 		});
 		panelUsuarios.add(btnAtras, BorderLayout.SOUTH);
-		
+		/*
+		 * Opciones de placas
+		 */
 		panelPlacas = new JPanel();
 		panelcentral.add(panelPlacas, "name_119314737616723");
 		panelPlacas.setLayout(new BorderLayout(0, 0));
@@ -253,7 +349,9 @@ public class ventanaServidor extends JFrame {
 	    	}
 	    });
 		panelAtras2.add(btnAtras2);
-		
+		/*
+		 * Panel opciones de las variables
+		 */
 		panelVariables = new JPanel();
 		panelcentral.add(panelVariables, "name_120457173488400");
 		panelVariables.setLayout(new BorderLayout(0, 0));
@@ -280,9 +378,101 @@ public class ventanaServidor extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			panelVariables.setVisible(false);
 			botoneraInicial.setVisible(true);
-			}
+						}
 		});
 		panelAtras3.add(btnAtras3);
+		/*
+		 * Panel Asocciaccion Placas Usuario
+		 */
+		panelAUsuarioPlacas = new JPanel();
+		panelcentral.add(panelAUsuarioPlacas, "name_5095721302242");
+		panelAUsuarioPlacas.setLayout(new BorderLayout(0, 0));
+		
+		panelAtras4 = new JPanel();
+		panelAUsuarioPlacas.add(panelAtras4, BorderLayout.SOUTH);
+		panelAtras4.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		btnAtras4 = new JButton("Atras");
+		btnAtras4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+				panelAUsuarioPlacas.setVisible(false);
+				panelUsuarios.setVisible(true);
+				lblS.setText("Seleccionar una opcion");
+			}
+		});
+		panelAtras4.add(btnAtras4);
+		
+		btnInicio1 = new JButton("Volver al inicio");
+		btnInicio1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelAUsuarioPlacas.setVisible(false);
+				botoneraInicial.setVisible(true);
+				lblS.setText("Seleccionar una opcion");
+			}
+		});
+		panelAtras4.add(btnInicio1);
+		
+		panelBotonesU = new JPanel();
+		panelAUsuarioPlacas.add(panelBotonesU, BorderLayout.CENTER);
+		panelBotonesU.setLayout(new BorderLayout(0, 0));
+		
+		panelTablas = new JPanel();
+		panelBotonesU.add(panelTablas);
+		panelTablas.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		scrollPaneTUsuario = new JScrollPane(tUsuario);
+		panelTablas.add(scrollPaneTUsuario);
+		
+		scrollPanePlaca = new JScrollPane(tPlaca);
+		panelTablas.add(scrollPanePlaca);
+		
+		panelCombinar = new JPanel();
+		panelBotonesU.add(panelCombinar, BorderLayout.SOUTH);
+		panelCombinar.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		btnAUPlacas = new JButton("Asocciar usuarios a placa");
+		panelCombinar.add(btnAUPlacas);
+		/*
+		 * Lista Usuario
+		 */
+		panelLUsuario = new JPanel();
+		panelcentral.add(panelLUsuario, "name_10638615482548");
+		panelLUsuario.setLayout(new BorderLayout(0, 0));
+		
+		panelCUsuario = new JPanel();
+		panelLUsuario.add(panelCUsuario, BorderLayout.CENTER);
+		panelCUsuario.setLayout(new BorderLayout(0, 0));
+		
+		btnUBorrar = new JButton("Borrar Usuario");
+		panelCUsuario.add(btnUBorrar, BorderLayout.SOUTH);
+		
+		JScrollPane scroLUsuario = new JScrollPane(tUsuario);
+		panelCUsuario.add(scroLUsuario, BorderLayout.CENTER);
+		
+		panelAtras5 = new JPanel();
+		panelLUsuario.add(panelAtras5, BorderLayout.SOUTH);
+		panelAtras5.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		btnAtras5 = new JButton("Atras");
+		btnAtras5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			panelLUsuario.setVisible(false);
+			panelUsuarios.setVisible(true);
+			lblS.setText("Seleccionar una opcion: ");
+			}
+		});
+		panelAtras5.add(btnAtras5);
+		
+		btnInicio2 = new JButton("Menu inicio");
+		btnInicio2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelLUsuario.setVisible(false);
+				botoneraInicial.setVisible(true);
+				lblS.setText("Seleccionar una opcion: ");
+			}
+		});
+		panelAtras5.add(btnInicio2);
 		
 	      panelApagar = new JPanel();
 		contentPane.add(panelApagar, BorderLayout.SOUTH);
@@ -332,5 +522,31 @@ public class ventanaServidor extends JFrame {
 	}
 	public static void desconectar(){
 		System.exit(0);
+	}
+	public class JModel extends DefaultTableModel
+	{
+
+		/**
+		 * Metodo utilizado para no editar la tabla
+		 */
+		public boolean isCellEditable (int row, int column)
+		{
+			// Aquí devolvemos true o false según queramos que una celda
+			// identificada por fila,columna (row,column), sea o no editable
+			if (column >=0)
+				return false;
+			return true;
+		}
+	}
+	@Override
+	public void focusGained(FocusEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
