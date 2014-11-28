@@ -303,10 +303,10 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			tSensor.setModel(mSensor);
 			tSensor.getTableHeader().setReorderingAllowed(false);
 			//sensor 2
-			tSensor1=new JTable(mSensor);
+			tSensor1=new JTable(mSensor1);
 			tSensor1.addFocusListener(this);
 			tSensor1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			tSensor1.setModel(mSensor);
+			tSensor1.setModel(mSensor1);
 			tSensor1.getTableHeader().setReorderingAllowed(false);
 		
 		panelSuperior = new JPanel();
@@ -1092,7 +1092,11 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		scrollUTablaPlaca = new JScrollPane(tPlaca2);
 		panelASENSPLAca.add(scrollUTablaPlaca);
 		
-		scrolltablaSensor = new JScrollPane(tSensor1);
+		scrolltablaSensor = new JScrollPane(tSensor);
+		/*
+		 * 	scrolltablaSensor = new JScrollPane(tSensor1);
+		 * Sale vacia sin la parte de arriba
+		 */
 		panelASENSPLAca.add(scrolltablaSensor);
 		
 		panelAtras11 = new JPanel();
@@ -1416,6 +1420,7 @@ public void rellenarSensores(){
 		
 	}
 	mSensor.fireTableDataChanged();
+	mSensor1.fireTableDataChanged();
 	for(int i=0;i<devolver.size();i++){
 		Sensor s=devolver.get(i);
 		if(s.getVariable().equals(null)){
