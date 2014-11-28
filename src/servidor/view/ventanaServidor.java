@@ -22,6 +22,8 @@ import java.awt.CardLayout;
 
 import servidor.serverController.*;
 import servidor.serverModel.InteraccionDB;
+import servidor.serverModel.ModelClass.Sensor;
+import servidor.serverModel.ModelClass.Usuario;
 import util.SocketManager;
 import util.Util;
 import util.excepciones.RepetElement;
@@ -254,13 +256,14 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		/*
 		 * Inicializaccion de modelos de tabla
 		 */
-			JModel mUsuario=new JModel();
+		
+			 mUsuario=new JModel();
 			mUsuario.setColumnIdentifiers(new String[]{"Nombre Usuario"});
-			JModel mPlaca=new JModel();
+			mPlaca=new JModel();
 			mPlaca.setColumnIdentifiers(new String[]{"ID","Estado"});
-			JModel mSensor=new JModel();
-			mSensor.setColumnIdentifiers(new String[]{"ID","Estado variable","Nombre Variable","Ultima Accion","Funcion principal"});
-			JModel mVariable=new JModel();
+			 mSensor=new JModel();
+			mSensor.setColumnIdentifiers(new String[]{"ID","EstadoV","Variable","Ul Accion","Fun principal"});
+			 mVariable=new JModel();
 			mVariable.setColumnIdentifiers(new String[]{"Nombre"});
 			/*
 			 * Inicializaccion de las tablas
@@ -377,6 +380,8 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			panelUsuarios.setVisible(false);
 			panelLUsuario.setVisible(true);
 			lblS.setText("Seleccionar una Usuario a borrar");
+			rellenarTablaUsuario();
+			
 			/*
 			 * Rellenar tabla usuario
 			 */
@@ -468,7 +473,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			panelLSensores.setVisible(true);
 			panelSensores.setVisible(false);
 			lblS.setText("Seleccionar sensor a borrar:");
-			
+			rellenarSensores();
 			}
 		});
 		panelCSensores.add(btnLSensores);
@@ -490,7 +495,9 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			public void actionPerformed(ActionEvent e) {
 				panelSensoresPlaca.setVisible(true);
 				panelSensores.setVisible(false);
-			lblS.setText("Seleccionar Ambas tablas para realizar la asociaciom de sensores con placas:");	}
+			lblS.setText("Seleccionar Ambas tablas para realizar la asociaciom de sensores con placas:");
+			rellenarSensores();
+			}
 		});
 		panelCSensores.add(btnASPlacas);
 		
@@ -683,6 +690,12 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		
 		btnUBorrar = new JButton("Borrar Usuario");
+		btnUBorrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			String nombre=""+tUsuario.getValueAt(tUsuario.getSelectedRow(), 0);
+			InteraccionDB.eliminarUser(nombre);
+			}
+		});
 		btnUBorrar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAtras5.add(btnUBorrar);
 		panelAtras5.add(btnInicio2);
@@ -1289,4 +1302,39 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	//    }
 	    return null;
  }
+public void rellenarTablaUsuario()
+
+	{
+		LinkedList<Usuario> devolver = new LinkedList<Usuario>();
+		devolver=InteraccionDB.listadoUsuario();
+	
+		for(int i=0;i<devolver.size();i++)		
+		{Usuario u= devolver.get(i);
+        mUsuario.addRow(new String[]{u.getUsuario()});	
+		}
+		mUsuario.fireTableDataChanged();
+	 tUsuario.setModel(mUsuario);
+	 tUsuario.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+	 tUsuario1.setModel(mUsuario);	
+	 tUsuario1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+	}
+public void rellenarSensores(){
+	LinkedList<Sensor> devolver = new LinkedList<Sensor>();
+	devolver=InteraccionDB.ListadoSensor();
+	for(int i=0;i<devolver.size();i++){
+		Sensor s=devolver.get(i);
+	
+		mSensor.addRow(new String[]{""+s.getId_sensor(),s.getEstadoVariable(),s.getVariable(),s.getUltimaAccion(),s.getFuncionPrincipal()});
+		
+	}
+	mSensor.fireTableDataChanged();
+	tSensor.setModel(mSensor);
+	tSensor1.setModel(mSensor);
+	
+}
+public void rellenarPLacas(){
+	LinkedList<Sensor> devolver = new LinkedList<Sensor>();
+	
+}
+
 }

@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import servidor.serverModel.ModelClass.Sensor;
+import servidor.serverModel.ModelClass.Usuario;
 import util.excepciones.RepetElement;
 import util.excepciones.SearchException;
 
@@ -116,6 +117,39 @@ public class InteraccionDB {
 		else
 			throw new RepetElement();
 
+	}
+	public static void eliminarUser(String usuario){
+			gestor.enviarComando("DELETE FROM Usuario WHERE (Nombre='"+usuario+"');");	
+	}
+	public static LinkedList<Sensor>ListadoSensor(){
+		LinkedList<Sensor> sensores=new LinkedList<Sensor>();
+		gestor.enviarComando("SELECT * FROM Sensor");
+		ResultSet resultado=gestor.getResultSet();
+		try {
+			while(resultado.next()){
+				sensores.add(new Sensor(resultado.getInt("Id_Sensor"), resultado.getString("Nombre_Variable"), resultado.getString("Funcion_Principal"), resultado.getString("Estado_la_variable"), resultado.getString("Ultima_Accion"), resultado.getInt("id_Placa")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return sensores;
+	}
+	public static  LinkedList<Usuario>listadoUsuario(){
+		LinkedList<Usuario> usuarios=new LinkedList<Usuario>();
+		gestor.enviarComando("SELECT * FROM Usuario;");
+		ResultSet respuesta=gestor.getResultSet();
+		try {
+			while(respuesta.next()){
+				
+				usuarios.add(new Usuario(respuesta.getString("Nombre"),respuesta.getString("Pass")));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return usuarios;
 	}
 	private static LinkedList<Sensor> listadoList(String nombre)
 	{
