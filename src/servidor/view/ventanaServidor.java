@@ -102,6 +102,8 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	private JModel mPlaca;
 	private JModel mVariable;
 	private JModel mSensor;
+	private JModel mSensor1;
+	private JModel mPlaca1;
 	private JTable tUsuario;
 	private JTable tPlaca;
 	private JTable tSensor;
@@ -111,6 +113,9 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	private JTable tSensor1;
 	private JTable tPlaca2;
 	private JTable tVariable1;
+	
+	
+	
 	private static ServerSocket wellcomeSocket;
 	public static LinkedList<SocketManager> listaSockets;
 	public static LinkedList<Request> listaHilos;
@@ -197,7 +202,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	private JButton btnMenu7;
 	private JPanel panelCVarible;
 	private JTextField textField;
-	private JPanel panelAVarPlacas;
+	private JPanel panelAVarSensor;
 	private JPanel panelAtra14;
 	private JButton btnAtras14;
 	private JButton btnAVP;
@@ -246,10 +251,11 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	 * Create the frame.
 	 */
 	public ventanaServidor() throws Exception{
+		setResizable(false);
 	
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 400);
+		setBounds(100, 100, 700, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -266,6 +272,13 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			mSensor.setColumnIdentifiers(new String[]{"ID Sensor","EstadoV","Variable","Ul Accion","Fun principal"});
 			 mVariable=new JModel();
 			mVariable.setColumnIdentifiers(new String[]{"Nombre Variable"});
+			/*
+			 * Dos modelos ya que uns para mostrar todos los sensores y otros los que ya esten relaccionarlos no mostrarlos
+			 */
+			mPlaca1=new JModel();
+			mPlaca1.setColumnIdentifiers(new String[]{"ID Placa"});
+			 mSensor1=new JModel();
+			mSensor1.setColumnIdentifiers(new String[]{"ID Sensor","EstadoV","Variable","Ul Accion","Fun principal"});
 			/*
 			 * Inicializaccion de las tablas
 			 */
@@ -321,7 +334,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	    	}
 	    });
 	    
-	    btnAUsuarios = new JButton("Administrar usuarios");
+	    btnAUsuarios = new JButton("Administrar Usuarios");
 	    btnAUsuarios.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    botoneraInicial.add(btnAUsuarios);
 	    btnAUsuarios.addActionListener(new ActionListener() {
@@ -550,10 +563,10 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		panelCVariables.add(btnCVariable);
 		
-		btnAVPlacas = new JButton("Asociar variables a las placas");
+		btnAVPlacas = new JButton("Asociar variables a las Sensores");
 		btnAVPlacas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelAVarPlacas.setVisible(true);
+				panelAVarSensor.setVisible(true);
 				panelVariables.setVisible(false);
 				lblS.setText("Seleccionar ambas tablas para asociar ");
 				
@@ -608,7 +621,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			}
 		});
 		
-		btnAUPlacas = new JButton("Asociar usuarios a placa");
+		btnAUPlacas = new JButton("Asociar");
 		btnAUPlacas.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAtras4.add(btnAUPlacas);
 		btnAUPlacas.addActionListener(new ActionListener() {
@@ -845,6 +858,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras8.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		btnAtras8 = new JButton("Atras");
+		btnAtras8.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAtras8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelCPlaca.setVisible(false);
@@ -855,6 +869,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras8.add(btnAtras8);
 		
 		btnMenuInicio4 = new JButton("Menu Inicio");
+		btnMenuInicio4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnMenuInicio4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelCPlaca.setVisible(false);
@@ -864,6 +879,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		
 		btnCreaccionPlaca = new JButton("Creaccion Placa");
+		btnCreaccionPlaca.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAtras8.add(btnCreaccionPlaca);
 		btnCreaccionPlaca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -893,16 +909,18 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		textID.setColumns(10);
 		
 		lbNombrep = new JLabel("Nombre:");
-		lbNombrep.setBounds(88, 58, 94, 14);
+		lbNombrep.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lbNombrep.setBounds(88, 95, 94, 14);
 		panelCreaccionPla.add(lbNombrep);
 		
 		textNombre = new JTextField();
-		textNombre.setBounds(192, 55, 158, 20);
+		textNombre.setBounds(202, 94, 158, 20);
 		panelCreaccionPla.add(textNombre);
 		textNombre.setColumns(10);
 		
 		JRadioButton rdbtnEstadoinicial = new JRadioButton("Encendido");
-		rdbtnEstadoinicial.setBounds(139, 79, 109, 23);
+		rdbtnEstadoinicial.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		rdbtnEstadoinicial.setBounds(165, 141, 109, 23);
 		panelCreaccionPla.add(rdbtnEstadoinicial);
 		/*
 		 * Lista de sensores
@@ -1057,6 +1075,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras11.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		btnAtras11 = new JButton("Atras");
+		btnAtras11.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAtras11.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelSensoresPlaca.setVisible(false);
@@ -1067,6 +1086,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras11.add(btnAtras11);
 		
 		btnMenuInicio = new JButton("Menu inicio");
+		btnMenuInicio.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnMenuInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelSensoresPlaca.setVisible(false);
@@ -1074,7 +1094,8 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			lblS.setText("Seleccionar opccion");	}
 		});
 		
-		btnAsociarSP = new JButton("Asociar sensor a placa");
+		btnAsociarSP = new JButton("Asociar ");
+		btnAsociarSP.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAtras11.add(btnAsociarSP);
 		btnAsociarSP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1176,18 +1197,18 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		/*
 		 * Panel Asociacion placas
 		 */
-		panelAVarPlacas = new JPanel();
-		panelcentral.add(panelAVarPlacas, "name_6280644490231");
-		panelAVarPlacas.setLayout(new BorderLayout(0, 0));
+		panelAVarSensor = new JPanel();
+		panelcentral.add(panelAVarSensor, "name_6280644490231");
+		panelAVarSensor.setLayout(new BorderLayout(0, 0));
 		
 		panelAtra14 = new JPanel();
-		panelAVarPlacas.add(panelAtra14, BorderLayout.SOUTH);
+		panelAVarSensor.add(panelAtra14, BorderLayout.SOUTH);
 		panelAtra14.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		btnAtras14 = new JButton("Atras");
 		btnAtras14.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				panelAVarPlacas.setVisible(false);
+				panelAVarSensor.setVisible(false);
 				panelVariables.setVisible(true);
 				lblS.setText("Seleccionar una opcion: ");
 			}
@@ -1195,31 +1216,27 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		btnAtras14.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAtra14.add(btnAtras14);
 		
-		btnAVP = new JButton("Asocciar placas y variables\r\n");
+		btnAVP = new JButton("Asociar \r\n");
 		btnAVP.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAtra14.add(btnAVP);
 		
 		btnInicio7 = new JButton("Menu inicio");
 		btnInicio7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelAVarPlacas.setVisible(false);
+				panelAVarSensor.setVisible(false);
 				botoneraInicial.setVisible(true);
 				lblS.setText("Seleccionar una opcion: ");
 			}
 		});
-		//Inicializando las tablas
-		rellenarTablaUsuario();
-		rellenarPLacas();
-		rellenarSensores();
-		rellenarVariables();
+	
 		btnInicio7.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAtra14.add(btnInicio7);
 		
 		panelAVPlacas = new JPanel();
-		panelAVarPlacas.add(panelAVPlacas, BorderLayout.CENTER);
+		panelAVarSensor.add(panelAVPlacas, BorderLayout.CENTER);
 		panelAVPlacas.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		scrollTPlaca = new JScrollPane(tPlaca2);
+		scrollTPlaca = new JScrollPane(tSensor1);
 		panelAVPlacas.add(scrollTPlaca);
 		
 		scrollVariable = new JScrollPane(tVariable1);
@@ -1231,7 +1248,11 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		btnConexiones = new JButton("Administrar conexiones");
 		btnConexiones.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelApagar.add(btnConexiones);
-		
+		//Inicializando las tablas
+		rellenarTablaUsuario();
+		rellenarPLacas();
+		rellenarSensores();
+		rellenarVariables();
 		btnAServidor = new JButton("Apagar servidor");
 		btnAServidor.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAServidor.addActionListener(new ActionListener() {
@@ -1339,8 +1360,14 @@ public void rellenarSensores(){
 		
 	}
 	mSensor.fireTableDataChanged();
+	for(int i=0;i<devolver.size();i++){
+		Sensor s=devolver.get(i);
+		if(s.getVariable().equals(null)){
+			mSensor1.addRow(new String[]{""+s.getId_sensor(),s.getEstadoVariable(),s.getVariable(),s.getUltimaAccion(),s.getFuncionPrincipal()});
+		}
+	}
 	tSensor.setModel(mSensor);
-	tSensor1.setModel(mSensor);
+	tSensor1.setModel(mSensor1);
 	
 }
 public void rellenarPLacas(){
