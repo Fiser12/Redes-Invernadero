@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import servidor.serverModel.ModelClass.Sensor;
+import util.excepciones.RepetElement;
 import util.excepciones.SearchException;
 
 /**
@@ -107,6 +109,13 @@ public class InteraccionDB {
 			e.printStackTrace();
 			return 0;
 		}
+	}
+	public static void insertarUser(String usuario, String pass) throws RepetElement{
+		if(metodoUser(usuario)!=200)
+			gestor.enviarComando("INSERT INTO Usuario VALUES('"+usuario+"','"+pass+"');");
+		else
+			throw new RepetElement();
+
 	}
 	private static LinkedList<Sensor> listadoList(String nombre)
 	{

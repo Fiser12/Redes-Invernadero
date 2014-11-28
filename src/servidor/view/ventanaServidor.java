@@ -3,7 +3,9 @@ package servidor.view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -19,8 +21,10 @@ import java.awt.FlowLayout;
 import java.awt.CardLayout;
 
 import servidor.serverController.*;
+import servidor.serverModel.InteraccionDB;
 import util.SocketManager;
 import util.Util;
+import util.excepciones.RepetElement;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -33,13 +37,18 @@ import java.util.LinkedList;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.Image;
 import java.awt.Insets;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+
 import java.awt.Font;
 
 public class ventanaServidor extends JFrame implements FocusListener {
@@ -743,8 +752,15 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras6.add(btnCrearU);
 		btnCrearU.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//			tFNombre
-				//pFUser
+
+				String user = tFNombre.getText();
+			    String pass=new String(pFUser.getPassword());
+			    try {
+			    	InteraccionDB.insertarUser(user, pass);
+			    }catch(RepetElement E){
+			    	JOptionPane.showMessageDialog(null,"El Usuario ya esta insertado","Error",JOptionPane.ERROR_MESSAGE);
+			    	//Aquí indicas que el usuario ya está repetido
+			    }
 			}
 		});
 		panelAtras6.add(btnAtras6);
@@ -1257,5 +1273,16 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	public void focusLost(FocusEvent e) {
 		// TODO Auto-generated method stub
 		
-	}
+	} 
+ public Image buscarImage(){
+	   JFileChooser chooser = new JFileChooser();
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & PNG Images", "jpg", "png");
+	    chooser.setFileFilter(filter);
+	//    int returnVal = chooser.showOpenDialog();
+	//    if(returnVal == JFileChooser.APPROVE_OPTION) {
+	//       System.out.println("You chose to open this file: " +
+	//           chooser.getSelectedFile().getName());
+	//    }
+	    return null;
+ }
 }
