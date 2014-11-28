@@ -40,6 +40,7 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import java.awt.Font;
 
 public class ventanaServidor extends JFrame implements FocusListener {
 
@@ -172,7 +173,18 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	private JScrollPane scrollUTablaPlaca;
 	private JScrollPane scrolltablaSensor;
 	private JPanel panelLVariables;
-	private JPanel panel;
+	private JPanel panelAtras12;
+	private JButton btnAtras12;
+	private JButton btnBVariable;
+	private JButton btnInicio6;
+	private JScrollPane scrollTVariable;
+	private JPanel panelCVAriable;
+	private JPanel panelAtras13;
+	private JButton btnAtras13;
+	private JButton btnCrVariable;
+	private JButton btnMenu7;
+	private JPanel panelCVarible;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -472,9 +484,22 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelCVariables.setLayout(new GridLayout(3, 1, 0, 0));
 		
 		btnLVariables = new JButton("Lista de Variables");
+		btnLVariables.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelLVariables.setVisible(true);
+				panelVariables.setVisible(false);
+				lblS.setText("Seleccionar una variable a borrar"); }
+		});
 		panelCVariables.add(btnLVariables);
 		
 		btnCVariable = new JButton("Crear Variable");
+		btnCVariable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					panelCVAriable.setVisible(true);
+					panelVariables.setVisible(false);
+					lblS.setText("Rellene los campos para crear la variable");
+					}
+		});
 		panelCVariables.add(btnCVariable);
 		
 		btnAVPlacas = new JButton("Asocciar variables a las placas");
@@ -958,13 +983,97 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			}
 		});
 		panelAtras11.add(btnMenuInicio);
-		
+		/*
+		 * LIsta variables
+		 */
 		panelLVariables = new JPanel();
 		panelcentral.add(panelLVariables, "name_1045599982979");
 		panelLVariables.setLayout(new BorderLayout(0, 0));
 		
-		panel = new JPanel();
-		panelLVariables.add(panel, BorderLayout.SOUTH);
+		panelAtras12 = new JPanel();
+		panelLVariables.add(panelAtras12, BorderLayout.SOUTH);
+		panelAtras12.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		btnAtras12 = new JButton("Atras");
+		btnAtras12.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			panelLVariables.setVisible(false);
+			panelVariables.setVisible(true);
+			lblS.setText("Seleccionar una opccion");
+			}
+		});
+		panelAtras12.add(btnAtras12);
+		
+		btnBVariable = new JButton("Borrar Variable");
+		btnBVariable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			/*
+			 * Borrar variable
+			 */
+			}
+		});
+		panelAtras12.add(btnBVariable);
+		
+		btnInicio6 = new JButton("Menu inicio");
+		btnInicio6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelLVariables.setVisible(false);
+				botoneraInicial.setVisible(true);
+				lblS.setText("Seleccionar una opcion");
+			}
+		});
+		panelAtras12.add(btnInicio6);
+		
+		scrollTVariable = new JScrollPane(tVariable);
+		panelLVariables.add(scrollTVariable, BorderLayout.CENTER);
+		/*
+		 * Crear Variable
+		 */
+		panelCVAriable = new JPanel();
+		panelcentral.add(panelCVAriable, "name_2039127852346");
+		panelCVAriable.setLayout(new BorderLayout(0, 0));
+		
+		panelAtras13 = new JPanel();
+		panelCVAriable.add(panelAtras13, BorderLayout.SOUTH);
+		panelAtras13.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		btnAtras13 = new JButton("Atras");
+		btnAtras13.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelCVAriable.setVisible(false);
+				panelVariables.setVisible(true);
+				lblS.setText("Seleccionar una opccion");
+			}
+		});
+		panelAtras13.add(btnAtras13);
+		
+		btnCrVariable = new JButton("Crear variable");
+		panelAtras13.add(btnCrVariable);
+		
+		btnMenu7 = new JButton("Menu inicio");
+		btnMenu7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					panelCVAriable.setVisible(false);
+					botoneraInicial.setVisible(true);
+					lblS.setText("Seleccionar una opccion");
+			}
+		});
+		panelAtras13.add(btnMenu7);
+		
+		panelCVarible = new JPanel();
+		panelCVAriable.add(panelCVarible, BorderLayout.CENTER);
+		panelCVarible.setLayout(null);
+		
+		JLabel lblNVariable = new JLabel("Nombre variable:");
+		lblNVariable.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNVariable.setBounds(91, 129, 154, 50);
+		panelCVarible.add(lblNVariable);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textField.setBounds(323, 140, 212, 27);
+		panelCVarible.add(textField);
+		textField.setColumns(10);
 		
 	      panelApagar = new JPanel();
 		contentPane.add(panelApagar, BorderLayout.SOUTH);
