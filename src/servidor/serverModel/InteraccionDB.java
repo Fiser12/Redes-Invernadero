@@ -119,8 +119,36 @@ public class InteraccionDB {
 			throw new RepetElement();
 
 	}
+	public static void insertarVariable(String nombre) throws RepetElement{
+	/*
+	 * Falta la imagen
+	 */
+		gestor.enviarComando("Select * FROM Variable WHERE Nombre='"+nombre+"');");
+	ResultSet resultado=gestor.getResultSet();
+	
+	try {
+		if(!resultado.isFirst()){
+			gestor.enviarComando("INSERT INTO Variable VALUES('"+nombre+"');");
+		}
+		else{
+			throw new RepetElement();
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	}
 	public static void eliminarUser(String usuario){
 			gestor.enviarComando("DELETE FROM Usuario WHERE (Nombre='"+usuario+"');");	
+	}
+	public static void eliminarSensor(int ID){
+		gestor.enviarComando("DELETE FROM Usuario WHERE (Id_Sensor'"+ID+"');");	
+	}
+	public static void eliminarPlaca(int ID){
+		gestor.enviarComando("DELETE FROM Usuario WHERE (Id_Placa='"+ID+"');");	
+	}
+	public static void eliminarVariable(String Nombre){
+		gestor.enviarComando("DELETE FROM Usuario WHERE (Nombre='"+Nombre+"');");	
 	}
 	public static LinkedList<Sensor>ListadoSensor(){
 		LinkedList<Sensor> sensores=new LinkedList<Sensor>();

@@ -54,6 +54,9 @@ import javax.swing.JRadioButton;
 
 import java.awt.Font;
 
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+
 public class ventanaServidor extends JFrame implements FocusListener {
 
 	/**
@@ -201,7 +204,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	private JButton btnCrVariable;
 	private JButton btnMenu7;
 	private JPanel panelCVarible;
-	private JTextField textField;
+	private JTextField textFieldVar;
 	private JPanel panelAVarSensor;
 	private JPanel panelAtra14;
 	private JButton btnAtras14;
@@ -210,6 +213,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	private JPanel panelAVPlacas;
 	private JScrollPane scrollVariable;
 	private JScrollPane scrollTPlaca;
+	private JComboBox comboBoxVariable;
 
 	/**
 	 * Launch the application.
@@ -540,8 +544,8 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		
 		 panelCVariables = new JPanel();
 		panelVariables.add(panelCVariables, BorderLayout.CENTER);
-		panelCVariables.setLayout(new GridLayout(3, 1, 0, 0));
-		
+		//panelCVariables.setLayout(new GridLayout(3, 1, 0, 0));
+		panelCVariables.setLayout(new GridLayout(2, 1, 0, 0));
 		btnLVariables = new JButton("Lista de Variables");
 		btnLVariables.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnLVariables.addActionListener(new ActionListener() {
@@ -563,17 +567,17 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		panelCVariables.add(btnCVariable);
 		
-		btnAVPlacas = new JButton("Asociar variables a las Sensores");
-		btnAVPlacas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelAVarSensor.setVisible(true);
-				panelVariables.setVisible(false);
-				lblS.setText("Seleccionar ambas tablas para asociar ");
-				
-			}
-		});
-		btnAVPlacas.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelCVariables.add(btnAVPlacas);
+//		btnAVPlacas = new JButton("Asociar variables a las Sensores");
+//		btnAVPlacas.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				panelAVarSensor.setVisible(true);
+//				panelVariables.setVisible(false);
+//				lblS.setText("Seleccionar ambas tablas para asociar ");
+//				
+//			}
+//		});
+//		btnAVPlacas.setFont(new Font("Tahoma", Font.PLAIN, 16));
+//		panelCVariables.add(btnAVPlacas);
 		
 		panelAtras3 = new JPanel();
 		panelVariables.add(panelAtras3, BorderLayout.SOUTH);
@@ -711,7 +715,9 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		btnUBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			String nombre=""+tUsuario.getValueAt(tUsuario.getSelectedRow(), 0);
+		
 			InteraccionDB.eliminarUser(nombre);
+			rellenarTablaUsuario();
 			}
 		});
 		btnUBorrar.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -835,6 +841,10 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			/*borrar placa
 			 */
 			public void actionPerformed(ActionEvent e) {
+				int id=Integer.parseInt((String) tPlaca.getValueAt(tPlaca.getSelectedRow(), 0));
+				
+				InteraccionDB.eliminarPlaca(id);
+				rellenarPLacas();
 			}
 		});
 		panelAtras7.add(btnInicio4);
@@ -941,6 +951,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras9.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		btnAtras9 = new JButton("Atras");
+		btnAtras9.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAtras9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelLSensores.setVisible(false);
@@ -951,6 +962,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras9.add(btnAtras9);
 		
 		btnInicio5 = new JButton("Menu inicio");
+		btnInicio5.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnInicio5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelLSensores.setVisible(false);
@@ -960,6 +972,14 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		
 		btnBSensor = new JButton("Borrar Sensor");
+		btnBSensor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+	         int id=Integer.parseInt((String) tSensor.getValueAt(tSensor.getSelectedRow(), 0));	
+				InteraccionDB.eliminarSensor(id);
+				rellenarSensores();
+			}
+		});
+		btnBSensor.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAtras9.add(btnBSensor);
 		panelAtras9.add(btnInicio5);
 		/*
@@ -991,7 +1011,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelCreSensor.add(lblFuncionPrincipal);
 		
 		JRadioButton rdbtnEISensor = new JRadioButton("Estodo inicial activado");
-		rdbtnEISensor.setBounds(121, 118, 157, 23);
+		rdbtnEISensor.setBounds(318, 163, 157, 23);
 		panelCreSensor.add(rdbtnEISensor);
 		
 		textFSensor = new JTextField();
@@ -1008,6 +1028,11 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		textIDSensor.setBounds(207, 24, 86, 20);
 		panelCreSensor.add(textIDSensor);
 		textIDSensor.setColumns(10);
+		
+		comboBoxVariable = new JComboBox();
+		comboBoxVariable.setModel(new DefaultComboBoxModel(rellenarCombobox()));
+		comboBoxVariable.setBounds(80, 164, 157, 20);
+		panelCreSensor.add(comboBoxVariable);
 		
 		panelAtras10 = new JPanel();
 		panelCSensor.add(panelAtras10, BorderLayout.SOUTH);
@@ -1039,7 +1064,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			public void actionPerformed(ActionEvent arg0) {
 			/*
 			 * rdbtnEISensor
-			 * textFSensor textNSensor textIDSensor
+			 * textFSensor textNSensor textIDSensor comboBoxVariable 
 			 */
 			}
 		});
@@ -1114,6 +1139,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras12.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		btnAtras12 = new JButton("Atras");
+		btnAtras12.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAtras12.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			panelLVariables.setVisible(false);
@@ -1124,16 +1150,22 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras12.add(btnAtras12);
 		
 		btnBVariable = new JButton("Borrar Variable");
+		btnBVariable.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnBVariable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			/*
 			 * Borrar variable
 			 */
+	     String Nombre= (String) tPlaca.getValueAt(tPlaca.getSelectedRow(), 0);
+				InteraccionDB.eliminarVariable(Nombre);
+				rellenarVariables();
+				comboBoxVariable.setModel(new DefaultComboBoxModel(rellenarCombobox()));
 			}
 		});
 		panelAtras12.add(btnBVariable);
 		
 		btnInicio6 = new JButton("Menu inicio");
+		btnInicio6.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnInicio6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelLVariables.setVisible(false);
@@ -1158,6 +1190,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras13.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		btnAtras13 = new JButton("Atras");
+		btnAtras13.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAtras13.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelCVAriable.setVisible(false);
@@ -1168,9 +1201,25 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras13.add(btnAtras13);
 		
 		btnCrVariable = new JButton("Crear variable");
+		btnCrVariable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			/*
+			 * Dice que falta una columna
+			 */
+				String nombre = textFieldVar.getText();
+			    try {
+			    	InteraccionDB.insertarVariable(nombre);
+			    }catch(RepetElement E){
+			    	JOptionPane.showMessageDialog(null,"La variable ya esta introducida","Error",JOptionPane.ERROR_MESSAGE);
+			    	//Aquí indicas que el usuario ya está repetido
+			    }
+			}
+		});
+		btnCrVariable.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAtras13.add(btnCrVariable);
 		
 		btnMenu7 = new JButton("Menu inicio");
+		btnMenu7.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnMenu7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					panelCVAriable.setVisible(false);
@@ -1189,11 +1238,11 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		lblNVariable.setBounds(91, 129, 154, 50);
 		panelCVarible.add(lblNVariable);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		textField.setBounds(323, 140, 212, 27);
-		panelCVarible.add(textField);
-		textField.setColumns(10);
+		textFieldVar = new JTextField();
+		textFieldVar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textFieldVar.setBounds(323, 140, 212, 27);
+		panelCVarible.add(textFieldVar);
+		textFieldVar.setColumns(10);
 		/*
 		 * Panel Asociacion placas
 		 */
@@ -1334,9 +1383,12 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	//    }
 	    return null;
  }
+
 public void rellenarTablaUsuario()
 
-	{
+
+	{ mUsuario=new JModel();
+	 mUsuario.setColumnIdentifiers(new String[]{"Nombre Usuario"});
 		LinkedList<Usuario> devolver = new LinkedList<Usuario>();
 		devolver=InteraccionDB.listadoUsuario();
 	
@@ -1351,6 +1403,10 @@ public void rellenarTablaUsuario()
 	 tUsuario1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 	}
 public void rellenarSensores(){
+	mSensor=new JModel();
+	mSensor.setColumnIdentifiers(new String[]{"ID Sensor","EstadoV","Variable","Ul Accion","Fun principal"});
+	mSensor1=new JModel();
+	mSensor1.setColumnIdentifiers(new String[]{"ID Sensor","EstadoV","Variable","Ul Accion","Fun principal"});
 	LinkedList<Sensor> devolver = new LinkedList<Sensor>();
 	devolver=InteraccionDB.ListadoSensor();
 	for(int i=0;i<devolver.size();i++){
@@ -1371,6 +1427,11 @@ public void rellenarSensores(){
 	
 }
 public void rellenarPLacas(){
+	mPlaca=new JModel();
+	mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});
+	mPlaca1=new JModel();
+	mPlaca1.setColumnIdentifiers(new String[]{"ID Placa"});
+	
 	LinkedList<Placa> devolver = new LinkedList<Placa>();
 	devolver=InteraccionDB.listadoPlacas();
 	for(int i=0;i<devolver.size();i++){
@@ -1385,6 +1446,8 @@ tPlaca2.setModel(mPlaca);
 public void rellenarVariables(){
 	LinkedList<String> devolver = new LinkedList<String>();
 	devolver=InteraccionDB.listadoVariable();
+	mVariable=new JModel();
+	mVariable.setColumnIdentifiers(new String[]{"Nombre Variable"});
 	for(int i=0;i<devolver.size();i++){
 	
 		mVariable.addRow(new String[]{	devolver.get(i)});
@@ -1393,5 +1456,18 @@ public void rellenarVariables(){
 	tVariable.setModel(mVariable);
 	tVariable1.setModel(mVariable);
 
+}
+/*
+ * Para la creaccion del sensor
+ */
+public String[]rellenarCombobox(){
+	LinkedList<String> devolver = new LinkedList<String>();
+	devolver=InteraccionDB.listadoVariable();
+	String[]var=new String[devolver.size()+1];
+	var[0]="Variable";
+	for(int i=0;i<devolver.size();i++){
+		var[i+1]=devolver.get(i);
+	}
+	return var;
 }
 }
