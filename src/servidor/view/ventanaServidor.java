@@ -22,6 +22,7 @@ import java.awt.CardLayout;
 
 import servidor.serverController.*;
 import servidor.serverModel.InteraccionDB;
+import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Sensor;
 import servidor.serverModel.ModelClass.Usuario;
 import util.SocketManager;
@@ -260,7 +261,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			 mUsuario=new JModel();
 			mUsuario.setColumnIdentifiers(new String[]{"Nombre Usuario"});
 			mPlaca=new JModel();
-			mPlaca.setColumnIdentifiers(new String[]{"ID","Estado"});
+			mPlaca.setColumnIdentifiers(new String[]{"ID"});
 			 mSensor=new JModel();
 			mSensor.setColumnIdentifiers(new String[]{"ID","EstadoV","Variable","Ul Accion","Fun principal"});
 			 mVariable=new JModel();
@@ -369,10 +370,12 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			      * Cargar los datos de la tabla placa y usuario
 			      */
 				panelUsuarios.setVisible(false);
-				lblS.setText("Seleccionar ambas tablas para poder relaccionar:");	
+				lblS.setText("Seleccionar ambas tablas para poder relaccionar:");
+			
+				
 			}
 		});
-		
+	
 		btnFUsuario = new JButton("Funcionalidades de usuario");
 		btnFUsuario.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnFUsuario.addActionListener(new ActionListener() {
@@ -380,7 +383,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			panelUsuarios.setVisible(false);
 			panelLUsuario.setVisible(true);
 			lblS.setText("Seleccionar una Usuario a borrar");
-			rellenarTablaUsuario();
+			
 			
 			/*
 			 * Rellenar tabla usuario
@@ -429,7 +432,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			panelPlacas.setVisible(false);
 			panelLPlaca.setVisible(true);
 			lblS.setText("Seleccionar el usuario a borrar:");
-			}
+		}
 		});
 		panelCPlacas.add(btnLPlaca);
 		
@@ -473,7 +476,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			panelLSensores.setVisible(true);
 			panelSensores.setVisible(false);
 			lblS.setText("Seleccionar sensor a borrar:");
-			rellenarSensores();
+		
 			}
 		});
 		panelCSensores.add(btnLSensores);
@@ -496,7 +499,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 				panelSensoresPlaca.setVisible(true);
 				panelSensores.setVisible(false);
 			lblS.setText("Seleccionar Ambas tablas para realizar la asociaciom de sensores con placas:");
-			rellenarSensores();
+			
 			}
 		});
 		panelCSensores.add(btnASPlacas);
@@ -552,6 +555,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 				panelAVarPlacas.setVisible(true);
 				panelVariables.setVisible(false);
 				lblS.setText("Seleccionar ambas tablas para asociar ");
+				
 			}
 		});
 		btnAVPlacas.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -571,7 +575,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		panelAtras3.add(btnAtras3);
 		/*
-		 * Panel Asocciaccion Placas Usuario No carga la tabla usuario
+		 * Panel Asocciaccion Placas Usuario
 		 */
 		panelAUsuarioPlacas = new JPanel();
 		panelcentral.add(panelAUsuarioPlacas, "name_5095721302242");
@@ -1201,6 +1205,11 @@ public class ventanaServidor extends JFrame implements FocusListener {
 				lblS.setText("Seleccionar una opcion: ");
 			}
 		});
+		//Inicializando las tablas
+		rellenarTablaUsuario();
+		rellenarPLacas();
+		rellenarSensores();
+		rellenarVariables();
 		btnInicio7.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAtra14.add(btnInicio7);
 		
@@ -1333,8 +1342,27 @@ public void rellenarSensores(){
 	
 }
 public void rellenarPLacas(){
-	LinkedList<Sensor> devolver = new LinkedList<Sensor>();
-	
+	LinkedList<Placa> devolver = new LinkedList<Placa>();
+	devolver=InteraccionDB.listadoPlacas();
+	for(int i=0;i<devolver.size();i++){
+		Placa p=devolver.get(i);
+		mPlaca.addRow(new String[]{""+p.getId()});
+	}
+mPlaca.fireTableDataChanged();
+tPlaca.setModel(mPlaca);
+tPlaca1.setModel(mPlaca);
+tPlaca2.setModel(mPlaca);
 }
+public void rellenarVariables(){
+	LinkedList<String> devolver = new LinkedList<String>();
+	devolver=InteraccionDB.listadoVariable();
+	for(int i=0;i<devolver.size();i++){
+	
+		mVariable.addRow(new String[]{	devolver.get(i)});
+	}
+	mVariable.fireTableDataChanged();
+	tVariable.setModel(mVariable);
+	tVariable1.setModel(mVariable);
 
+}
 }

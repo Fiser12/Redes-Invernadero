@@ -22,6 +22,9 @@ public class Placa {
 		this.estado = estado;
 		this.foto = temp;
 	}
+	public Placa(int id){
+	this.id=id;
+	}
 	public Placa() {
 
 	}

@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Sensor;
 import servidor.serverModel.ModelClass.Usuario;
 import util.excepciones.RepetElement;
@@ -135,6 +136,34 @@ public class InteraccionDB {
 		}
 		return sensores;
 	}
+	public static LinkedList<Placa>listadoPlacas(){
+		LinkedList<Placa> placas=new LinkedList<Placa>();
+		gestor.enviarComando("Select *FROM Placa");
+		ResultSet respuesta=gestor.getResultSet();
+		try {
+			while(respuesta.next()){
+			placas.add(new Placa(respuesta.getInt(1)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return placas;
+	}
+	public static LinkedList<String>listadoVariable(){
+		LinkedList<String> variables=new LinkedList<String>();
+		gestor.enviarComando("SELECT * FROM Variable;");
+		ResultSet respuesta=gestor.getResultSet();
+		try {
+			while(respuesta.next()){
+				variables.add(respuesta.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return variables;
+	}
 	public static  LinkedList<Usuario>listadoUsuario(){
 		LinkedList<Usuario> usuarios=new LinkedList<Usuario>();
 		gestor.enviarComando("SELECT * FROM Usuario;");
@@ -142,7 +171,7 @@ public class InteraccionDB {
 		try {
 			while(respuesta.next()){
 				
-				usuarios.add(new Usuario(respuesta.getString("Nombre"),respuesta.getString("Pass")));
+				usuarios.add(new Usuario(respuesta.getString("Nombre"),""));
 				
 			}
 		} catch (SQLException e) {
