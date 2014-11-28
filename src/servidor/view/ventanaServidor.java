@@ -274,6 +274,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelSuperior.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		lblS = new JLabel("Seleccionar una opcion:");
+		lblS.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelSuperior.add(lblS);
 		
 		panelcentral = new JPanel();
@@ -288,6 +289,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	    
 	    btnASensores = 
 	    		new JButton("Administrar Sensores");
+	    btnASensores.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    btnASensores.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		botoneraInicial.setVisible(false);
@@ -296,6 +298,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	    });
 	    
 	    btnAUsuarios = new JButton("Administrar usuarios");
+	    btnAUsuarios.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    botoneraInicial.add(btnAUsuarios);
 	    btnAUsuarios.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
@@ -306,6 +309,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	    });
 	    
 	    btnPlacas = new JButton("Administrar Placas");
+	    btnPlacas.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    btnPlacas.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		botoneraInicial.setVisible(false);
@@ -315,6 +319,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	    botoneraInicial.add(btnPlacas);
 	    
 	    btnAVariables = new JButton("Administrar Variables");
+	    btnAVariables.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    btnAVariables.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		botoneraInicial.setVisible(false);
@@ -333,7 +338,8 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelBotonesUsuario = new JPanel();
 		panelUsuarios.add(panelBotonesUsuario);
 		
-		btnAUsuarioPlaca = new JButton("Asociciar Usuarios a placas");
+		btnAUsuarioPlaca = new JButton("Asociar Usuarios a placas");
+		btnAUsuarioPlaca.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAUsuarioPlaca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			     panelAUsuarioPlacas.setVisible(true);
@@ -346,6 +352,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		
 		btnFUsuario = new JButton("Funcionalidades de usuario");
+		btnFUsuario.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnFUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			panelUsuarios.setVisible(false);
@@ -361,6 +368,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelBotonesUsuario.add(btnFUsuario);
 		
 		btnCUsuario = new JButton("Crear Usuario");
+		btnCUsuario.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnCUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelCrUsuario.setVisible(true);
@@ -371,6 +379,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelBotonesUsuario.add(btnCUsuario);
 		
 		btnAtras = new JButton("Atras");
+		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelUsuarios.setVisible(false);
@@ -390,6 +399,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelCPlacas.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		btnLPlaca = new JButton("Lista de Placas");
+		btnLPlaca.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnLPlaca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			panelPlacas.setVisible(false);
@@ -400,6 +410,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelCPlacas.add(btnLPlaca);
 		
 		btnCPlaca = new JButton("Crear placa");
+		btnCPlaca.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnCPlaca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelCPlaca.setVisible(true);
@@ -414,6 +425,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		btnAtras1 = new JButton("Atras");
+		btnAtras1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAtras1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			panelPlacas.setVisible(false);
@@ -431,6 +443,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelCSensores.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		btnLSensores = new JButton("Lista de sensores");
+		btnLSensores.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnLSensores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			panelLSensores.setVisible(true);
@@ -442,6 +455,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelCSensores.add(btnLSensores);
 		
 		btnCSensor = new JButton("Crear Sensor");
+		btnCSensor.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnCSensor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelCSensor.setVisible(true);
@@ -452,6 +466,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelCSensores.add(btnCSensor);
 		
 		btnASPlacas = new JButton("Asociar sensores a placas");
+		btnASPlacas.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnASPlacas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelSensoresPlaca.setVisible(true);
@@ -465,6 +480,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras2.setLayout(new GridLayout(1, 0, 0, 0));
 		
 	    btnAtras2 = new JButton("Atras");
+	    btnAtras2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 	    btnAtras2.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    	panelSensores.setVisible(false);
@@ -484,6 +500,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelCVariables.setLayout(new GridLayout(3, 1, 0, 0));
 		
 		btnLVariables = new JButton("Lista de Variables");
+		btnLVariables.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnLVariables.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelLVariables.setVisible(true);
@@ -493,6 +510,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelCVariables.add(btnLVariables);
 		
 		btnCVariable = new JButton("Crear Variable");
+		btnCVariable.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnCVariable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					panelCVAriable.setVisible(true);
@@ -502,7 +520,8 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		panelCVariables.add(btnCVariable);
 		
-		btnAVPlacas = new JButton("Asocciar variables a las placas");
+		btnAVPlacas = new JButton("Asociar variables a las placas");
+		btnAVPlacas.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelCVariables.add(btnAVPlacas);
 		
 		panelAtras3 = new JPanel();
@@ -510,6 +529,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras3.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		 btnAtras3 = new JButton("Atras");
+		 btnAtras3.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAtras3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			panelVariables.setVisible(false);
@@ -529,6 +549,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras4.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		btnAtras4 = new JButton("Atras");
+		btnAtras4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAtras4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
@@ -539,7 +560,8 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		panelAtras4.add(btnAtras4);
 		
-		btnInicio1 = new JButton("Volver al inicio");
+		btnInicio1 = new JButton("Menu Inicio\r\n");
+		btnInicio1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnInicio1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelAUsuarioPlacas.setVisible(false);
@@ -548,7 +570,8 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			}
 		});
 		
-		btnAUPlacas = new JButton("Asocciar usuarios a placa");
+		btnAUPlacas = new JButton("Asociar usuarios a placa");
+		btnAUPlacas.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAtras4.add(btnAUPlacas);
 		btnAUPlacas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -607,6 +630,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras5.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		btnAtras5 = new JButton("Atras");
+		btnAtras5.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAtras5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			panelLUsuario.setVisible(false);
@@ -617,6 +641,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras5.add(btnAtras5);
 		
 		btnInicio2 = new JButton("Menu inicio");
+		btnInicio2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnInicio2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelLUsuario.setVisible(false);
@@ -626,6 +651,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		
 		btnUBorrar = new JButton("Borrar Usuario");
+		btnUBorrar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAtras5.add(btnUBorrar);
 		panelAtras5.add(btnInicio2);
 		/*
@@ -644,19 +670,23 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelcamposUser.setLayout(null);
 		
 		lblNombre = new JLabel("Nombre:");
+		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNombre.setBounds(67, 33, 90, 14);
 		panelcamposUser.add(lblNombre);
 		
 		tFNombre = new JTextField();
+		tFNombre.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tFNombre.setBounds(241, 30, 433, 20);
 		panelcamposUser.add(tFNombre);
 		tFNombre.setColumns(10);
 		
 		lblPass = new JLabel("Contrase\u00F1a:");
+		lblPass.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblPass.setBounds(60, 148, 110, 14);
 		panelcamposUser.add(lblPass);
 		
 		pFUser = new JPasswordField();
+		pFUser.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		pFUser.setBounds(241, 145, 433, 20);
 		panelcamposUser.add(pFUser);
 		
@@ -665,6 +695,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras6.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		btnInicio3 = new JButton("Atras");
+		btnInicio3.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnInicio3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			panelCrUsuario.setVisible(false);
@@ -675,6 +706,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras6.add(btnInicio3);
 		
 		btnAtras6 = new JButton("Menu inicio");
+		btnAtras6.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAtras6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelCrUsuario.setVisible(false);
@@ -684,6 +716,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		
 		btnCrearU = new JButton("Crear Usuario");
+		btnCrearU.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAtras6.add(btnCrearU);
 		btnCrearU.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -704,6 +737,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras7.setLayout(new GridLayout(1, 1, 0, 0));
 		
 		btnAtras7 = new JButton("Atras");
+		btnAtras7.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAtras7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			panelLPlaca.setVisible(false);
@@ -714,6 +748,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras7.add(btnAtras7);
 		
 		btnInicio4 = new JButton("Menu inicio");
+		btnInicio4.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnInicio4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelLPlaca.setVisible(false);
@@ -723,6 +758,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		
 		btnBPlaca = new JButton("Borrar placa");
+		btnBPlaca.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelAtras7.add(btnBPlaca);
 		btnBPlaca.addActionListener(new ActionListener() {
 			
@@ -1079,9 +1115,11 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		contentPane.add(panelApagar, BorderLayout.SOUTH);
 		
 		btnConexiones = new JButton("Administrar conexiones");
+		btnConexiones.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelApagar.add(btnConexiones);
 		
 		btnAServidor = new JButton("Apagar servidor");
+		btnAServidor.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAServidor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				desconectar();
