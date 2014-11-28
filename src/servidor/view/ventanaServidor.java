@@ -249,7 +249,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 400);
+		setBounds(100, 100, 500, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -261,11 +261,11 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			 mUsuario=new JModel();
 			mUsuario.setColumnIdentifiers(new String[]{"Nombre Usuario"});
 			mPlaca=new JModel();
-			mPlaca.setColumnIdentifiers(new String[]{"ID"});
+			mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});
 			 mSensor=new JModel();
-			mSensor.setColumnIdentifiers(new String[]{"ID","EstadoV","Variable","Ul Accion","Fun principal"});
+			mSensor.setColumnIdentifiers(new String[]{"ID Sensor","EstadoV","Variable","Ul Accion","Fun principal"});
 			 mVariable=new JModel();
-			mVariable.setColumnIdentifiers(new String[]{"Nombre"});
+			mVariable.setColumnIdentifiers(new String[]{"Nombre Variable"});
 			/*
 			 * Inicializaccion de las tablas
 			 */
@@ -317,6 +317,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	    	public void actionPerformed(ActionEvent e) {
 	    		botoneraInicial.setVisible(false);
 	    		panelSensores.setVisible(true);
+	    	
 	    	}
 	    });
 	    
@@ -1028,6 +1029,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		/*
 		 * Asociar Sensor a  una placa Que los campos de ambos esten nulos
 		 */
+		//  La tabla de la placa no sale
 		panelSensoresPlaca = new JPanel();
 		panelcentral.add(panelSensoresPlaca, "name_46903230953549");
 		panelSensoresPlaca.setLayout(new BorderLayout(0, 0));
