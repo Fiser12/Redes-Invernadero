@@ -185,6 +185,14 @@ public class ventanaServidor extends JFrame implements FocusListener {
 	private JButton btnMenu7;
 	private JPanel panelCVarible;
 	private JTextField textField;
+	private JPanel panelAVarPlacas;
+	private JPanel panelAtra14;
+	private JButton btnAtras14;
+	private JButton btnAVP;
+	private JButton btnInicio7;
+	private JPanel panelAVPlacas;
+	private JScrollPane scrollVariable;
+	private JScrollPane scrollTPlaca;
 
 	/**
 	 * Launch the application.
@@ -263,11 +271,13 @@ public class ventanaServidor extends JFrame implements FocusListener {
 			tSensor.addFocusListener(this);
 			tSensor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tSensor.setModel(mSensor);
+			tSensor.getTableHeader().setReorderingAllowed(false);
 			//sensor 2
 			tSensor1=new JTable(mSensor);
 			tSensor1.addFocusListener(this);
 			tSensor1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tSensor1.setModel(mSensor);
+			tSensor1.getTableHeader().setReorderingAllowed(false);
 		
 		panelSuperior = new JPanel();
 		contentPane.add(panelSuperior, BorderLayout.NORTH);
@@ -521,6 +531,13 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelCVariables.add(btnCVariable);
 		
 		btnAVPlacas = new JButton("Asociar variables a las placas");
+		btnAVPlacas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelAVarPlacas.setVisible(true);
+				panelVariables.setVisible(false);
+				lblS.setText("Seleccionar ambas tablas para asociar ");
+			}
+		});
 		btnAVPlacas.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelCVariables.add(btnAVPlacas);
 		
@@ -601,11 +618,14 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		tPlaca.addFocusListener(this);
 		tPlaca.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tPlaca.setModel(mPlaca);
+		tPlaca.getTableHeader().setReorderingAllowed(false);
 		//tabla PLaca
 		tPlaca1=new JTable(mPlaca);
+		tPlaca1.setRowSelectionAllowed(false);
 		tPlaca1.addFocusListener(this);
 		tPlaca1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tPlaca1.setModel(mPlaca);
+		tPlaca1.getTableHeader().setReorderingAllowed(false);
 		
 		scrollPanePlaca = new JScrollPane(tPlaca1);
 		panelTablas.add(scrollPanePlaca);
@@ -614,10 +634,13 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		tUsuario.addFocusListener(this);
 		tUsuario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tUsuario.setModel(mUsuario);
+		tUsuario.getTableHeader().setReorderingAllowed(false);
 		tUsuario1=new JTable(mUsuario);
 		tUsuario1.addFocusListener(this);
+		tUsuario1.getTableHeader().setReorderingAllowed(false);
 		tUsuario1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tUsuario1.setModel(mUsuario);
+
 		
 		scrollPaneTUsuario = new JScrollPane(tUsuario1);
 		panelTablas.add(scrollPaneTUsuario);
@@ -984,6 +1007,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		tPlaca2.addFocusListener(this);
 		tPlaca2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tPlaca2.setModel(mPlaca);
+		tPlaca2.getTableHeader().setReorderingAllowed(false);
 		scrollUTablaPlaca = new JScrollPane(tPlaca2);
 		panelASENSPLAca.add(scrollUTablaPlaca);
 		
@@ -1110,6 +1134,52 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		textField.setBounds(323, 140, 212, 27);
 		panelCVarible.add(textField);
 		textField.setColumns(10);
+		/*
+		 * Panel Asociacion placas
+		 */
+		panelAVarPlacas = new JPanel();
+		panelcentral.add(panelAVarPlacas, "name_6280644490231");
+		panelAVarPlacas.setLayout(new BorderLayout(0, 0));
+		
+		panelAtra14 = new JPanel();
+		panelAVarPlacas.add(panelAtra14, BorderLayout.SOUTH);
+		panelAtra14.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		btnAtras14 = new JButton("Atras");
+		btnAtras14.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panelAVarPlacas.setVisible(false);
+				panelVariables.setVisible(true);
+				lblS.setText("Seleccionar una opcion: ");
+			}
+		});
+		btnAtras14.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelAtra14.add(btnAtras14);
+		
+		btnAVP = new JButton("Asocciar placas y variables\r\n");
+		btnAVP.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelAtra14.add(btnAVP);
+		
+		btnInicio7 = new JButton("Menu inicio");
+		btnInicio7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelAVarPlacas.setVisible(false);
+				botoneraInicial.setVisible(true);
+				lblS.setText("Seleccionar una opcion: ");
+			}
+		});
+		btnInicio7.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelAtra14.add(btnInicio7);
+		
+		panelAVPlacas = new JPanel();
+		panelAVarPlacas.add(panelAVPlacas, BorderLayout.CENTER);
+		panelAVPlacas.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		scrollTPlaca = new JScrollPane(tPlaca2);
+		panelAVPlacas.add(scrollTPlaca);
+		
+		scrollVariable = new JScrollPane(tVariable1);
+		panelAVPlacas.add(scrollVariable);
 		
 	      panelApagar = new JPanel();
 		contentPane.add(panelApagar, BorderLayout.SOUTH);
