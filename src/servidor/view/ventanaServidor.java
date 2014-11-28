@@ -816,6 +816,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelLplaca.add(scrollPane, BorderLayout.CENTER);
 		/*
 		 * Crear Placa
+		 * 
 		 */
 		panelCPlaca = new JPanel();
 		panelcentral.add(panelCPlaca, "name_24645888711459");
@@ -864,7 +865,8 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelCreaccionPla.setLayout(null);
 		
 		lblPNombre = new JLabel("ID:");
-		lblPNombre.setBounds(88, 33, 15, 14);
+		lblPNombre.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblPNombre.setBounds(88, 33, 51, 14);
 		panelCreaccionPla.add(lblPNombre);
 		
 		textID = new JTextField();
@@ -926,6 +928,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelAtras9.add(btnInicio5);
 		/*
 		 * Crear sensor
+		 * Sensor se relacciona con una variable y  placa
 		 */
 		panelCSensor = new JPanel();
 		panelcentral.add(panelCSensor, "name_27780962298831");
@@ -1006,7 +1009,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		panelAtras10.add(btnInicio);
 		/*
-		 * Asociar Sensores a placa
+		 * Asociar Sensor a  una placa Que los campos de ambos esten nulos
 		 */
 		panelSensoresPlaca = new JPanel();
 		panelcentral.add(panelSensoresPlaca, "name_46903230953549");
@@ -1060,7 +1063,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		});
 		panelAtras11.add(btnMenuInicio);
 		/*
-		 * LIsta variables
+		 * Lista variables
 		 */
 		panelLVariables = new JPanel();
 		panelcentral.add(panelLVariables, "name_1045599982979");
@@ -1104,6 +1107,7 @@ public class ventanaServidor extends JFrame implements FocusListener {
 		panelLVariables.add(scrollTVariable, BorderLayout.CENTER);
 		/*
 		 * Crear Variable
+		 * Varios sensores
 		 */
 		panelCVAriable = new JPanel();
 		panelcentral.add(panelCVAriable, "name_2039127852346");
