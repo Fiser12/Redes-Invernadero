@@ -9,15 +9,20 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
 
 import java.awt.Font;
+
 import javax.swing.JTextField;
 
 import java.awt.CardLayout;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
@@ -34,7 +39,7 @@ public class PanelAdminServer extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTable tUsuario;
-	private JTextField textFieldNConexiones;
+	private JSpinner spinnerConexiones;
 	private DefaultTableModel mUsuario;
 	private JPanel  panelCentral;
 	private JPanel panelCerrar;
@@ -92,39 +97,16 @@ public class PanelAdminServer extends JPanel {
 		JLabel lblConexiones = new JLabel("Conexiones Actuales");
 		panelAConexines.add(lblConexiones);
 
-		textFieldNConexiones = new JTextField();
-		panelAConexines.add(textFieldNConexiones);
-		textFieldNConexiones.setColumns(10);
-		textFieldNConexiones.setText(""+Util.usuariosMaximos);
-		JButton btnConexiones = new JButton("Actualizar conexiones");
-		btnConexiones.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-
-				NumberFormat format = NumberFormat.getInstance();
-				NumberFormatter formatter = new NumberFormatter(format);
-				formatter.setValueClass(Integer.class);
-				formatter.setMinimum(0);
-				formatter.setMaximum(10);
-
-				formatter.setCommitsOnValidEdit(true);
-				textFieldNConexiones = new JFormattedTextField(formatter);
-				String str=textFieldNConexiones.getText() ;
-				int numeroU;
-				numeroU=Integer.parseInt(str);
-				if(Util.usuariosMaximos<numeroU) {	
-
-					panelCentral.setVisible(false);
-					panelCerrar.setVisible(true);
-				}
-				else{
-					int seleccion=JOptionPane.showOptionDialog(null,"Esta Seguro de que desea reducir las conexiones a "+numeroU ,"Cierre de conexion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[] { "Si", "No" }, "Si");
-					if(seleccion==0){
-						Util.cambiarNUsuarios(numeroU);
-					}}
+		SpinnerNumberModel model = new SpinnerNumberModel(Util.usuariosMaximos, 1, Integer.MAX_VALUE, 1);
+		spinnerConexiones = new JSpinner(model);
+		panelAConexines.add(spinnerConexiones);
+		spinnerConexiones.setValue(Util.usuariosMaximos);
+		spinnerConexiones.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				Util.usuariosMaximos = new Integer((Integer)spinnerConexiones.getValue()).intValue();
 			}
-		});
-		panelAConexines.add(btnConexiones);
+	    });
 
 		panelCerrar = new JPanel();
 		add(panelCerrar, "name_116325924696087");
@@ -141,9 +123,7 @@ public class PanelAdminServer extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int seleccion=JOptionPane.showOptionDialog(null,"Esta Seguro de que desea cerrar la conexion con "+tUsuario.getValueAt(tUsuario.getSelectedRow(), 0),"Cierre de conexion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[] { "Si", "No" }, "Si");
 				if(seleccion==0){
-					/*
-					 * cerrar la conexion con el Usuario
-					 */
+
 				}
 			}
 		});
