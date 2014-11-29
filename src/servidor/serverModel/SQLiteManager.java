@@ -188,7 +188,7 @@ public class SQLiteManager
 		}
 		return funciona;
 	}
-	public boolean insertarPlaca(String sql, Image image, String dos)
+	public boolean insertarDatos(String sql, Image image, String dos)
 	{
 		boolean funciona = true; 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();  

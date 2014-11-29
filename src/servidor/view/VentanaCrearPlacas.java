@@ -87,9 +87,6 @@ public class VentanaCrearPlacas extends JDialog{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-            JFrame temp = new JFrame();
-            temp.setVisible(true);
-            temp.add(new JLabel(new ImageIcon(image)));
             btnInsertar.setEnabled(true);  
         }
 	}

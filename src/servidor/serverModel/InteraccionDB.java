@@ -126,7 +126,7 @@ public class InteraccionDB {
 
 		try {
 			if(!resultado.isFirst()){
-				gestor.insertarPlaca("INSERT INTO Variable(Foto, Nombre_Variable) VALUES(?, ?);", imagen, nombre);
+				gestor.insertarDatos("INSERT INTO Variable(Foto, Nombre_Variable) VALUES(?, ?);", imagen, nombre);
 			}
 			else{
 				throw new RepetElement();
@@ -135,11 +135,9 @@ public class InteraccionDB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		gestor.setImagen("UPDATE Variable SET Foto=? WHERE Nombre_Variable='"+nombre+"'", imagen);
-
 	}
 	public static void insertarPlaca(Image imagen) throws RepetElement{
-		gestor.insertarPlaca("INSERT INTO Placa(Foto, Estado) VALUES(?, ?) ", imagen, "ON");
+		gestor.insertarDatos("INSERT INTO Placa(Foto, Estado) VALUES(?, ?) ", imagen, "ON");
 	}
 	public static void insertarSensor(String funcion, String variable, String accion, boolean estado, Image imagen) throws RepetElement{
 		String estadoStr = "ON";
