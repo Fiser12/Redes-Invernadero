@@ -1,13 +1,14 @@
 package servidor.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import servidor.serverModel.InteraccionDB;
+import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Usuario;
 
 public class PanelUsuarios extends JPanel{
@@ -50,7 +52,7 @@ public class PanelUsuarios extends JPanel{
 		add(panelCentral, BorderLayout.CENTER);
 		panelTablas = new JPanel();
 		panelCentral.add(panelTablas);
-		panelTablas.setLayout(new GridLayout(0, 2, 0, 0));
+		panelTablas.setLayout(new FlowLayout());
 		
 		mPlaca=new DefaultTableModel();
 		mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});
@@ -60,6 +62,7 @@ public class PanelUsuarios extends JPanel{
 		tPlaca.setModel(mPlaca);
 		tPlaca.getTableHeader().setReorderingAllowed(false);
 		scrollPanePlaca = new JScrollPane(tPlaca);
+		scrollPanePlaca.setPreferredSize(new Dimension(335, 400));
 		panelTablas.add(scrollPanePlaca);
 
 		mUsuario=new DefaultTableModel();
@@ -69,6 +72,7 @@ public class PanelUsuarios extends JPanel{
 		tUsuario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tUsuario.setModel(mUsuario);
 		scrollPaneUsuario = new JScrollPane(tUsuario);
+		scrollPaneUsuario.setPreferredSize(new Dimension(335, 400));
 		panelTablas.add(scrollPaneUsuario);
 		
 		/**
@@ -110,6 +114,7 @@ public class PanelUsuarios extends JPanel{
 				borrarUsuario();
 			}
 		});
+		rellenarPlacas();
 		rellenarTablaUsuario();
 	}
 	public void asociar()
@@ -153,5 +158,20 @@ public class PanelUsuarios extends JPanel{
 		tUsuario.setModel(mUsuario);
 		tUsuario.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 	}
+	public void rellenarPlacas()
+	{
+		mPlaca=new DefaultTableModel();
+		mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});	
+		LinkedList<Placa> devolver = new LinkedList<Placa>();
+		devolver=InteraccionDB.listadoPlacas();
+		for(int i=0;i<devolver.size();i++){
+			Placa p=devolver.get(i);
+			mPlaca.addRow(new String[]{""+p.getId()});
+		}
+		mPlaca.fireTableDataChanged();
+		tPlaca.setModel(mPlaca);
+		tPlaca.setModel(mPlaca);
+	}
+
 
 }
