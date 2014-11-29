@@ -83,6 +83,7 @@ public class VentanaCrearVariables extends JDialog{
 	    }catch(RepetElement E){
 	    	JOptionPane.showMessageDialog(null,"El Usuario ya esta insertado","Error",JOptionPane.ERROR_MESSAGE);
 	    }
+		dispose();
 	}
 	public void sacarFoto()
 	{

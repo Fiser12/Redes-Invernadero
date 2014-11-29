@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -94,13 +96,14 @@ public class PanelVariables extends JPanel{
 	}
 	public void añadir()
 	{
-		//		String nombre = textFieldVar.getText();
-		//	    try {
-		//	    	InteraccionDB.insertarVariable(nombre);
-		//	    }catch(RepetElement E){
-		//	    	JOptionPane.showMessageDialog(null,"La variable ya esta introducida","Error",JOptionPane.ERROR_MESSAGE);
-		//	    }
-
+		VentanaCrearVariables nueva = new VentanaCrearVariables();
+		nueva.setVisible(true);
+		nueva.addWindowListener(new WindowAdapter() {
+			public void windowClosed(WindowEvent e)
+			{
+				rellenarVariables();
+			}
+		});
 	}
 	public void rellenarVariables(){
 		LinkedList<String> devolver = new LinkedList<String>();

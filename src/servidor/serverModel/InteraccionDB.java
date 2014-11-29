@@ -152,13 +152,13 @@ public class InteraccionDB {
 		gestor.enviarComando("DELETE FROM Usuario WHERE (Nombre='"+usuario+"');");	
 	}
 	public static void eliminarSensor(int ID){
-		gestor.enviarComando("DELETE FROM Usuario WHERE (Id_Sensor"+ID+");");	
+		gestor.enviarComando("DELETE FROM Sensor WHERE (Id_Sensor"+ID+");");	
 	}
 	public static void eliminarPlaca(int ID){
-		gestor.enviarComando("DELETE FROM Usuario WHERE (Id_Placa="+ID+");");	
+		gestor.enviarComando("DELETE FROM Placa WHERE (Id="+ID+");");	
 	}
 	public static void eliminarVariable(String Nombre){
-		gestor.enviarComando("DELETE FROM Usuario WHERE (Nombre='"+Nombre+"');");	
+		gestor.enviarComando("DELETE FROM Variable WHERE (Nombre_Variable='"+Nombre+"');");	
 	}
 	public static LinkedList<Sensor>ListadoSensor(){
 		LinkedList<Sensor> sensores=new LinkedList<Sensor>();

@@ -111,6 +111,7 @@ public class VentanaCrearSensores extends JDialog{
 	    	boolean estado = chckbxNewCheckBox.isSelected();
 	    	String accion = tFUltimaAccion.getSelectedText();
 	    	InteraccionDB.insertarSensor(funcion, variable, accion, estado, image);
+			dispose();
 	    }catch(RepetElement E){
 	    	JOptionPane.showMessageDialog(null,"El Usuario ya esta insertado","Error",JOptionPane.ERROR_MESSAGE);
 	    }

@@ -65,6 +65,7 @@ public class VentanaCrearPlacas extends JDialog{
 	{
 	    try {
 	    	InteraccionDB.insertarPlaca(image);
+			dispose();
 	    }catch(RepetElement E){
 	    	JOptionPane.showMessageDialog(null,"El Usuario ya esta insertado","Error",JOptionPane.ERROR_MESSAGE);
 	    }

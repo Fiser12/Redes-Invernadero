@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -144,7 +146,14 @@ public class PanelSensores extends JPanel{
 	}
 	public void crearUsuario()
 	{
-
+		VentanaCrearUsuario nueva = new VentanaCrearUsuario();
+		nueva.setVisible(true);
+		nueva.addWindowListener(new WindowAdapter() {
+			public void windowClosed(WindowEvent e)
+			{
+				rellenarTablaSensor();
+			}
+		});
 	}
 	public void atras()
 	{
