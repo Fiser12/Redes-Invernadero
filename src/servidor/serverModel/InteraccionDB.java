@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
+
 import javax.imageio.ImageIO;
 
+import servidor.serverModel.ModelClass.Asociacion;
 import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Sensor;
 import servidor.serverModel.ModelClass.Usuario;
@@ -27,7 +29,7 @@ public class InteraccionDB {
 		gestor.enviarComando("PRAGMA foreign_keys = ON");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario (Nombre VARCHAR(50) NOT NULL ,Pass VARCHAR(50) NOT NULL, PRIMARY KEY(Nombre));");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Placa (Id INTEGER PRIMARY KEY AUTOINCREMENT, Estado VARCHAR(250) NOT NULL, Foto BLOB);");
-		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario_Placa(Nombre VARCHAR(50) NOT NULL, Id_Placa INT(10) NOT NULL, CONSTRAINT Nombre FOREIGN KEY (Nombre) REFERENCES Usuario (Nombre) ON DELETE CASCADE, CONSTRAINT Id_Placa FOREIGN KEY (Id_Placa) REFERENCES Placa(Id) ON DELETE CASCADE)");
+		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario_Placa(Nombre VARCHAR(50) NOT NULL, Id_Placa INT(10) NOT NULL, CONSTRAINT Nombre FOREIGN KEY (Nombre) REFERENCES Usuario (Nombre), CONSTRAINT Id_Placa FOREIGN KEY (Id_Placa) REFERENCES Placa(Id))");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Sensor (Id_Sensor INTEGER PRIMARY KEY AUTOINCREMENT, Nombre_Variable VARCHAR(250) NOT NULL, Funcion_Principal VARCHAR(500) NOT NULL, Estado_la_variable VARCHAR(250) NOT NULL,Ultima_Accion VARCHAR(500) NOT NULL, id_Placa INT(10), Foto BLOB, CONSTRAINT id_Placa FOREIGN KEY (id_Placa) REFERENCES Placa (Id) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT Nombre_Variable FOREIGN KEY (Nombre_Variable) REFERENCES Variable (Nombre_variable) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(id_Placa, Nombre_Variable));");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Variable (Nombre_Variable VARCHAR(250) PRIMARY KEY, Foto BLOB)");
 	}
@@ -314,5 +316,31 @@ public class InteraccionDB {
 	public static void actualizarPlaca(int sensor, int placa)
 	{
 		gestor.enviarComando("UPDATE Sensor SET id_Placa="+placa+" WHERE Id_Sensor="+sensor);
+	}
+	public static void asociarUserPlaca(String user, int placa)
+	{
+		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('"+user+"', "+placa+")");
+	}
+	public static void desasociarUserPlaca(String user, int placa)
+	{
+		gestor.enviarComando("DELETE FROM Usuario_Placa WHERE (Id_Placa="+placa+" AND Nombre='"+user+"')");
+	}
+	public static LinkedList<Asociacion> getUserPlaca()
+	{
+		LinkedList<Asociacion> devolver = new LinkedList<Asociacion>();
+		gestor.enviarComando("SELECT * FROM Usuario_Placa;");
+		ResultSet resultado = gestor.getResultSet();
+		try {
+			while(resultado.next())
+			{
+				String user = resultado.getString("Nombre");
+				int placa = resultado.getInt("Id_Placa");
+				devolver.add(new Asociacion(user, placa));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return devolver;
+
 	}
 }

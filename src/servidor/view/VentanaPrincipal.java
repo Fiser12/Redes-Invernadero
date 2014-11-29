@@ -175,7 +175,6 @@ public class VentanaPrincipal extends JFrame {
 		panelcentral.add(pUsuarios);
 		panelcentral.add(pSensores);
 		panelcentral.add(pPlacas);
-
 	}
 	public static void mostrarUsuario(int usuario)
 	{
