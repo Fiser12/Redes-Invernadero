@@ -211,25 +211,39 @@ public class SQLiteManager
 	public boolean insertarSensor(String sql,String funcion, String variable, String accion, String estado, Image image)
 	{
 		boolean funciona = true; 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-        try {
-                ImageIO.write((RenderedImage)image, "png", baos);
-        } catch (IOException e) {
-                e.printStackTrace();
-        }  
-        byte[] data = baos.toByteArray(); 
-		try {
-			PreparedStatement consultaPreparada = connection.prepareStatement(sql);
-			consultaPreparada.setString(1, funcion);
-			consultaPreparada.setString(2, variable);
-			consultaPreparada.setString(3, accion);
-			consultaPreparada.setString(4, estado);
-			consultaPreparada.setBytes(5, data);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		if(image!=null){
+			try {
+				ImageIO.write((RenderedImage)image, "png", baos);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}  
+			byte[] data = baos.toByteArray();
 
-			consultaPreparada.executeUpdate();
-		} catch (SQLException e) {
-			funciona = false;
+			try {
+				PreparedStatement consultaPreparada = connection.prepareStatement(sql);
+				consultaPreparada.setString(1, funcion);
+				consultaPreparada.setString(2, variable);
+				consultaPreparada.setString(3, accion);
+				consultaPreparada.setString(4, estado);
+				consultaPreparada.setBytes(5, data);
+
+				consultaPreparada.executeUpdate();
+			} catch (SQLException e) {
+				funciona = false;
+			}
 		}
+		else
+			try {
+				PreparedStatement consultaPreparada = connection.prepareStatement(sql);
+				consultaPreparada.setString(1, funcion);
+				consultaPreparada.setString(2, variable);
+				consultaPreparada.setString(3, accion);
+				consultaPreparada.setString(4, estado);
+				consultaPreparada.executeUpdate();
+			} catch (SQLException e) {
+				funciona = false;
+			}
 		return funciona;
 	}
 }

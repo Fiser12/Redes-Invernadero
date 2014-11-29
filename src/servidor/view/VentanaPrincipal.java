@@ -78,7 +78,6 @@ public class VentanaPrincipal extends JFrame {
 	private PanelPlacas pPlacas;
 	private PanelUsuarios pUsuarios;
 	private PanelSensores pSensores;
-	private PanelVariables pVariables;
 	private static ServerSocket wellcomeSocket;
 	public static LinkedList<SocketManager> listaSockets;
 	public static LinkedList<Request> listaHilos;
@@ -183,16 +182,6 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		botoneraInicial.add(btnPlacas);
-
-		btnAVariables = new JButton("Administrar Variables");
-		btnAVariables.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnAVariables.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				administrarVariables();
-				botoneraInicial.setVisible(false);
-			}
-		});
-		botoneraInicial.add(btnAVariables);
 		botoneraInicial.add(btnASensores);
 
 		panelApagar = new JPanel();
@@ -200,7 +189,7 @@ public class VentanaPrincipal extends JFrame {
 
 		btnConexiones = new JButton("Administrar conexiones");
 		btnConexiones.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelApagar.add(btnConexiones);
+		botoneraInicial.add(btnConexiones);
 		btnAServidor = new JButton("Apagar servidor");
 		btnAServidor.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAServidor.addActionListener(new ActionListener() {
@@ -212,12 +201,9 @@ public class VentanaPrincipal extends JFrame {
 		pPlacas = new PanelPlacas(panelcentral);
 		pUsuarios = new PanelUsuarios(panelcentral);
 		pSensores = new PanelSensores(panelcentral);
-		pVariables = new PanelVariables(panelcentral);
 		pPlacas.setVisible(false);
 		pUsuarios.setVisible(false);
 		pSensores.setVisible(false);
-		pVariables.setVisible(false);
-		panelcentral.add(pVariables);
 		panelcentral.add(pUsuarios);
 		panelcentral.add(pSensores);
 		panelcentral.add(pPlacas);
@@ -258,11 +244,6 @@ public class VentanaPrincipal extends JFrame {
 	public static void desconectar(){
 		System.exit(0);
 	}
-	public void administrarVariables(){
-		pVariables.setVisible(true);
-		botoneraInicial.setVisible(false);
-
-	}
 	public void administrarSensores(){
 		pSensores.setVisible(true);
 		botoneraInicial.setVisible(false);
@@ -270,7 +251,6 @@ public class VentanaPrincipal extends JFrame {
 	public void administrarUsuarios(){
 		pUsuarios.setVisible(true);
 		botoneraInicial.setVisible(false);
-
 	}
 	public void administrarPlacas(){
 		pPlacas.setVisible(true);
