@@ -43,14 +43,14 @@ public class VentanaCrearUsuario extends JDialog{
 		panelUser.add(textFieldUser);
 		textFieldUser.setColumns(10);
 		
-		JPanel panelContraseña = new JPanel();
-		panelCentral.add(panelContraseña);
+		JPanel panelContrasena = new JPanel();
+		panelCentral.add(panelContrasena);
 		
 		JLabel lblPass = new JLabel("Pass:");
-		panelContraseña.add(lblPass);
+		panelContrasena.add(lblPass);
 		
 		textFieldPass = new JPasswordField();
-		panelContraseña.add(textFieldPass);
+		panelContrasena.add(textFieldPass);
 		textFieldPass.setColumns(10);
 		
 		JPanel panelInferior = new JPanel();

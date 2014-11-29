@@ -34,8 +34,8 @@ public class VentanaCrearPlacas extends JDialog{
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 			
-		JPanel panelContraseña = new JPanel();
-		getContentPane().add(panelContraseña);
+		JPanel panelContrasena = new JPanel();
+		getContentPane().add(panelContrasena);
 		
 		JButton btnSeleccionarFoto = new JButton("Seleccionar Foto");
 		btnSeleccionarFoto.addActionListener(new ActionListener() {
@@ -43,7 +43,7 @@ public class VentanaCrearPlacas extends JDialog{
 				sacarFoto();
 			}
 		});
-		panelContraseña.add(btnSeleccionarFoto);
+		panelContrasena.add(btnSeleccionarFoto);
 
 		JPanel panelInferior = new JPanel();
 		getContentPane().add(panelInferior, BorderLayout.SOUTH);

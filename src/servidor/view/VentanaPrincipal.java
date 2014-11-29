@@ -3,14 +3,9 @@ package servidor.view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 import java.awt.GridLayout;
 
@@ -21,41 +16,15 @@ import java.awt.FlowLayout;
 import java.awt.CardLayout;
 
 import servidor.serverController.*;
-import servidor.serverModel.InteraccionDB;
-import servidor.serverModel.ModelClass.Placa;
-import servidor.serverModel.ModelClass.Sensor;
-import servidor.serverModel.ModelClass.Usuario;
 import util.SocketManager;
 import util.Util;
-import util.excepciones.RepetElement;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.LinkedList;
 
-import javax.swing.BoxLayout;
-import javax.swing.JScrollPane;
-import javax.swing.border.BevelBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import java.awt.Color;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Image;
-import java.awt.Insets;
-
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
-
 import java.awt.Font;
-
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -71,7 +40,6 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnAUsuarios;
 	private JButton btnPlacas;
 	private JButton btnASensores;
-	private JButton btnAVariables;
 	private JPanel panelApagar;
 	private JButton btnConexiones;
 	private JButton btnAServidor;
