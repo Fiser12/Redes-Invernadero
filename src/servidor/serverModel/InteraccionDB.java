@@ -50,9 +50,9 @@ public class InteraccionDB {
 	public static void cargarDatosIniciales()
 	{
 		gestor.enviarComando("INSERT INTO Usuario VALUES('Fiser', '1234')");
-		gestor.enviarComando("INSERT INTO Placa(Id, Estado) VALUES(1, 'ON')");
-		gestor.enviarComando("INSERT INTO Placa(Id, Estado) VALUES(2, 'ON')");
-		gestor.enviarComando("INSERT INTO Placa(Id, Estado) VALUES(3, 'ON')");
+		gestor.enviarComando("INSERT INTO Placa(Estado) VALUES('ON')");
+		gestor.enviarComando("INSERT INTO Placa(Estado) VALUES('ON')");
+		gestor.enviarComando("INSERT INTO Placa(Estado) VALUES('ON')");
 		gestor.enviarComando("INSERT INTO Variable(Nombre_Variable) VALUES('Temperatura')");
 		gestor.enviarComando("INSERT INTO Variable(Nombre_Variable) VALUES('Imagen')");
 		gestor.enviarComando("INSERT INTO Variable(Nombre_Variable) VALUES('Zoom')");
@@ -126,7 +126,7 @@ public class InteraccionDB {
 
 		try {
 			if(!resultado.isFirst()){
-				gestor.enviarComando("INSERT INTO Variable(Nombre_Variable) VALUES('"+nombre+"');");
+				gestor.insertarPlaca("INSERT INTO Variable(Foto, Nombre_Variable) VALUES(?, ?);", imagen, nombre);
 			}
 			else{
 				throw new RepetElement();
@@ -139,13 +139,13 @@ public class InteraccionDB {
 
 	}
 	public static void insertarPlaca(Image imagen) throws RepetElement{
-		gestor.setImagen("INSERT INTO(Estado, Foto) Placa VALUES('ON', ?) ", imagen);
+		gestor.insertarPlaca("INSERT INTO Placa(Foto, Estado) VALUES(?, ?) ", imagen, "ON");
 	}
 	public static void insertarSensor(String funcion, String variable, String accion, boolean estado, Image imagen) throws RepetElement{
 		String estadoStr = "ON";
 		if(!estado)
 			estadoStr = "OFF";
-		gestor.setImagen("INSERT INTO(Funcion_Principal, Nombre_Variable, Ultima_Accion, Estado_la_variable, Foto) Placa VALUES('"+funcion+"','"+variable+"','"+accion+"','"+estadoStr+"', ?) ", imagen);
+		gestor.insertarSensor("INSERT INTO Sensor(Funcion_Principal, Nombre_Variable, Ultima_Accion, Estado_la_variable, Foto) VALUES(?, ?, ?, ?, ?) ", funcion, variable, accion, estadoStr,imagen);
 	}
 
 	public static void eliminarUser(String usuario){

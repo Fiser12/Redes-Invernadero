@@ -1,6 +1,7 @@
 package servidor.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,6 +36,7 @@ public class VentanaCrearSensores extends JDialog{
 	private JComboBox<String> comboBoxVariable;
 	public VentanaCrearSensores()
 	{
+	    setSize(new Dimension(400,300));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelCentral = new JPanel();

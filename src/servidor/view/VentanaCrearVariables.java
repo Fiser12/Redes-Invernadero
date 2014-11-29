@@ -1,6 +1,7 @@
 package servidor.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +28,7 @@ public class VentanaCrearVariables extends JDialog{
 	private static final long serialVersionUID = 1L;
 	public VentanaCrearVariables()
 	{
+	    setSize(new Dimension(250,135));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelCentral = new JPanel();

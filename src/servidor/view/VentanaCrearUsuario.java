@@ -3,6 +3,7 @@ package servidor.view;
 import javax.swing.JDialog;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,6 +26,7 @@ public class VentanaCrearUsuario extends JDialog{
 	private JPasswordField textFieldPass;
 	public VentanaCrearUsuario()
 	{
+	    setSize(new Dimension(250,135));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelCentral = new JPanel();

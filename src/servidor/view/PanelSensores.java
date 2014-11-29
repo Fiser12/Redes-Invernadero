@@ -55,7 +55,7 @@ public class PanelSensores extends JPanel{
 
 		panelTablas = new JPanel();
 		panelCentral.add(panelTablas);
-		panelTablas.setLayout(new GridLayout(0, 2, 0, 0));
+		panelTablas.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		mPlaca=new DefaultTableModel();
 		mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});
@@ -146,7 +146,7 @@ public class PanelSensores extends JPanel{
 	}
 	public void crearUsuario()
 	{
-		VentanaCrearUsuario nueva = new VentanaCrearUsuario();
+		VentanaCrearSensores nueva = new VentanaCrearSensores();
 		nueva.setVisible(true);
 		nueva.addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent e)
