@@ -46,6 +46,7 @@ public class VentanaPrincipal extends JFrame {
 	private PanelPlacas pPlacas;
 	private PanelUsuarios pUsuarios;
 	private PanelSensores pSensores;
+	private PanelAdminServer pPanelAdmin;
 	private static ServerSocket wellcomeSocket;
 	public static LinkedList<SocketManager> listaSockets;
 	public static LinkedList<Request> listaHilos;
@@ -158,6 +159,13 @@ public class VentanaPrincipal extends JFrame {
 		btnConexiones = new JButton("Administrar conexiones");
 		btnConexiones.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		botoneraInicial.add(btnConexiones);
+		btnConexiones.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				administrarGestion();
+			}
+		});
+		
 		btnAServidor = new JButton("Apagar servidor");
 		btnAServidor.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAServidor.addActionListener(new ActionListener() {
@@ -169,12 +177,17 @@ public class VentanaPrincipal extends JFrame {
 		pPlacas = new PanelPlacas(panelcentral);
 		pUsuarios = new PanelUsuarios(panelcentral);
 		pSensores = new PanelSensores(panelcentral);
+		pPanelAdmin = new PanelAdminServer(panelcentral);
 		pPlacas.setVisible(false);
 		pUsuarios.setVisible(false);
 		pSensores.setVisible(false);
+		pPanelAdmin.setVisible(false);
+
 		panelcentral.add(pUsuarios);
 		panelcentral.add(pSensores);
 		panelcentral.add(pPlacas);
+		panelcentral.add(pPanelAdmin);
+
 	}
 	public static void mostrarUsuario(int usuario)
 	{
@@ -221,6 +234,10 @@ public class VentanaPrincipal extends JFrame {
 	}
 	public void administrarPlacas(){
 		pPlacas.setVisible(true);
+		botoneraInicial.setVisible(false);
+	}
+	public void administrarGestion(){
+		pPanelAdmin.setVisible(true);
 		botoneraInicial.setVisible(false);
 	}
 }

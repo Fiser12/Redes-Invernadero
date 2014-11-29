@@ -10,4 +10,7 @@ public class Util {
 	public static String servidor = "127.0.0.1";
 	public static int puerto = 3000;
 	public static SocketManager claseSocketCliente;
+	public  static void cambiarNUsuarios(int i){
+		usuariosMaximos=i;
+	}
 }

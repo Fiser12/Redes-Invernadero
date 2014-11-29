@@ -341,6 +341,5 @@ public class InteraccionDB {
 			e.printStackTrace();
 		}
 		return devolver;
-
 	}
 }

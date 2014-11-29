@@ -22,7 +22,6 @@ import servidor.serverModel.InteraccionDB;
 import servidor.serverModel.ModelClass.Asociacion;
 import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Usuario;
-import util.excepciones.SearchException;
 
 public class PanelUsuarios extends JPanel{
 
