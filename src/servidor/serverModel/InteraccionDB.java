@@ -1,5 +1,6 @@
 package servidor.serverModel;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -119,7 +120,7 @@ public class InteraccionDB {
 			throw new RepetElement();
 
 	}
-	public static void insertarVariable(String nombre) throws RepetElement{
+	public static void insertarVariable(String nombre, Image imagen) throws RepetElement{
 
 		gestor.enviarComando("Select * FROM Variable WHERE Nombre='"+nombre+"');");
 		ResultSet resultado=gestor.getResultSet();
@@ -135,9 +136,11 @@ public class InteraccionDB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		gestor.setImagen("UPDATE Variable SET Foto=? WHERE Nombre_Variable='"+nombre+"'", imagen);
+
 	}
 	public static void eliminarUser(String usuario){
-			gestor.enviarComando("DELETE FROM Usuario WHERE (Nombre='"+usuario+"');");	
+		gestor.enviarComando("DELETE FROM Usuario WHERE (Nombre='"+usuario+"');");	
 	}
 	public static void eliminarSensor(int ID){
 		gestor.enviarComando("DELETE FROM Usuario WHERE (Id_Sensor'"+ID+"');");	

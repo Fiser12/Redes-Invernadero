@@ -80,17 +80,6 @@ public class VentanaPrincipal extends JFrame {
 	private static ServerSocket wellcomeSocket;
 	public static LinkedList<SocketManager> listaSockets;
 	public static LinkedList<Request> listaHilos;
-	private JPanel panelCrUsuario;
-	private JPanel panelCreaccionU;
-	private JPanel panelAtras6;
-	private JButton btnInicio3;
-	private JButton btnAtras6;
-	private JButton btnCrearU;
-	private JPanel panelcamposUser;
-	private JLabel lblNombre;
-	private JLabel lblPass;
-	private JTextField tFNombre;
-	private JPasswordField pFUser;
 	private JPanel panelCPlaca;
 	private JPanel panelAtras8;
 	private JButton btnAtras8;
@@ -112,13 +101,6 @@ public class VentanaPrincipal extends JFrame {
 	private JTextField textFSensor;
 	private JTextField textNSensor;
 	private JTextField textIDSensor;
-	private JPanel panelCVAriable;
-	private JPanel panelAtras13;
-	private JButton btnAtras13;
-	private JButton btnCrVariable;
-	private JButton btnMenu7;
-	private JPanel panelCVarible;
-	private JTextField textFieldVar;
 	private JComboBox comboBoxVariable;
 
 	/**
@@ -197,8 +179,8 @@ public class VentanaPrincipal extends JFrame {
 		btnASensores.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnASensores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				administrarSensores();
 				botoneraInicial.setVisible(false);
-
 			}
 		});
 
@@ -207,8 +189,8 @@ public class VentanaPrincipal extends JFrame {
 		botoneraInicial.add(btnAUsuarios);
 		btnAUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				administrarUsuarios();
 				botoneraInicial.setVisible(false);
-
 			}
 		});
 
@@ -216,6 +198,7 @@ public class VentanaPrincipal extends JFrame {
 		btnPlacas.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnPlacas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				administrarPlacas();
 				botoneraInicial.setVisible(false);
 			}
 		});
@@ -225,88 +208,12 @@ public class VentanaPrincipal extends JFrame {
 		btnAVariables.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAVariables.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				administrarVariables();
 				botoneraInicial.setVisible(false);
 			}
 		});
 		botoneraInicial.add(btnAVariables);
 		botoneraInicial.add(btnASensores);
-		/*
-		 * Creaccion de usuario
-		 */
-		panelCrUsuario = new JPanel();
-		panelcentral.add(panelCrUsuario, "name_22220760681955");
-		panelCrUsuario.setLayout(new BorderLayout(0, 0));
-
-		panelCreaccionU = new JPanel();
-		panelCrUsuario.add(panelCreaccionU, BorderLayout.CENTER);
-		panelCreaccionU.setLayout(new BorderLayout(0, 0));
-
-		panelcamposUser = new JPanel();
-		panelCreaccionU.add(panelcamposUser, BorderLayout.CENTER);
-		panelcamposUser.setLayout(null);
-
-		lblNombre = new JLabel("Nombre:");
-		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNombre.setBounds(67, 33, 90, 14);
-		panelcamposUser.add(lblNombre);
-
-		tFNombre = new JTextField();
-		tFNombre.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		tFNombre.setBounds(241, 30, 433, 20);
-		panelcamposUser.add(tFNombre);
-		tFNombre.setColumns(10);
-
-		lblPass = new JLabel("Contrase\u00F1a:");
-		lblPass.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblPass.setBounds(60, 148, 110, 14);
-		panelcamposUser.add(lblPass);
-
-		pFUser = new JPasswordField();
-		pFUser.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		pFUser.setBounds(241, 145, 433, 20);
-		panelcamposUser.add(pFUser);
-
-		panelAtras6 = new JPanel();
-		panelCrUsuario.add(panelAtras6, BorderLayout.SOUTH);
-		panelAtras6.setLayout(new GridLayout(1, 0, 0, 0));
-
-		btnInicio3 = new JButton("Atras");
-		btnInicio3.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnInicio3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelCrUsuario.setVisible(false);
-				lblS.setText("Seleccionar una opccion");
-			}
-		});
-		panelAtras6.add(btnInicio3);
-
-		btnAtras6 = new JButton("Menu inicio");
-		btnAtras6.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnAtras6.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelCrUsuario.setVisible(false);
-				botoneraInicial.setVisible(true);
-				lblS.setText("Seleccionar una opccion");
-			}
-		});
-
-		btnCrearU = new JButton("Crear Usuario");
-		btnCrearU.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelAtras6.add(btnCrearU);
-		btnCrearU.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				String user = tFNombre.getText();
-				String pass=new String(pFUser.getPassword());
-				try {
-					InteraccionDB.insertarUser(user, pass);
-				}catch(RepetElement E){
-					JOptionPane.showMessageDialog(null,"El Usuario ya esta insertado","Error",JOptionPane.ERROR_MESSAGE);
-					//Aqu� indicas que el usuario ya est� repetido
-				}
-			}
-		});
-		panelAtras6.add(btnAtras6);
 		/*
 		 * Crear Placa
 		 * 
@@ -469,71 +376,6 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		panelAtras10.add(btnInicio);
-		/*
-		 * Crear Variable
-		 * Varios sensores
-		 */
-		panelCVAriable = new JPanel();
-		panelcentral.add(panelCVAriable, "name_2039127852346");
-		panelCVAriable.setLayout(new BorderLayout(0, 0));
-
-		panelAtras13 = new JPanel();
-		panelCVAriable.add(panelAtras13, BorderLayout.SOUTH);
-		panelAtras13.setLayout(new GridLayout(1, 0, 0, 0));
-
-		btnAtras13 = new JButton("Atras");
-		btnAtras13.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnAtras13.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelCVAriable.setVisible(false);
-				lblS.setText("Seleccionar una opccion");
-			}
-		});
-		panelAtras13.add(btnAtras13);
-
-		btnCrVariable = new JButton("Crear variable");
-		btnCrVariable.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				/*
-				 * Dice que falta una columna
-				 */
-				String nombre = textFieldVar.getText();
-				try {
-					InteraccionDB.insertarVariable(nombre);
-				}catch(RepetElement E){
-					JOptionPane.showMessageDialog(null,"La variable ya esta introducida","Error",JOptionPane.ERROR_MESSAGE);
-					//Aqu� indicas que el usuario ya est� repetido
-				}
-			}
-		});
-		btnCrVariable.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelAtras13.add(btnCrVariable);
-
-		btnMenu7 = new JButton("Menu inicio");
-		btnMenu7.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnMenu7.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelCVAriable.setVisible(false);
-				botoneraInicial.setVisible(true);
-				lblS.setText("Seleccionar una opccion");
-			}
-		});
-		panelAtras13.add(btnMenu7);
-
-		panelCVarible = new JPanel();
-		panelCVAriable.add(panelCVarible, BorderLayout.CENTER);
-		panelCVarible.setLayout(null);
-
-		JLabel lblNVariable = new JLabel("Nombre variable:");
-		lblNVariable.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNVariable.setBounds(91, 129, 154, 50);
-		panelCVarible.add(lblNVariable);
-
-		textFieldVar = new JTextField();
-		textFieldVar.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		textFieldVar.setBounds(323, 140, 212, 27);
-		panelCVarible.add(textFieldVar);
-		textFieldVar.setColumns(10);
 
 		panelApagar = new JPanel();
 		contentPane.add(panelApagar, BorderLayout.SOUTH);
@@ -607,5 +449,17 @@ public class VentanaPrincipal extends JFrame {
 			var[i+1]=devolver.get(i);
 		}
 		return var;
+	}
+	public void administrarVariables(){
+		
+	}
+	public void administrarSensores(){
+		
+	}
+	public void administrarUsuarios(){
+		
+	}
+	public void administrarPlacas(){
+		
 	}
 }
