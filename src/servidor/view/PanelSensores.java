@@ -1,6 +1,7 @@
 package servidor.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -65,6 +66,7 @@ public class PanelSensores extends JPanel{
 		tPlaca.setModel(mPlaca);
 		tPlaca.getTableHeader().setReorderingAllowed(false);
 		scrollPanePlaca = new JScrollPane(tPlaca);
+		scrollPanePlaca.setPreferredSize(new Dimension(222, 400));
 		panelTablas.add(scrollPanePlaca);
 
 		mSensor=new DefaultTableModel();
@@ -74,6 +76,7 @@ public class PanelSensores extends JPanel{
 		tSensor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tSensor.setModel(mSensor);
 		scrollPaneSensor = new JScrollPane(tSensor);
+		scrollPaneSensor.setPreferredSize(new Dimension(222, 400));
 		panelTablas.add(scrollPaneSensor);
 		
 		mVariable=new DefaultTableModel();
@@ -83,6 +86,8 @@ public class PanelSensores extends JPanel{
 		tVariable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tVariable.setModel(mVariable);
 		scrollPaneVariable = new JScrollPane(tVariable);
+		scrollPaneVariable.setPreferredSize(new Dimension(222, 400));
+
 		panelTablas.add(scrollPaneVariable);
 		
 		/**
