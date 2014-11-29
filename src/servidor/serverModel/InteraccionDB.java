@@ -305,8 +305,5 @@ public class InteraccionDB {
 	public static void main(String []argv)
 	{
 		reiniciarBase();
-		System.out.println(listado("Fiser").replaceAll("/n", "\n"));
-		JFrame ventana = new JFrame();
-		ventana.setVisible(true);
 	}
 }
