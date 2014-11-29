@@ -41,14 +41,16 @@ public class PanelSensores extends JPanel{
 	JScrollPane scrollPanePlaca;
 	JScrollPane scrollPaneSensor;
 	JScrollPane scrollPaneVariable;
-
-	public PanelSensores()
+	JPanel central;
+	public PanelSensores(JPanel central)
 	{
+		this.central = central;
 		this.setLayout(new BorderLayout());
 		panelInferior = new JPanel();
 		panelCentral = new JPanel();
-		panelCentral.add(panelInferior, BorderLayout.SOUTH);
-		//
+		add(panelInferior, BorderLayout.SOUTH);
+		add(panelCentral, BorderLayout.CENTER);
+
 		panelTablas = new JPanel();
 		panelCentral.add(panelTablas);
 		panelTablas.setLayout(new GridLayout(0, 2, 0, 0));
@@ -146,11 +148,14 @@ public class PanelSensores extends JPanel{
 	}
 	public void atras()
 	{
-
+		central.setVisible(true);
+		this.setVisible(false);
 	}
 	public void borrarUsuario()
 	{
-
+		int id=Integer.parseInt((String) tSensor.getValueAt(tSensor.getSelectedRow(), 0));
+		InteraccionDB.eliminarSensor(id);
+		rellenarTablaSensor();
 	}
 	public void rellenarTablaSensor()
 	{

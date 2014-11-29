@@ -209,10 +209,10 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		panelApagar.add(btnAServidor);
-		pPlacas = new PanelPlacas();
-		pUsuarios = new PanelUsuarios();
-		pSensores = new PanelSensores();
-		pVariables = new PanelVariables();
+		pPlacas = new PanelPlacas(panelcentral);
+		pUsuarios = new PanelUsuarios(panelcentral);
+		pSensores = new PanelSensores(panelcentral);
+		pVariables = new PanelVariables(panelcentral);
 		pPlacas.setVisible(false);
 		pUsuarios.setVisible(false);
 		pSensores.setVisible(false);

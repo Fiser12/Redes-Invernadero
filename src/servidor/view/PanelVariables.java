@@ -27,17 +27,21 @@ public class PanelVariables extends JPanel{
 	JScrollPane scrollPane;
 	JTable tVariable;
 	DefaultTableModel mVariable;
-
-	public PanelVariables()
+	JPanel central;
+	public PanelVariables(JPanel central)
 	{
+		this.central = central;
 		mVariable=new DefaultTableModel();
 		mVariable.setColumnIdentifiers(new String[]{"Nombre"});
 		
 		setLayout(new BorderLayout(0, 0));
 
 		panelInferior = new JPanel();
+		panelCentral = new JPanel();
+
 		panelInferior.setLayout(new GridLayout(1, 1, 0, 0));
 		add(panelInferior, BorderLayout.SOUTH);
+		add(panelCentral, BorderLayout.CENTER);
 
 		btnAtras = new JButton("Atras");
 		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -73,14 +77,14 @@ public class PanelVariables extends JPanel{
 		});
 		panelInferior.add(btnAñadir);
 
-		panelCentral = new JPanel();
 		panelCentral.setLayout(new BorderLayout(0, 0));
 		panelCentral.add(scrollPane, BorderLayout.CENTER);
 		rellenarVariables();
 	}
 	public void atras()
 	{
-		
+		central.setVisible(true);
+		this.setVisible(false);
 	}
 	public void borrar()
 	{

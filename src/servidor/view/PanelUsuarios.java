@@ -32,17 +32,19 @@ public class PanelUsuarios extends JPanel{
 	JTable tUsuario;
 	DefaultTableModel mPlaca;
 	DefaultTableModel mUsuario;
-
+	JPanel central;
+	
 	JScrollPane scrollPanePlaca;
 	JScrollPane scrollPaneUsuario;
 
-	public PanelUsuarios()
+	public PanelUsuarios(JPanel central)
 	{
+		this.central = central;
 		this.setLayout(new BorderLayout());
 		panelInferior = new JPanel();
 		panelCentral = new JPanel();
-		panelCentral.add(panelInferior, BorderLayout.SOUTH);
-		//
+		add(panelInferior, BorderLayout.SOUTH);
+		add(panelCentral, BorderLayout.CENTER);
 		panelTablas = new JPanel();
 		panelCentral.add(panelTablas);
 		panelTablas.setLayout(new GridLayout(0, 2, 0, 0));
@@ -117,11 +119,14 @@ public class PanelUsuarios extends JPanel{
 	}
 	public void atras()
 	{
-
+		central.setVisible(true);
+		this.setVisible(false);
 	}
 	public void borrarUsuario()
 	{
-
+		String Nombre= (String) tUsuario.getValueAt(tUsuario.getSelectedRow(), 0);
+		InteraccionDB.eliminarUser(Nombre);
+		rellenarTablaUsuario();
 	}
 	public void rellenarTablaUsuario()
 	{

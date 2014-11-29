@@ -28,16 +28,20 @@ public class PanelPlacas extends JPanel {
 	JScrollPane scrollPane;
 	JTable tPlaca;
 	DefaultTableModel mPlaca;
-	public PanelPlacas()
+	JPanel central;
+	public PanelPlacas(JPanel central)
 	{
+		this.central = central;
 		mPlaca=new DefaultTableModel();
 		mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});
+		panelCentral = new JPanel();
 
 		setLayout(new BorderLayout(0, 0));
 
 		panelInferior = new JPanel();
 		panelInferior.setLayout(new GridLayout(1, 1, 0, 0));
 		add(panelInferior, BorderLayout.SOUTH);
+		add(panelCentral, BorderLayout.CENTER);
 
 		btnAtras = new JButton("Atras");
 		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -74,14 +78,14 @@ public class PanelPlacas extends JPanel {
 		});
 		panelInferior.add(btnAñadir);
 
-		panelCentral = new JPanel();
 		panelCentral.setLayout(new BorderLayout(0, 0));
 		panelCentral.add(scrollPane, BorderLayout.CENTER);
 		rellenarPlacas();
 	}
 	public void atras()
 	{
-		
+		central.setVisible(true);
+		this.setVisible(false);
 	}
 	public void borrar()
 	{
