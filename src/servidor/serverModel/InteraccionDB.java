@@ -28,9 +28,9 @@ public class InteraccionDB {
 	{
 		gestor.enviarComando("PRAGMA foreign_keys = ON");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario (Nombre VARCHAR(50) NOT NULL ,Pass VARCHAR(50) NOT NULL, PRIMARY KEY(Nombre));");
-		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Placa (Id INTEGER PRIMARY KEY, Estado VARCHAR(250) NOT NULL, Foto BLOB);");
+		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Placa (Id INTEGER PRIMARY KEY AUTOINCREMENT, Estado VARCHAR(250) NOT NULL, Foto BLOB);");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario_Placa(Nombre VARCHAR(50) NOT NULL, Id_Placa INT(10) NOT NULL, CONSTRAINT Nombre FOREIGN KEY (Nombre) REFERENCES Usuario (Nombre) ON DELETE CASCADE, CONSTRAINT Id_Placa FOREIGN KEY (Id_Placa) REFERENCES Placa(Id) ON DELETE CASCADE)");
-		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Sensor (Id_Sensor INTEGER PRIMARY KEY, Nombre_Variable VARCHAR(250) NOT NULL, Funcion_Principal VARCHAR(500) NOT NULL, Estado_la_variable VARCHAR(250) NOT NULL,Ultima_Accion VARCHAR(500) NOT NULL, id_Placa INT(10), Foto BLOB, CONSTRAINT id_Placa FOREIGN KEY (id_Placa) REFERENCES Placa (Id) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT Nombre_Variable FOREIGN KEY (Nombre_Variable) REFERENCES Variable (Nombre_variable) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(id_Placa, Nombre_Variable));");
+		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Sensor (Id_Sensor INTEGER PRIMARY KEY AUTOINCREMENT, Nombre_Variable VARCHAR(250) NOT NULL, Funcion_Principal VARCHAR(500) NOT NULL, Estado_la_variable VARCHAR(250) NOT NULL,Ultima_Accion VARCHAR(500) NOT NULL, id_Placa INT(10), Foto BLOB, CONSTRAINT id_Placa FOREIGN KEY (id_Placa) REFERENCES Placa (Id) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT Nombre_Variable FOREIGN KEY (Nombre_Variable) REFERENCES Variable (Nombre_variable) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(id_Placa, Nombre_Variable));");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Variable (Nombre_Variable VARCHAR(250) PRIMARY KEY, Foto BLOB)");
 	}
 	private static void borrarBaseDeDatos()
@@ -118,7 +118,6 @@ public class InteraccionDB {
 			gestor.enviarComando("INSERT INTO Usuario VALUES('"+usuario+"','"+pass+"');");
 		else
 			throw new RepetElement();
-
 	}
 	public static void insertarVariable(String nombre, Image imagen) throws RepetElement{
 
@@ -138,6 +137,9 @@ public class InteraccionDB {
 		}
 		gestor.setImagen("UPDATE Variable SET Foto=? WHERE Nombre_Variable='"+nombre+"'", imagen);
 
+	}
+	public static void insertarPlaca(Image imagen) throws RepetElement{
+		gestor.setImagen("INSERT INTO(Estado, Foto) Placa VALUES('ON', ?) ", imagen);
 	}
 	public static void eliminarUser(String usuario){
 		gestor.enviarComando("DELETE FROM Usuario WHERE (Nombre='"+usuario+"');");	
