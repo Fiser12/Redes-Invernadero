@@ -2,6 +2,7 @@ package servidor.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import servidor.serverModel.InteraccionDB;
+import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Sensor;
 
 public class PanelSensores extends JPanel{
@@ -56,27 +58,22 @@ public class PanelSensores extends JPanel{
 
 		panelTablas = new JPanel();
 		panelCentral.add(panelTablas);
-		panelTablas.setLayout(new GridLayout(0, 3, 0, 0));
+		panelTablas.setLayout(new FlowLayout());
 		
 		mPlaca=new DefaultTableModel();
 		mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});
 		tPlaca=new JTable(mPlaca);
-		tPlaca.setRowSelectionAllowed(false);
 		tPlaca.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tPlaca.setModel(mPlaca);
 		tPlaca.getTableHeader().setReorderingAllowed(false);
 		scrollPanePlaca = new JScrollPane(tPlaca);
-		scrollPanePlaca.setPreferredSize(new Dimension(222, 400));
-		panelTablas.add(scrollPanePlaca);
+		scrollPanePlaca.setPreferredSize(new Dimension(122, 400));
 
-		mSensor=new DefaultTableModel();
-		mSensor.setColumnIdentifiers(new String[]{"ID Sensor"});
-		tSensor=new JTable(mSensor);
+		tSensor=new JTable();
 		tSensor.getTableHeader().setReorderingAllowed(false);
 		tSensor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tSensor.setModel(mSensor);
 		scrollPaneSensor = new JScrollPane(tSensor);
-		scrollPaneSensor.setPreferredSize(new Dimension(222, 400));
+		scrollPaneSensor.setPreferredSize(new Dimension(422, 400));
 		panelTablas.add(scrollPaneSensor);
 		
 		mVariable=new DefaultTableModel();
@@ -86,8 +83,8 @@ public class PanelSensores extends JPanel{
 		tVariable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tVariable.setModel(mVariable);
 		scrollPaneVariable = new JScrollPane(tVariable);
-		scrollPaneVariable.setPreferredSize(new Dimension(222, 400));
-
+		scrollPaneVariable.setPreferredSize(new Dimension(122, 400));
+		panelTablas.add(scrollPanePlaca);
 		panelTablas.add(scrollPaneVariable);
 		
 		/**
@@ -140,6 +137,8 @@ public class PanelSensores extends JPanel{
 			}
 		});
 		rellenarTablaSensor();
+		rellenarVariables();
+		rellenarPlacas();
 	}
 	public void asociarVariable()
 	{
@@ -174,14 +173,42 @@ public class PanelSensores extends JPanel{
 	public void rellenarTablaSensor()
 	{
 		mSensor=new DefaultTableModel();
-		mSensor.setColumnIdentifiers(new String[]{"ID Sensor","EstadoV","Variable","Ul Accion","Fun principal"});
+		mSensor.setColumnIdentifiers(new String[]{"ID Sensor","Estado","Variable","Accion","Funcion"});
 		LinkedList<Sensor> devolver = new LinkedList<Sensor>();
 		devolver=InteraccionDB.ListadoSensor();
 		for(int i=0;i<devolver.size();i++){
 			Sensor s=devolver.get(i);
-
+			System.out.println(s.toString());
 			mSensor.addRow(new String[]{""+s.getId_sensor(),s.getEstadoVariable(),s.getVariable(),s.getUltimaAccion(),s.getFuncionPrincipal()});
 
 		}
+		mSensor.fireTableDataChanged();
+		tSensor.setModel(mSensor);
+	}
+	public void rellenarVariables(){
+		LinkedList<String> devolver = new LinkedList<String>();
+		devolver=InteraccionDB.listadoVariable();
+		mVariable=new DefaultTableModel();
+		mVariable.setColumnIdentifiers(new String[]{"Nombre Variable"});
+		for(int i=0;i<devolver.size();i++){
+
+			mVariable.addRow(new String[]{	devolver.get(i)});
+		}
+		mVariable.fireTableDataChanged();
+		tVariable.setModel(mVariable);
+	}
+	public void rellenarPlacas()
+	{
+		mPlaca=new DefaultTableModel();
+		mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});	
+		LinkedList<Placa> devolver = new LinkedList<Placa>();
+		devolver=InteraccionDB.listadoPlacas();
+		for(int i=0;i<devolver.size();i++){
+			Placa p=devolver.get(i);
+			mPlaca.addRow(new String[]{""+p.getId()});
+		}
+		mPlaca.fireTableDataChanged();
+		tPlaca.setModel(mPlaca);
+		tPlaca.setModel(mPlaca);
 	}
 }

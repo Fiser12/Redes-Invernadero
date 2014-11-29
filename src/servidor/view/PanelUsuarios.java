@@ -57,7 +57,6 @@ public class PanelUsuarios extends JPanel{
 		mPlaca=new DefaultTableModel();
 		mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});
 		tPlaca=new JTable(mPlaca);
-		tPlaca.setRowSelectionAllowed(false);
 		tPlaca.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tPlaca.setModel(mPlaca);
 		tPlaca.getTableHeader().setReorderingAllowed(false);
