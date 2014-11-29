@@ -67,13 +67,13 @@ public class PanelSensores extends JPanel{
 		tPlaca.setModel(mPlaca);
 		tPlaca.getTableHeader().setReorderingAllowed(false);
 		scrollPanePlaca = new JScrollPane(tPlaca);
-		scrollPanePlaca.setPreferredSize(new Dimension(122, 400));
+		scrollPanePlaca.setPreferredSize(new Dimension(100, 400));
 
 		tSensor=new JTable();
 		tSensor.getTableHeader().setReorderingAllowed(false);
 		tSensor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPaneSensor = new JScrollPane(tSensor);
-		scrollPaneSensor.setPreferredSize(new Dimension(422, 400));
+		scrollPaneSensor.setPreferredSize(new Dimension(466, 400));
 		panelTablas.add(scrollPaneSensor);
 		
 		mVariable=new DefaultTableModel();
@@ -83,7 +83,7 @@ public class PanelSensores extends JPanel{
 		tVariable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tVariable.setModel(mVariable);
 		scrollPaneVariable = new JScrollPane(tVariable);
-		scrollPaneVariable.setPreferredSize(new Dimension(122, 400));
+		scrollPaneVariable.setPreferredSize(new Dimension(100, 400));
 		panelTablas.add(scrollPanePlaca);
 		panelTablas.add(scrollPaneVariable);
 		
@@ -142,11 +142,21 @@ public class PanelSensores extends JPanel{
 	}
 	public void asociarVariable()
 	{
-
+		int rowIndexSensor = tSensor.getSelectedRow();
+		int sensor = Integer.parseInt((String) tSensor.getValueAt(rowIndexSensor, 0));
+		int rowIndexVariable = tVariable.getSelectedRow();
+		String variable = ((String) tVariable.getValueAt(rowIndexVariable, 0));
+		InteraccionDB.actualizarVariable(sensor, variable);
+		rellenarTablaSensor();
 	}
 	public void asociarPlaca()
 	{
-		
+		int rowIndexSensor = tSensor.getSelectedRow();
+		int sensor = Integer.parseInt((String) tSensor.getValueAt(rowIndexSensor, 0));
+		int rowIndexPlaca = tPlaca.getSelectedRow();
+		int placa = Integer.parseInt((String) tPlaca.getValueAt(rowIndexPlaca, 0));
+		InteraccionDB.actualizarPlaca(sensor, placa);
+		rellenarTablaSensor();
 	}
 	public void crearUsuario()
 	{
@@ -173,13 +183,13 @@ public class PanelSensores extends JPanel{
 	public void rellenarTablaSensor()
 	{
 		mSensor=new DefaultTableModel();
-		mSensor.setColumnIdentifiers(new String[]{"ID Sensor","Estado","Variable","Accion","Funcion"});
+		mSensor.setColumnIdentifiers(new String[]{"ID Sensor", "ID Placa","Estado","Variable","Accion","Funcion"});
 		LinkedList<Sensor> devolver = new LinkedList<Sensor>();
 		devolver=InteraccionDB.ListadoSensor();
 		for(int i=0;i<devolver.size();i++){
 			Sensor s=devolver.get(i);
 			System.out.println(s.toString());
-			mSensor.addRow(new String[]{""+s.getId_sensor(),s.getEstadoVariable(),s.getVariable(),s.getUltimaAccion(),s.getFuncionPrincipal()});
+			mSensor.addRow(new String[]{""+s.getId_sensor(),""+s.getId_Placa(),s.getEstadoVariable(),s.getVariable(),s.getUltimaAccion(),s.getFuncionPrincipal()});
 
 		}
 		mSensor.fireTableDataChanged();

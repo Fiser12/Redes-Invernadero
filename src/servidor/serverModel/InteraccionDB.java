@@ -298,13 +298,21 @@ public class InteraccionDB {
 		return gestor.getImagenSensor(sensor);
 	}
 	public static void actualizarEstado(String sensor, String placa, String estado) {
-		gestor.enviarComando("UPDATE Sensor SET Estado_la_variable='"+estado+"' WHERE Id_Placa='"+placa+"' AND Nombre_Variable='"+sensor+"';");
+		gestor.enviarComando("UPDATE Sensor SET Estado_la_variable='"+estado+"' WHERE id_Placa='"+placa+"' AND Nombre_Variable='"+sensor+"';");
 	}
 	public static void actualizarAccion(String sensor, String placa, String accion) {
-		gestor.enviarComando("UPDATE Sensor SET Ultima_Accion='"+accion+"' WHERE Id_Placa='"+placa+"' AND Nombre_Variable='"+sensor+"';");
+		gestor.enviarComando("UPDATE Sensor SET Ultima_Accion='"+accion+"' WHERE id_Placa="+placa+" AND Nombre_Variable='"+sensor+"';");
 	}
 	public static void main(String []argv)
 	{
 		reiniciarBase();
+	}
+	public static void actualizarVariable(int sensor, String var)
+	{
+		gestor.enviarComando("UPDATE Sensor SET Nombre_Variable='"+var+"' WHERE Id_Sensor="+sensor);
+	}
+	public static void actualizarPlaca(int sensor, int placa)
+	{
+		gestor.enviarComando("UPDATE Sensor SET id_Placa="+placa+" WHERE Id_Sensor="+sensor);
 	}
 }
