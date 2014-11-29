@@ -171,6 +171,4 @@ public class PanelUsuarios extends JPanel{
 		tPlaca.setModel(mPlaca);
 		tPlaca.setModel(mPlaca);
 	}
-
-
 }

@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -84,6 +86,7 @@ public class VentanaCrearSensores extends JDialog{
 		tFUltimaAccion = new JTextField();
 		panel.add(tFUltimaAccion);
 		tFUltimaAccion.setColumns(10);
+		btnImagen.setEnabled(false);
 
 		JPanel panelInferior = new JPanel();
 		getContentPane().add(panelInferior, BorderLayout.SOUTH);
@@ -103,17 +106,26 @@ public class VentanaCrearSensores extends JDialog{
 			}
 		});
 		panelInferior.add(btnCancelar);
-		
+		comboBoxVariable.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(((String)comboBoxVariable.getSelectedItem()).equals("Imagen"))
+					btnImagen.setEnabled(true);
+				else
+					btnImagen.setEnabled(false);
+			}
+		});
 	}
 	public void insertar()
 	{
 	    try {
-	    	String funcion = tFFuncionPrincipal.getSelectedText();
+	    	String funcion = tFFuncionPrincipal.getText();
 	    	String variable = (String)comboBoxVariable.getSelectedItem();
 	    	boolean estado = chckbxNewCheckBox.isSelected();
-	    	String accion = tFUltimaAccion.getSelectedText();
+	    	String accion = tFUltimaAccion.getText();
 	    	InteraccionDB.insertarSensor(funcion, variable, accion, estado, image);
 			dispose();
+			image = null;
 	    }catch(RepetElement E){
 	    	JOptionPane.showMessageDialog(null,"El Usuario ya esta insertado","Error",JOptionPane.ERROR_MESSAGE);
 	    }
@@ -135,15 +147,15 @@ public class VentanaCrearSensores extends JDialog{
 	}
 	public void cancelar()
 	{
+		image = null;
 		dispose();
 	}
 	public String[]rellenarCombobox(){
 		LinkedList<String> devolver = new LinkedList<String>();
 		devolver=InteraccionDB.listadoVariable();
-		String[]var=new String[devolver.size()+1];
-		var[0]="Variable";
+		String[]var=new String[devolver.size()];
 		for(int i=0;i<devolver.size();i++){
-			var[i+1]=devolver.get(i);
+			var[i]=devolver.get(i);
 		}
 		return var;
 	}

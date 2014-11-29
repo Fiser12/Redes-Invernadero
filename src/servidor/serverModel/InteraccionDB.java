@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
-
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 
 import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Sensor;
@@ -143,14 +141,17 @@ public class InteraccionDB {
 		String estadoStr = "ON";
 		if(!estado)
 			estadoStr = "OFF";
-		gestor.insertarSensor("INSERT INTO Sensor(Funcion_Principal, Nombre_Variable, Ultima_Accion, Estado_la_variable, Foto) VALUES(?, ?, ?, ?, ?) ", funcion, variable, accion, estadoStr,imagen);
+		if(imagen!=null)
+			gestor.insertarSensor("INSERT INTO Sensor(Funcion_Principal, Nombre_Variable, Ultima_Accion, Estado_la_variable, Foto) VALUES(?, ?, ?, ?, ?) ", funcion, variable, accion, estadoStr,imagen);
+		else
+			gestor.enviarComando("INSERT INTO Sensor(Funcion_Principal, Nombre_Variable, Ultima_Accion, Estado_la_variable) VALUES('"+funcion+"', '"+variable+"', '"+accion+"', '"+estado+"') ");
 	}
 
 	public static void eliminarUser(String usuario){
 		gestor.enviarComando("DELETE FROM Usuario WHERE (Nombre='"+usuario+"');");	
 	}
 	public static void eliminarSensor(int ID){
-		gestor.enviarComando("DELETE FROM Sensor WHERE (Id_Sensor"+ID+");");	
+		gestor.enviarComando("DELETE FROM Sensor WHERE (Id_Sensor="+ID+");");	
 	}
 	public static void eliminarPlaca(int ID){
 		gestor.enviarComando("DELETE FROM Placa WHERE (Id="+ID+");");	
