@@ -74,7 +74,6 @@ public class PanelVariables extends JPanel{
 		panelInferior.add(btnAñadir);
 
 		panelCentral = new JPanel();
-		panelCentral.add(panelCentral, BorderLayout.CENTER);
 		panelCentral.setLayout(new BorderLayout(0, 0));
 		panelCentral.add(scrollPane, BorderLayout.CENTER);
 		rellenarVariables();

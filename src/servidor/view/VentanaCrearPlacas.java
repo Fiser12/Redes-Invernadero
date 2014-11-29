@@ -28,12 +28,9 @@ public class VentanaCrearPlacas extends JDialog{
 	{
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelCentral = new JPanel();
-		getContentPane().add(panelCentral, BorderLayout.CENTER);
-		panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
 			
 		JPanel panelContraseña = new JPanel();
-		panelCentral.add(panelContraseña);
+		getContentPane().add(panelContraseña);
 		
 		JButton btnSeleccionarFoto = new JButton("Seleccionar Foto");
 		btnSeleccionarFoto.addActionListener(new ActionListener() {

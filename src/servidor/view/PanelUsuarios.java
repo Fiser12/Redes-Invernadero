@@ -36,10 +36,11 @@ public class PanelUsuarios extends JPanel{
 	JScrollPane scrollPanePlaca;
 	JScrollPane scrollPaneUsuario;
 
-	public PanelUsuarios(JPanel anterior)
+	public PanelUsuarios()
 	{
 		this.setLayout(new BorderLayout());
 		panelInferior = new JPanel();
+		panelCentral = new JPanel();
 		panelCentral.add(panelInferior, BorderLayout.SOUTH);
 		//
 		panelTablas = new JPanel();

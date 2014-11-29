@@ -72,36 +72,16 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnPlacas;
 	private JButton btnASensores;
 	private JButton btnAVariables;
-	private JButton btnAVPlacas;
 	private JPanel panelApagar;
 	private JButton btnConexiones;
 	private JButton btnAServidor;
-
+	private PanelPlacas pPlacas;
+	private PanelUsuarios pUsuarios;
+	private PanelSensores pSensores;
+	private PanelVariables pVariables;
 	private static ServerSocket wellcomeSocket;
 	public static LinkedList<SocketManager> listaSockets;
 	public static LinkedList<Request> listaHilos;
-	private JPanel panelCPlaca;
-	private JPanel panelAtras8;
-	private JButton btnAtras8;
-	private JButton btnMenuInicio4;
-	private JPanel panelCreplaca;
-	private JButton btnCreaccionPlaca;
-	private JPanel panelCreaccionPla;
-	private JLabel lblPNombre;
-	private JTextField textID;
-	private JLabel lbNombrep;
-	private JTextField textNombre;
-	private JPanel panelCSensor;
-	private JPanel panelCrSensor;
-	private JPanel panelAtras10;
-	private JButton btnAtras10;
-	private JButton btnInicio;
-	private JPanel panelCreSensor;
-	private JButton btnCrSensor;
-	private JTextField textFSensor;
-	private JTextField textNSensor;
-	private JTextField textIDSensor;
-	private JComboBox comboBoxVariable;
 
 	/**
 	 * Launch the application.
@@ -110,7 +90,7 @@ public class VentanaPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ventanaServidor frame = new ventanaServidor();
+					VentanaPrincipal frame = new VentanaPrincipal();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -214,168 +194,6 @@ public class VentanaPrincipal extends JFrame {
 		});
 		botoneraInicial.add(btnAVariables);
 		botoneraInicial.add(btnASensores);
-		/*
-		 * Crear Placa
-		 * 
-		 */
-		panelCPlaca = new JPanel();
-		panelcentral.add(panelCPlaca, "name_24645888711459");
-		panelCPlaca.setLayout(new BorderLayout(0, 0));
-
-		panelAtras8 = new JPanel();
-		panelCPlaca.add(panelAtras8, BorderLayout.SOUTH);
-		panelAtras8.setLayout(new GridLayout(0, 3, 0, 0));
-
-		btnAtras8 = new JButton("Atras");
-		btnAtras8.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnAtras8.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelCPlaca.setVisible(false);
-				lblS.setText("Seleccionar una Opcion:");
-			}
-		});
-		panelAtras8.add(btnAtras8);
-
-		btnMenuInicio4 = new JButton("Menu Inicio");
-		btnMenuInicio4.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnMenuInicio4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelCPlaca.setVisible(false);
-				botoneraInicial.setVisible(true);
-				lblS.setText("Seleccionar una Opcion:");
-			}
-		});
-
-		btnCreaccionPlaca = new JButton("Creaccion Placa");
-		btnCreaccionPlaca.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelAtras8.add(btnCreaccionPlaca);
-		btnCreaccionPlaca.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//textID
-				//textNombre
-				// rdbtnEstadoinicial
-			}
-		});
-		panelAtras8.add(btnMenuInicio4);
-
-		panelCreplaca = new JPanel();
-		panelCPlaca.add(panelCreplaca, BorderLayout.CENTER);
-		panelCreplaca.setLayout(new BorderLayout(0, 0));
-
-		panelCreaccionPla = new JPanel();
-		panelCreplaca.add(panelCreaccionPla, BorderLayout.CENTER);
-		panelCreaccionPla.setLayout(null);
-
-		lblPNombre = new JLabel("ID:");
-		lblPNombre.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblPNombre.setBounds(88, 33, 51, 14);
-		panelCreaccionPla.add(lblPNombre);
-
-		textID = new JTextField();
-		textID.setBounds(192, 30, 158, 20);
-		panelCreaccionPla.add(textID);
-		textID.setColumns(10);
-
-		lbNombrep = new JLabel("Nombre:");
-		lbNombrep.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lbNombrep.setBounds(88, 95, 94, 14);
-		panelCreaccionPla.add(lbNombrep);
-
-		textNombre = new JTextField();
-		textNombre.setBounds(202, 94, 158, 20);
-		panelCreaccionPla.add(textNombre);
-		textNombre.setColumns(10);
-
-		JRadioButton rdbtnEstadoinicial = new JRadioButton("Encendido");
-		rdbtnEstadoinicial.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		rdbtnEstadoinicial.setBounds(165, 141, 109, 23);
-		panelCreaccionPla.add(rdbtnEstadoinicial);
-		/*
-		 * Crear sensor
-		 * Sensor se relacciona con una variable y  placa
-		 */
-		panelCSensor = new JPanel();
-		panelcentral.add(panelCSensor, "name_27780962298831");
-		panelCSensor.setLayout(new BorderLayout(0, 0));
-
-		panelCrSensor = new JPanel();
-		panelCSensor.add(panelCrSensor);
-		panelCrSensor.setLayout(new BorderLayout(0, 0));
-
-		panelCreSensor = new JPanel();
-		panelCrSensor.add(panelCreSensor, BorderLayout.CENTER);
-		panelCreSensor.setLayout(null);
-
-		JLabel lblSensorId = new JLabel("Sensor ID:");
-		lblSensorId.setBounds(10, 27, 73, 14);
-		panelCreSensor.add(lblSensorId);
-
-		JLabel lblNSensor = new JLabel("Sensor Nombre:");
-		lblNSensor.setBounds(10, 64, 94, 14);
-		panelCreSensor.add(lblNSensor);
-
-		JLabel lblFuncionPrincipal = new JLabel("Funcion Principal:");
-		lblFuncionPrincipal.setBounds(10, 89, 114, 14);
-		panelCreSensor.add(lblFuncionPrincipal);
-
-		JRadioButton rdbtnEISensor = new JRadioButton("Estodo inicial activado");
-		rdbtnEISensor.setBounds(318, 163, 157, 23);
-		panelCreSensor.add(rdbtnEISensor);
-
-		textFSensor = new JTextField();
-		textFSensor.setBounds(208, 86, 172, 20);
-		panelCreSensor.add(textFSensor);
-		textFSensor.setColumns(10);
-
-		textNSensor = new JTextField();
-		textNSensor.setBounds(207, 55, 172, 20);
-		panelCreSensor.add(textNSensor);
-		textNSensor.setColumns(10);
-
-		textIDSensor = new JTextField();
-		textIDSensor.setBounds(207, 24, 86, 20);
-		panelCreSensor.add(textIDSensor);
-		textIDSensor.setColumns(10);
-
-		comboBoxVariable = new JComboBox();
-		comboBoxVariable.setModel(new DefaultComboBoxModel(rellenarCombobox()));
-		comboBoxVariable.setBounds(80, 164, 157, 20);
-		panelCreSensor.add(comboBoxVariable);
-
-		panelAtras10 = new JPanel();
-		panelCSensor.add(panelAtras10, BorderLayout.SOUTH);
-		panelAtras10.setLayout(new GridLayout(0, 3, 0, 0));
-
-		btnAtras10 = new JButton("Atras");
-		btnAtras10.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelCSensor.setVisible(false);
-				lblS.setText("Seleccionar opccion");
-
-			}
-		});
-		panelAtras10.add(btnAtras10);
-
-		btnInicio = new JButton("Menu inicio");
-		btnInicio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelCSensor.setVisible(false);
-				botoneraInicial.setVisible(true);
-				lblS.setText("Seleccionar opccion");
-			}
-		});
-
-		btnCrSensor = new JButton("Crear Sensor");
-		panelAtras10.add(btnCrSensor);
-		btnCrSensor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				/*
-				 * rdbtnEISensor
-				 * textFSensor textNSensor textIDSensor comboBoxVariable 
-				 */
-			}
-		});
-		panelAtras10.add(btnInicio);
 
 		panelApagar = new JPanel();
 		contentPane.add(panelApagar, BorderLayout.SOUTH);
@@ -383,7 +201,6 @@ public class VentanaPrincipal extends JFrame {
 		btnConexiones = new JButton("Administrar conexiones");
 		btnConexiones.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelApagar.add(btnConexiones);
-		//Inicializando las tablas
 		btnAServidor = new JButton("Apagar servidor");
 		btnAServidor.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAServidor.addActionListener(new ActionListener() {
@@ -391,7 +208,20 @@ public class VentanaPrincipal extends JFrame {
 				desconectar();
 			}
 		});
-		panelApagar.add(btnAServidor);	
+		panelApagar.add(btnAServidor);
+		pPlacas = new PanelPlacas();
+		pUsuarios = new PanelUsuarios();
+		pSensores = new PanelSensores();
+		pVariables = new PanelVariables();
+		pPlacas.setVisible(false);
+		pUsuarios.setVisible(false);
+		pSensores.setVisible(false);
+		pVariables.setVisible(false);
+		panelcentral.add(pVariables);
+		panelcentral.add(pUsuarios);
+		panelcentral.add(pSensores);
+		panelcentral.add(pPlacas);
+
 	}
 	public static void mostrarUsuario(int usuario)
 	{
@@ -428,38 +258,22 @@ public class VentanaPrincipal extends JFrame {
 	public static void desconectar(){
 		System.exit(0);
 	}
-	public Image buscarImage(){
-		JFileChooser chooser = new JFileChooser();
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & PNG Images", "jpg", "png");
-		chooser.setFileFilter(filter);
-		//    int returnVal = chooser.showOpenDialog();
-		//    if(returnVal == JFileChooser.APPROVE_OPTION) {
-		//       System.out.println("You chose to open this file: " +
-		//           chooser.getSelectedFile().getName());
-		//    }
-		return null;
-	}
-
-	public String[]rellenarCombobox(){
-		LinkedList<String> devolver = new LinkedList<String>();
-		devolver=InteraccionDB.listadoVariable();
-		String[]var=new String[devolver.size()+1];
-		var[0]="Variable";
-		for(int i=0;i<devolver.size();i++){
-			var[i+1]=devolver.get(i);
-		}
-		return var;
-	}
 	public void administrarVariables(){
-		
+		pVariables.setVisible(true);
+		botoneraInicial.setVisible(false);
+
 	}
 	public void administrarSensores(){
-		
+		pSensores.setVisible(true);
+		botoneraInicial.setVisible(false);
 	}
 	public void administrarUsuarios(){
-		
+		pUsuarios.setVisible(true);
+		botoneraInicial.setVisible(false);
+
 	}
 	public void administrarPlacas(){
-		
+		pPlacas.setVisible(true);
+		botoneraInicial.setVisible(false);
 	}
 }

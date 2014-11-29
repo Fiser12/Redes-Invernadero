@@ -42,10 +42,11 @@ public class PanelSensores extends JPanel{
 	JScrollPane scrollPaneSensor;
 	JScrollPane scrollPaneVariable;
 
-	public PanelSensores(JPanel anterior)
+	public PanelSensores()
 	{
 		this.setLayout(new BorderLayout());
 		panelInferior = new JPanel();
+		panelCentral = new JPanel();
 		panelCentral.add(panelInferior, BorderLayout.SOUTH);
 		//
 		panelTablas = new JPanel();

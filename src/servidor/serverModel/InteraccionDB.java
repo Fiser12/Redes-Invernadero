@@ -141,6 +141,13 @@ public class InteraccionDB {
 	public static void insertarPlaca(Image imagen) throws RepetElement{
 		gestor.setImagen("INSERT INTO(Estado, Foto) Placa VALUES('ON', ?) ", imagen);
 	}
+	public static void insertarSensor(String funcion, String variable, String accion, boolean estado, Image imagen) throws RepetElement{
+		String estadoStr = "ON";
+		if(!estado)
+			estadoStr = "OFF";
+		gestor.setImagen("INSERT INTO(Funcion_Principal, Nombre_Variable, Ultima_Accion, Estado_la_variable, Foto) Placa VALUES('"+funcion+"','"+variable+"','"+accion+"','"+estadoStr+"', ?) ", imagen);
+	}
+
 	public static void eliminarUser(String usuario){
 		gestor.enviarComando("DELETE FROM Usuario WHERE (Nombre='"+usuario+"');");	
 	}
