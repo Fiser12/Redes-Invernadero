@@ -5,12 +5,17 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+
+import servidor.serverModel.InteraccionDB;
+import servidor.serverModel.ModelClass.Sensor;
 
 public class PanelSensores extends JPanel{
 
@@ -148,6 +153,15 @@ public class PanelSensores extends JPanel{
 	}
 	public void rellenarTablaSensor()
 	{
-		
+		mSensor=new DefaultTableModel();
+		mSensor.setColumnIdentifiers(new String[]{"ID Sensor","EstadoV","Variable","Ul Accion","Fun principal"});
+		LinkedList<Sensor> devolver = new LinkedList<Sensor>();
+		devolver=InteraccionDB.ListadoSensor();
+		for(int i=0;i<devolver.size();i++){
+			Sensor s=devolver.get(i);
+
+			mSensor.addRow(new String[]{""+s.getId_sensor(),s.getEstadoVariable(),s.getVariable(),s.getUltimaAccion(),s.getFuncionPrincipal()});
+
+		}
 	}
 }
