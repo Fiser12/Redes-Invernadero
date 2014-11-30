@@ -1,7 +1,6 @@
 package util;
 import java.net.*;
 import java.io.*;
-import servidor.serverController.Server;
 
 public class SocketManager {
 	private Socket mySocket;
@@ -51,8 +50,6 @@ public class SocketManager {
 
 	public void CerrarSocket() throws IOException {
 		mySocket.close();
-		Server.listaHilos.remove(Server.listaSockets.indexOf(this));
-		Server.listaSockets.remove(this);
 	}
 
 	/**
@@ -62,10 +59,6 @@ public class SocketManager {
 	 */
 	public String Leer() throws IOException {
 		return (bufferLectura.readLine());
-	}
-	public int Leer2(char[]temp) throws IOException
-	{
-		return bufferLectura.read(temp);
 	}
 	public void Escribir(String contenido) throws IOException {
 		bufferEscritura.writeBytes(contenido);
@@ -115,6 +108,4 @@ public class SocketManager {
 		}
 		return data;
 	}
-
-
 }

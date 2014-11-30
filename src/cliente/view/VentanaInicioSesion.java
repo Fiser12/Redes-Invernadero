@@ -169,6 +169,8 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 		try {
 			Util.claseSocketCliente.Escribir("SALIR\n");
 			respuesta = Util.claseSocketCliente.Leer();
+			Util.claseSocketCliente.CerrarStreams();
+			Util.claseSocketCliente.CerrarSocket();
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
 		}

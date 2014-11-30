@@ -15,6 +15,8 @@ import javax.imageio.ImageIO;
 import util.*;
 import util.excepciones.SearchException;
 import servidor.serverModel.InteraccionDB;
+import servidor.view.PanelAdminServer;
+
 public final class Request implements Runnable {
 
 	final static String CRLF = "\r\n";
@@ -25,9 +27,12 @@ public final class Request implements Runnable {
 	private String variableAccion;
 	private String accion;
 	private String requestLine;
+	private boolean stop;
+	private PanelAdminServer conexiones;
 	// Constructor
-	public Request(SocketManager sockMan) throws Exception {
+	public Request(SocketManager sockMan, PanelAdminServer conexiones) throws Exception {
 		sockManager = sockMan;
+		this.conexiones = conexiones;
 	}
 
 	// Implement the run() method of the Runnable interface.
@@ -51,9 +56,13 @@ public final class Request implements Runnable {
 		}
 	}
 	private void processRequest() throws Exception {
+		Util.listaSockets.add(sockManager);
+		Util.listaHilos.add(this);
+		conexiones.rellenarTablaUsuario();
 		requestLine = sockManager.Leer();
 		System.out.println("RequestLine: " + requestLine);
-		boolean stop = false;
+		stop = false;
+
 		while(!stop)
 		{
 			switch (estado) {
@@ -66,6 +75,7 @@ public final class Request implements Runnable {
 					if(respuesta == 200){
 						sockManager.Escribir("200 OK Bienvenido " + usuario + "\n");
 						estado = 1;
+						conexiones.rellenarTablaUsuario();
 					}
 					else if(respuesta == 400)
 						sockManager.Escribir("400 ERR Falta el nombre de usuario\n");
@@ -76,7 +86,6 @@ public final class Request implements Runnable {
 				}
 				else if(requestLine.startsWith("SALIR"))
 				{
-					sockManager.Escribir("209 OK Adios\n");
 					estado = 4;
 				}
 				else{
@@ -261,7 +270,6 @@ public final class Request implements Runnable {
 				}
 				else if(requestLine.startsWith("SALIR"))
 				{
-					sockManager.Escribir("209 OK Adios\n");
 					estado = 4;
 				}
 				else
@@ -350,7 +358,6 @@ public final class Request implements Runnable {
 				}
 				else if(requestLine.startsWith("SALIR"))
 				{
-					sockManager.Escribir("209 OK Adios\n");
 					estado = 4;
 				}
 				else
@@ -365,10 +372,7 @@ public final class Request implements Runnable {
 				break;
 
 			case 4:
-				sockManager.CerrarStreams();
-				sockManager.CerrarSocket();
-				System.out.println("Cerrando");
-				stop = true;
+				salir();
 				break;
 			}
 		}
@@ -379,5 +383,14 @@ public final class Request implements Runnable {
 
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
+	}
+	public void salir() throws IOException
+	{
+		Util.listaSockets.remove(sockManager);
+		Util.listaHilos.remove(this);
+		conexiones.rellenarTablaUsuario();
+		sockManager.Escribir("209 OK Adios\n");
+		System.out.println("Cerrando");
+		stop = true;
 	}
 }

@@ -150,9 +150,8 @@ public class VentanaTabla extends JFrame{
 		Listar.add(btnSalir);
 		modeloTabla=new ModeloSensor();
 		tabla=new JTable(modeloTabla);
-	    tabla.setCellSelectionEnabled(true);
-	    tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	    tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		tabla.getTableHeader().setReorderingAllowed(false);
+		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scroll = new JScrollPane(tabla);
 		contentPane.add(scroll, BorderLayout.CENTER);
 	}
@@ -178,6 +177,9 @@ public class VentanaTabla extends JFrame{
 		try {
 			Util.claseSocketCliente.Escribir("SALIR\n");
 			respuesta = Util.claseSocketCliente.Leer();
+			Util.claseSocketCliente.CerrarStreams();
+			Util.claseSocketCliente.CerrarSocket();
+
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
 		}
