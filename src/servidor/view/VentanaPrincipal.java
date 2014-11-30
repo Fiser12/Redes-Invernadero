@@ -14,12 +14,8 @@ import javax.swing.JLabel;
 
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
-
-import servidor.serverController.*;
-import util.SocketManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.net.ServerSocket;
 
 import java.awt.Font;
 
@@ -41,28 +37,7 @@ public class VentanaPrincipal extends JFrame {
 	private PanelUsuarios pUsuarios;
 	private PanelSensores pSensores;
 	private PanelAdminServer pPanelAdmin;
-	private static ServerSocket wellcomeSocket;
-	public static int usuariosConectados = 0;
-	public static boolean userMax = false;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) throws Exception{
-		VentanaPrincipal frame = new VentanaPrincipal();
-		frame.setVisible(true);
-		int port = 3000;
-		wellcomeSocket = new ServerSocket(port);
-		while (true)
-		{
-				SocketManager sockManager = new SocketManager(wellcomeSocket.accept());
-				if(!userMax)
-				{
-				Request request = new Request(sockManager, frame.getPanelServer());
-				Thread thre = new Thread(request);
-				thre.start();
-			}
-		}
-	}
+
 	public PanelAdminServer getPanelServer()
 	{
 		return pPanelAdmin;

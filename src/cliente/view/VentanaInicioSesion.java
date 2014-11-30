@@ -1,8 +1,6 @@
 package cliente.view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -42,22 +40,6 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
     private JLabel lblDatos;
     private String respuesta;
     private JButton btnSalir;
-	
-    /**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaInicioSesion frame = new VentanaInicioSesion();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.

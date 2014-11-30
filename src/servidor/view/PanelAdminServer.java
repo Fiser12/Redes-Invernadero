@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -21,11 +20,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
+import servidor.mainServidor;
+import servidor.serverController.Request;
+import util.SocketManager;
 import util.Util;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 
 public class PanelAdminServer extends JPanel {
 
@@ -144,9 +145,15 @@ public class PanelAdminServer extends JPanel {
 		devolver[4] = Util.listaSockets.get(usuario).getMySocket().getPort()+"";
 		return devolver;
 	}
-	public static void desconectarUsuario(int usuario){
-		Util.listaHilos.get(usuario).setEstado(4);
-		System.out.println(usuario);
+	public void desconectarUsuario(int usuario){
+		//Util.listaHilos.get(usuario).setEstado(4);
+		SocketManager temp1 = Util.listaSockets.get(usuario);
+		Request temp2 = Util.listaHilos.get(usuario);
+		try {
+			temp1.CerrarSocket();
+			temp1.CerrarStreams();
+		} catch (Exception e) {}
+		borrar(temp1, temp2);
 	}
 	public void cambioMaximoUser(){
 		Util.usuariosMaximos = new Integer((Integer)spinnerConexiones.getValue()).intValue();
@@ -154,16 +161,28 @@ public class PanelAdminServer extends JPanel {
 		if((Util.listaHilos.size()<Util.usuariosMaximos))
 		{
 			System.out.println(Util.listaHilos.size() + "<REST" + Util.usuariosMaximos);
-			VentanaPrincipal.userMax = false;
+			mainServidor.userMax = false;
 		}
 		else
-			VentanaPrincipal.userMax = true;
+			mainServidor.userMax = true;
 	}
 	public void cerrarConexion()
 	{
 		int rowIndex = tUsuario.getSelectedRow();
 		int posicion = Integer.parseInt((String) tUsuario.getValueAt(rowIndex, 1));
 		desconectarUsuario(posicion-1);
+		rellenarTablaUsuario();
 	}
-	
+	public void borrar(SocketManager add1, Request add2)
+	{
+		Util.listaSockets.remove(add1);
+		Util.listaHilos.remove(add2);
+		actualizarLabel();
+		if((Util.listaHilos.size()<Util.usuariosMaximos))
+		{
+			System.out.println(Util.listaHilos.size() + "<REST" + Util.usuariosMaximos);
+			mainServidor.userMax = false;
+		}
+	}
+
 }

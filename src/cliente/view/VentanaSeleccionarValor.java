@@ -1,7 +1,6 @@
 package cliente.view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Image;
 
 import javax.imageio.ImageIO;
@@ -41,22 +40,6 @@ public class VentanaSeleccionarValor extends JFrame {
 	private JPanel contentPane;
 	String respuesta = "";
 	private JFormattedTextField txIncremento;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-				//	VentanaIncrementar frame = new VentanaIncrementar(true);
-					//frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.

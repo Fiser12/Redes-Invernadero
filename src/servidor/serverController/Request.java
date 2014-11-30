@@ -13,9 +13,9 @@ import javax.imageio.ImageIO;
 
 import util.*;
 import util.excepciones.SearchException;
+import servidor.mainServidor;
 import servidor.serverModel.InteraccionDB;
 import servidor.view.PanelAdminServer;
-import servidor.view.VentanaPrincipal;
 
 public final class Request implements Runnable {
 
@@ -51,7 +51,7 @@ public final class Request implements Runnable {
 		if((Util.listaHilos.size()<Util.usuariosMaximos))
 		{
 			System.out.println(Util.listaHilos.size() + "<REST" + Util.usuariosMaximos);
-			VentanaPrincipal.userMax = false;
+			mainServidor.userMax = false;
 		}
 	}
 	public void añadir(SocketManager add1, Request add2)
@@ -62,7 +62,7 @@ public final class Request implements Runnable {
 		if(!(Util.listaHilos.size()<Util.usuariosMaximos))
 		{
 			System.out.println(Util.listaHilos.size() + "<MAX" + Util.usuariosMaximos);
-			VentanaPrincipal.userMax = true;
+			mainServidor.userMax = true;
 		}
 	}
 	private void processRequest() throws Exception {

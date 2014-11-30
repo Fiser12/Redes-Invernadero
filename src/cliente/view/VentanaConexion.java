@@ -1,7 +1,6 @@
 package cliente.view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import util.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,22 +26,6 @@ public class VentanaConexion extends JFrame {
 	private JPanel contentPane;
 	private JTextField tFIP;
 	private JFormattedTextField tFpuerto;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaConexion frame = new VentanaConexion();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
