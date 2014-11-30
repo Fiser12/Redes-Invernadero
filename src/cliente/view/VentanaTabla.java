@@ -200,7 +200,6 @@ public class VentanaTabla extends JFrame{
 		{
 			Util.claseSocketCliente.Escribir("ON " + seleccionado.getId_Placa() + " " + seleccionado.getVariable()+"\n");
 			respuesta = Util.claseSocketCliente.Leer();
-			System.out.println(respuesta);
 			if(respuesta.contains("ERR"))
 				JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
 			else
@@ -227,7 +226,6 @@ public class VentanaTabla extends JFrame{
 		{
 			Util.claseSocketCliente.Escribir("OFF " + seleccionado.getId_Placa() + " " + seleccionado.getVariable()+"\n");
 			respuesta = Util.claseSocketCliente.Leer();
-			System.out.println(respuesta);
 			if(respuesta.contains("ERR"))
 				JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
 			else
@@ -291,7 +289,6 @@ public class VentanaTabla extends JFrame{
 		
 		for(String tratar: temp)
 		{
-			System.out.println(tratar);
 			Sensor nuevo = new Sensor();
 			nuevo.setId_Placa(Character.getNumericValue(tratar.charAt(11)));
 			nuevo.setId_sensor(Character.getNumericValue(tratar.charAt(4)));
@@ -346,7 +343,6 @@ public class VentanaTabla extends JFrame{
 		try {
 			Util.claseSocketCliente.Escribir("OBTENER_FOTO Variable" + seleccionado.getVariable()+"\n");
 			respuesta = Util.claseSocketCliente.Leer();
-			System.out.println(respuesta);
 			if(respuesta.contains("ERR"))
 				JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
 			else

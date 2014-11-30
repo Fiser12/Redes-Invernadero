@@ -157,10 +157,8 @@ public class PanelAdminServer extends JPanel {
 	}
 	public void cambioMaximoUser(){
 		Util.usuariosMaximos = new Integer((Integer)spinnerConexiones.getValue()).intValue();
-		System.out.println(Util.usuariosMaximos);
 		if((Util.listaHilos.size()<Util.usuariosMaximos))
 		{
-			System.out.println(Util.listaHilos.size() + "<REST" + Util.usuariosMaximos);
 			mainServidor.userMax = false;
 		}
 		else
@@ -180,7 +178,6 @@ public class PanelAdminServer extends JPanel {
 		actualizarLabel();
 		if((Util.listaHilos.size()<Util.usuariosMaximos))
 		{
-			System.out.println(Util.listaHilos.size() + "<REST" + Util.usuariosMaximos);
 			mainServidor.userMax = false;
 		}
 	}

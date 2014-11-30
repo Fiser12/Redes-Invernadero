@@ -188,7 +188,6 @@ public class PanelSensores extends JPanel{
 		devolver=InteraccionDB.ListadoSensor();
 		for(int i=0;i<devolver.size();i++){
 			Sensor s=devolver.get(i);
-			System.out.println(s.toString());
 			mSensor.addRow(new String[]{""+s.getId_sensor(),""+s.getId_Placa(),s.getEstadoVariable(),s.getVariable(),s.getUltimaAccion(),s.getFuncionPrincipal()});
 
 		}

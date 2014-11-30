@@ -118,7 +118,6 @@ public class VentanaSeleccionarValor extends JFrame {
 					{
 						Util.claseSocketCliente.Escribir("CONFIRMAR_ACCION "+ s.getId_sensor() +"\n");
 						respuesta = Util.claseSocketCliente.Leer();
-						System.out.println(respuesta);
 						if(respuesta.contains("ERR"))
 							JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
 						else

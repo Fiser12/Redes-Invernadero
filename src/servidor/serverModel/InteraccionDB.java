@@ -264,7 +264,6 @@ public class InteraccionDB {
 			texto = texto + temporal;
 		}
 		texto = texto + "/n202 FINLISTA\n";
-		System.out.println(texto);
 		return texto;
 	}
 	public static boolean comprobarEstado(String sensor, String placa) throws SearchException{
@@ -274,7 +273,6 @@ public class InteraccionDB {
 			if(resultado.next())
 			{
 				String estado = resultado.getString("Estado_la_variable");
-				System.out.println(estado);
 				if(estado.equals("ON"))
 					return true;
 				else return false;

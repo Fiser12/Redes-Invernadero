@@ -58,7 +58,6 @@ public class SQLiteManager
 			}
 		}catch (ClassNotFoundException e) {
 			conectado = false;
-			System.out.println(e.getMessage());
 		}
 	}
 	/**
@@ -108,7 +107,6 @@ public class SQLiteManager
 				return false;
 			}
 		} catch (SQLException e) {
-			System.out.println(e.toString());
 			return false;
 		}               
 	}
