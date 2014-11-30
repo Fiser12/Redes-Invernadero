@@ -7,7 +7,6 @@ import java.awt.image.ColorConvertOp;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -16,6 +15,7 @@ import util.*;
 import util.excepciones.SearchException;
 import servidor.serverModel.InteraccionDB;
 import servidor.view.PanelAdminServer;
+import servidor.view.VentanaPrincipal;
 
 public final class Request implements Runnable {
 
@@ -29,13 +29,12 @@ public final class Request implements Runnable {
 	private String requestLine;
 	private boolean stop;
 	private PanelAdminServer conexiones;
-	// Constructor
+	
 	public Request(SocketManager sockMan, PanelAdminServer conexiones) throws Exception {
 		sockManager = sockMan;
 		this.conexiones = conexiones;
 	}
 
-	// Implement the run() method of the Runnable interface.
 	public void run() {
 		try {
 			processRequest();
@@ -44,20 +43,30 @@ public final class Request implements Runnable {
 			System.out.println(e);
 		}
 	}
-	@SuppressWarnings("unused")
-	private void sendBytes(FileInputStream fis) throws Exception {
-		// Construct a 1K buffer to hold bytes on their way to the socket.
-		byte[] buffer = new byte[1024];
-		int bytes = 0;
-
-		// Copy requested file into the socket's output stream.
-		while ( (bytes = fis.read(buffer)) != -1) {
-			sockManager.Escribir(buffer, bytes);
+	public void borrar(SocketManager add1, Request add2)
+	{
+		Util.listaSockets.remove(add1);
+		Util.listaHilos.remove(add2);
+		this.conexiones.actualizarLabel();
+		if((Util.listaHilos.size()<Util.usuariosMaximos))
+		{
+			System.out.println(Util.listaHilos.size() + "<REST" + Util.usuariosMaximos);
+			VentanaPrincipal.userMax = false;
+		}
+	}
+	public void añadir(SocketManager add1, Request add2)
+	{
+		Util.listaSockets.add(add1);
+		Util.listaHilos.add(add2);
+		this.conexiones.actualizarLabel();
+		if(!(Util.listaHilos.size()<Util.usuariosMaximos))
+		{
+			System.out.println(Util.listaHilos.size() + "<MAX" + Util.usuariosMaximos);
+			VentanaPrincipal.userMax = true;
 		}
 	}
 	private void processRequest() throws Exception {
-		Util.listaSockets.add(sockManager);
-		Util.listaHilos.add(this);
+		añadir(sockManager, this);
 		conexiones.rellenarTablaUsuario();
 		requestLine = sockManager.Leer();
 		System.out.println("RequestLine: " + requestLine);
@@ -386,11 +395,9 @@ public final class Request implements Runnable {
 	}
 	public void salir() throws IOException
 	{
-		Util.listaSockets.remove(sockManager);
-		Util.listaHilos.remove(this);
+		borrar(sockManager, this);
 		conexiones.rellenarTablaUsuario();
 		sockManager.Escribir("209 OK Adios\n");
-		System.out.println("Cerrando");
 		stop = true;
 	}
 }

@@ -15,9 +15,6 @@ public class Util {
 	public static String servidor = "127.0.0.1";
 	public static int puerto = 3000;
 	public static SocketManager claseSocketCliente;
-	public static LinkedList<SocketManager> listaSockets;
-	public static LinkedList<Request> listaHilos;
-	public  static void cambiarNUsuarios(int i){
-		usuariosMaximos=i;
-	}
+	public static LinkedList<SocketManager> listaSockets = new LinkedList<SocketManager>();;
+	public static LinkedList<Request> listaHilos = new LinkedList<Request>();
 }

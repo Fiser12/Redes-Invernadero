@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -18,24 +17,15 @@ import javax.swing.SpinnerNumberModel;
 
 import java.awt.Font;
 
-import javax.swing.JTextField;
-
-import java.awt.CardLayout;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.NumberFormatter;
 
-import servidor.serverModel.InteraccionDB;
-import servidor.serverModel.ModelClass.Usuario;
 import util.Util;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.text.NumberFormat;
-import java.util.LinkedList;
 
 public class PanelAdminServer extends JPanel {
 
@@ -46,6 +36,7 @@ public class PanelAdminServer extends JPanel {
 	private JPanel panelPrincipal;
 	JPanel central;
 	private JScrollPane scrollPaneTablaconetados;
+	private JLabel lblNewLabel;
 	
 	public PanelAdminServer(JPanel central)
 	{
@@ -81,22 +72,6 @@ public class PanelAdminServer extends JPanel {
 			}
 		});
 
-		JPanel panelAConexines = new JPanel();
-		panelOpciones.add(panelAConexines);
-
-		JLabel lblConexiones = new JLabel("Conexiones Actuales");
-		panelAConexines.add(lblConexiones);
-
-		SpinnerNumberModel model = new SpinnerNumberModel(Util.usuariosMaximos, 1, Integer.MAX_VALUE, 1);
-		spinnerConexiones = new JSpinner(model);
-		panelAConexines.add(spinnerConexiones);
-		spinnerConexiones.setValue(Util.usuariosMaximos);
-		spinnerConexiones.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				Util.usuariosMaximos = new Integer((Integer)spinnerConexiones.getValue()).intValue();
-			}
-	    });
 
 		panelPrincipal = new JPanel();
 		add(panelPrincipal, "name_116325924696087");
@@ -131,18 +106,37 @@ public class PanelAdminServer extends JPanel {
 		});
 		panelBotonera.add(btnCancelar);
 
-		JLabel lblNewLabel = new JLabel("Seleccione el Usuario a cerrar conexion ");
+		JLabel lblConexiones = new JLabel("Conexiones Actuales");
+		panelBotonera.add(lblConexiones);
+
+		SpinnerNumberModel model = new SpinnerNumberModel(Util.usuariosMaximos, 1, Integer.MAX_VALUE, 1);
+		spinnerConexiones = new JSpinner(model);
+		panelBotonera.add(spinnerConexiones);
+		spinnerConexiones.setValue(Util.usuariosMaximos);
+		spinnerConexiones.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				cambioMaximoUser();
+			}
+	    });
+
+		
+		lblNewLabel = new JLabel("Usuarios Conectados: " + (Util.listaHilos.size()));
 		panelPrincipal.add(lblNewLabel, BorderLayout.NORTH);
 		rellenarTablaUsuario();
 	}
 	public void rellenarTablaUsuario()
 	{
 		mUsuario=new DefaultTableModel();
-		mUsuario.setColumnIdentifiers(new String[]{"USERNAME" , "Nº USUARIO", "DIRECCIÓN", "NOMBRE DEL HOST", "PUERTO", "NOMBRE CANONICO"});
+		mUsuario.setColumnIdentifiers(new String[]{"USERNAME" , "Nº USUARIO", "DIRECCIÓN", "NOMBRE DEL HOST", "PUERTO"});
 		for(int i = 0; i<Util.listaHilos.size(); i++)
 			mUsuario.addRow(obtenerUsuario(i));
 		mUsuario.fireTableDataChanged();
 		tUsuario.setModel(mUsuario);
+	}
+	public void actualizarLabel()
+	{
+		lblNewLabel.setText("Usuarios Conectados: " + (Util.listaHilos.size()));
 	}
 	public void atras()
 	{
@@ -152,18 +146,15 @@ public class PanelAdminServer extends JPanel {
 	public static String[] obtenerUsuario(int usuario)
 	{
 		String [] devolver = new String[6];
-		String usuarioRegistrado = "DESCONECTADO";
-		try{
-			usuarioRegistrado = Util.listaHilos.get(usuario).getUsuario();
-		}catch(Exception E){
+		String usuarioRegistrado = Util.listaHilos.get(usuario).getUsuario();
+		if(usuarioRegistrado == null)
 			usuarioRegistrado = "DESCONECTADO";
-		}
+
 		devolver[0] = usuarioRegistrado;
 		devolver[1] = (usuario+1)+"";
 		devolver[2] = Util.listaSockets.get(usuario).getMySocket().getInetAddress().getHostAddress();
 		devolver[3] = Util.listaSockets.get(usuario).getMySocket().getInetAddress().getHostName();
 		devolver[4] = Util.listaSockets.get(usuario).getMySocket().getPort()+"";
-		devolver[5] = Util.listaSockets.get(usuario).getMySocket().getInetAddress().getCanonicalHostName();
 		return devolver;
 	}
 	public static void desconectarUsuario(int usuario){
@@ -175,8 +166,16 @@ public class PanelAdminServer extends JPanel {
 			e.printStackTrace();
 		}
 	}
-	public static int getUsuariosConectados()
-	{
-		return Util.listaSockets.size();
+	public void cambioMaximoUser(){
+		Util.usuariosMaximos = new Integer((Integer)spinnerConexiones.getValue()).intValue();
+		System.out.println(Util.usuariosMaximos);
+		if((Util.listaHilos.size()<Util.usuariosMaximos))
+		{
+			System.out.println(Util.listaHilos.size() + "<REST" + Util.usuariosMaximos);
+			VentanaPrincipal.userMax = false;
+		}
+		else
+			VentanaPrincipal.userMax = true;
 	}
+	
 }

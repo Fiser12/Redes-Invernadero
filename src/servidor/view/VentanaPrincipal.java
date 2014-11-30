@@ -17,11 +17,9 @@ import java.awt.CardLayout;
 
 import servidor.serverController.*;
 import util.SocketManager;
-import util.Util;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.net.ServerSocket;
-import java.util.LinkedList;
 
 import java.awt.Font;
 
@@ -44,23 +42,21 @@ public class VentanaPrincipal extends JFrame {
 	private PanelSensores pSensores;
 	private PanelAdminServer pPanelAdmin;
 	private static ServerSocket wellcomeSocket;
-
+	public static int usuariosConectados = 0;
+	public static boolean userMax = false;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) throws Exception{
 		VentanaPrincipal frame = new VentanaPrincipal();
 		frame.setVisible(true);
-		Util.listaSockets = new LinkedList<SocketManager>();
-		Util.listaHilos = new LinkedList<Request>();
 		int port = 3000;
 		wellcomeSocket = new ServerSocket(port);
 		while (true)
 		{
-			
-			if(Util.listaHilos.size()<Util.usuariosMaximos)
-			{
 				SocketManager sockManager = new SocketManager(wellcomeSocket.accept());
+				if(!userMax)
+				{
 				Request request = new Request(sockManager, frame.getPanelServer());
 				Thread thre = new Thread(request);
 				thre.start();
@@ -95,7 +91,7 @@ public class VentanaPrincipal extends JFrame {
 					contentPane.add(panelSuperior, BorderLayout.NORTH);
 					panelSuperior.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-					lblS = new JLabel("Seleccionar una opcion:");
+					lblS = new JLabel("Administracion del Servidor");
 					lblS.setFont(new Font("Tahoma", Font.PLAIN, 16));
 					panelSuperior.add(lblS);
 
@@ -109,8 +105,7 @@ public class VentanaPrincipal extends JFrame {
 					panelcentral.add(botoneraInicial, "name_117604164092399");
 					botoneraInicial.setLayout(new GridLayout(2, 2, 0, 0));
 
-					btnASensores = 
-							new JButton("Administrar Sensores");
+					btnASensores = new JButton("Administrar Sensores");
 					btnASensores.setFont(new Font("Tahoma", Font.PLAIN, 16));
 					btnASensores.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
