@@ -195,4 +195,5 @@ public class VentanaPrincipal extends JFrame {
 		pPanelAdmin.setVisible(true);
 		botoneraInicial.setVisible(false);
 	}
+	
 }

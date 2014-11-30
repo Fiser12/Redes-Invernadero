@@ -34,7 +34,7 @@ public class PanelAdminServer extends JPanel {
 	private JSpinner spinnerConexiones;
 	private DefaultTableModel mUsuario;
 	private JPanel panelPrincipal;
-	JPanel central;
+	private JPanel central;
 	private JScrollPane scrollPaneTablaconetados;
 	private JLabel lblNewLabel;
 	
@@ -52,25 +52,12 @@ public class PanelAdminServer extends JPanel {
 		JPanel panelCerrarconexion = new JPanel();
 		panelOpciones.add(panelCerrarconexion);
 
-		JButton btnCerrarConexion = new JButton("Cerrar conexion");
-		panelCerrarconexion.add(btnCerrarConexion);
-
 		JButton btnAtras = new JButton("Atras");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				atras();
 			}});
-		panelCerrarconexion.add(btnAtras);
-		btnCerrarConexion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int seleccion=JOptionPane.showOptionDialog(null,"Esta Seguro de que desea cerrar la conexion con "+tUsuario.getValueAt(tUsuario.getSelectedRow(), 0),"Cierre de conexion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[] { "Si", "No" }, "Si");
-				if(seleccion==0){
-					/*
-					 * cerrar la conexion con el Usuario
-					 */
-				}
-			}
-		});
+
 
 
 		panelPrincipal = new JPanel();
@@ -93,7 +80,7 @@ public class PanelAdminServer extends JPanel {
 		JButton btnCerrar = new JButton("Cerrar conexion");
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				cerrarConexion();
 			}
 		});
 		panelBotonera.add(btnCerrar);
@@ -158,13 +145,8 @@ public class PanelAdminServer extends JPanel {
 		return devolver;
 	}
 	public static void desconectarUsuario(int usuario){
-		try
-		{
-			Util.listaHilos.get(usuario).salir();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+		Util.listaHilos.get(usuario).setEstado(4);
+		System.out.println(usuario);
 	}
 	public void cambioMaximoUser(){
 		Util.usuariosMaximos = new Integer((Integer)spinnerConexiones.getValue()).intValue();
@@ -176,6 +158,12 @@ public class PanelAdminServer extends JPanel {
 		}
 		else
 			VentanaPrincipal.userMax = true;
+	}
+	public void cerrarConexion()
+	{
+		int rowIndex = tUsuario.getSelectedRow();
+		int posicion = Integer.parseInt((String) tUsuario.getValueAt(rowIndex, 1));
+		desconectarUsuario(posicion-1);
 	}
 	
 }

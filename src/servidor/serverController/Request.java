@@ -386,6 +386,15 @@ public final class Request implements Runnable {
 			}
 		}
 	}
+	
+	public int getEstado() {
+		return estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
 	public String getUsuario() {
 		return usuario;
 	}
