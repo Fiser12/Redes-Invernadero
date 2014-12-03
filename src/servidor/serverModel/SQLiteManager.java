@@ -67,18 +67,9 @@ public class SQLiteManager
 			e.printStackTrace();
 		}
 	}
-	/**
-	 * Retorna el resultado de la consulta SQL ultima que se ha realizado
-	 * @return
-	 */
 	public ResultSet getResultSet(){
 		return resultadoDeConsulta;
 	}
-	/**
-	 * Metodo preparado para enviar cualquier tipo de comando y ajusta la llamada para decidir si devuelve algun valor o no
-	 * @param comando
-	 * @return
-	 */
 	public synchronized boolean enviarComando(String comando)
 	{
 		try {
