@@ -93,10 +93,10 @@ public class PanelAdminServer extends JPanel {
 		JLabel lblConexiones = new JLabel("Conexiones Actuales");
 		panelBotonera.add(lblConexiones);
 
-		SpinnerNumberModel model = new SpinnerNumberModel(Util.usuariosMaximos, 1, Integer.MAX_VALUE, 1);
+		SpinnerNumberModel model = new SpinnerNumberModel(Util.getUsuariosMaximos(), 1, Integer.MAX_VALUE, 1);
 		spinnerConexiones = new JSpinner(model);
 		panelBotonera.add(spinnerConexiones);
-		spinnerConexiones.setValue(Util.usuariosMaximos);
+		spinnerConexiones.setValue(Util.getUsuariosMaximos());
 		spinnerConexiones.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -142,23 +142,19 @@ public class PanelAdminServer extends JPanel {
 		return devolver;
 	}
 	public void desconectarUsuario(int usuario){
-		//Util.listaHilos.get(usuario).setEstado(4);
 		SocketManager temp1 = Util.listaSockets.get(usuario);
 		Request temp2 = Util.listaHilos.get(usuario);
 		try {
 			temp1.CerrarSocket();
 			temp1.CerrarStreams();
-		} catch (Exception e) {}
+		} catch (Exception ignored) {
+
+		}
 		borrar(temp1, temp2);
 	}
 	public void cambioMaximoUser(){
-		Util.usuariosMaximos = new Integer((Integer)spinnerConexiones.getValue()).intValue();
-		if((Util.listaHilos.size()<Util.usuariosMaximos))
-		{
-			mainServidor.userMax = false;
-		}
-		else
-			mainServidor.userMax = true;
+		Util.setUsuariosMaximos((Integer) spinnerConexiones.getValue());
+		mainServidor.userMax = (Util.listaHilos.size() >= Util.getUsuariosMaximos());
 	}
 	public void cerrarConexion()
 	{
@@ -172,7 +168,7 @@ public class PanelAdminServer extends JPanel {
 		Util.listaSockets.remove(add1);
 		Util.listaHilos.remove(add2);
 		actualizarLabel();
-		if((Util.listaHilos.size()<Util.usuariosMaximos))
+		if((Util.listaHilos.size()< Util.getUsuariosMaximos()))
 		{
 			mainServidor.userMax = false;
 		}

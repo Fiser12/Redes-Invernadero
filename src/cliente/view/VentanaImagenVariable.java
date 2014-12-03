@@ -6,20 +6,9 @@ import java.awt.*;
 
 public class VentanaImagenVariable extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-
-
-	/**
-	 * Create the frame.
-	 */
 	public VentanaImagenVariable(Image i, String variable) {
 		setBounds(100, 100, new ImageIcon(i).getIconWidth(), new ImageIcon(i).getIconHeight()+70);
 		contentPane = new JPanel();
