@@ -343,9 +343,6 @@ public class VentanaTabla extends JFrame{
 		}
 
 	}
-	/**
-	 * Permite recargar la tabla teniendo en cuenta el ultimo patron con el que se ha cargado, para asi actualizarlo con el
-	 */
 	public void recargarTabla()
 	{
 		if(ultimaCarga==1)
