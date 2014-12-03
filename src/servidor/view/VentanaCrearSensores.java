@@ -69,7 +69,7 @@ public class VentanaCrearSensores extends JDialog{
 		chckbxNewCheckBox = new JCheckBox("Estado");
 		panel_1.add(chckbxNewCheckBox);
 		
-		JButton btnImagen = new JButton("Imagen");
+		final JButton btnImagen = new JButton("Imagen");
 		btnImagen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				sacarFoto();

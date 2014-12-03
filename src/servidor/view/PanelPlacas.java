@@ -25,7 +25,7 @@ public class PanelPlacas extends JPanel {
 	JPanel panelInferior;
 	JPanel panelCentral;
 	JButton btnAtras;
-	JButton btnAñadir;
+	JButton btnAnadir;
 	JButton borrarPlaca;
 	JScrollPane scrollPane;
 	JTable tPlaca;
@@ -71,14 +71,14 @@ public class PanelPlacas extends JPanel {
 		});
 		panelInferior.add(borrarPlaca);
 
-		btnAñadir = new JButton("Añadir placa");
-		btnAñadir.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnAñadir.addActionListener(new ActionListener() {
+		btnAnadir = new JButton("Anadir placa");
+		btnAnadir.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				añadir();
 			}
 		});
-		panelInferior.add(btnAñadir);
+		panelInferior.add(btnAnadir);
 
 		panelCentral.setLayout(new BorderLayout(0, 0));
 		panelCentral.add(scrollPane, BorderLayout.CENTER);

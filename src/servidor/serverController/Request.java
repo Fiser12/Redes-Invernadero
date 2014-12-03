@@ -54,7 +54,7 @@ public final class Request implements Runnable {
 			mainServidor.userMax = false;
 		}
 	}
-	public void añadir(SocketManager add1, Request add2)
+	public void anadir(SocketManager add1, Request add2)
 	{
 		Util.listaSockets.add(add1);
 		Util.listaHilos.add(add2);
@@ -66,7 +66,7 @@ public final class Request implements Runnable {
 		}
 	}
 	private void processRequest() throws Exception {
-		añadir(sockManager, this);
+		anadir(sockManager, this);
 		conexiones.rellenarTablaUsuario();
 		requestLine = sockManager.Leer();
 		System.out.println("RequestLine: " + requestLine);
