@@ -49,7 +49,6 @@ public class PanelPlacas extends JPanel {
 		});
 		panelInferior.add(btnAtras);
 
-		
 		tPlaca=new JTable(mPlaca);
 		tPlaca.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tPlaca.setModel(mPlaca);
@@ -103,11 +102,9 @@ public class PanelPlacas extends JPanel {
 	{
 		mPlaca=new DefaultTableModel();
 		mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});	
-		LinkedList<Placa> devolver = new LinkedList<Placa>();
-		devolver=InteraccionDB.listadoPlacas();
-		for(int i=0;i<devolver.size();i++){
-			Placa p=devolver.get(i);
-			mPlaca.addRow(new String[]{""+p.getId()});
+		LinkedList<Placa> devolver = InteraccionDB.listadoPlacas();
+		for (Placa p : devolver) {
+			mPlaca.addRow(new String[]{"" + p.getId()});
 		}
 		mPlaca.fireTableDataChanged();
 		tPlaca.setModel(mPlaca);
