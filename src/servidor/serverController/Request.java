@@ -17,7 +17,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-@SuppressWarnings(value = "ConstantConditions")
 public final class Request implements Runnable {
 
 	SocketManager sockManager;
@@ -48,9 +47,9 @@ public final class Request implements Runnable {
 		Util.listaSockets.remove(add1);
 		Util.listaHilos.remove(add2);
 		this.conexiones.actualizarLabel();
-		if((Util.listaHilos.size()<Util.usuariosMaximos))
+		if((Util.listaHilos.size()< Util.getUsuariosMaximos()))
 		{
-			System.out.println(Util.listaHilos.size() + "<REST" + Util.usuariosMaximos);
+			System.out.println(Util.listaHilos.size() + "<REST" + Util.getUsuariosMaximos());
 			mainServidor.userMax = false;
 		}
 	}
@@ -59,9 +58,9 @@ public final class Request implements Runnable {
 		Util.listaSockets.add(add1);
 		Util.listaHilos.add(add2);
 		this.conexiones.actualizarLabel();
-		if(!(Util.listaHilos.size()<Util.usuariosMaximos))
+		if(!(Util.listaHilos.size()< Util.getUsuariosMaximos()))
 		{
-			System.out.println(Util.listaHilos.size() + "<MAX" + Util.usuariosMaximos);
+			System.out.println(Util.listaHilos.size() + "<MAX" + Util.getUsuariosMaximos());
 			mainServidor.userMax = true;
 		}
 	}
