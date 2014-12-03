@@ -36,9 +36,6 @@ public class SQLiteManager
 		createInstance();
 		return instance;
 	}
-	/**
-	 * Conecta con la base de datos SQLite establecida en la direcion Util
-	 */
 	private void connect()
 	{
 		try {
@@ -52,19 +49,6 @@ public class SQLiteManager
 			}
 		}catch (ClassNotFoundException e) {
 			conectado = false;
-		}
-	}
-	/**
-	 * Desconecta la base de datos
-	 */
-	public void disconnet()
-	{
-		try{
-			query.close();
-			connection.close();
-			conectado = false;
-		}catch (Exception e){
-			e.printStackTrace();
 		}
 	}
 	public ResultSet getResultSet(){
@@ -98,8 +82,8 @@ public class SQLiteManager
 	public byte[] getImagen(int codigo) throws SearchException
 	{
 		String query="SELECT Foto FROM Placa WHERE Id="+codigo;
-		Statement stmt=null;
-		byte[] imgArr = new byte[1];
+		Statement stmt;
+		byte[] imgArr;
 		try{
 			stmt=connection.createStatement();
 			ResultSet rslt=stmt.executeQuery(query);
@@ -117,8 +101,8 @@ public class SQLiteManager
 	public byte[] getImagenVariable(String codigo) throws SearchException
 	{
 		String query="SELECT Foto FROM Variable WHERE Nombre_Variable='"+codigo+"'";
-		Statement stmt=null;
-		byte[] imgArr = new byte[1];
+		Statement stmt;
+		byte[] imgArr;
 		try{
 			stmt=connection.createStatement();
 			ResultSet rslt=stmt.executeQuery(query);
@@ -136,8 +120,8 @@ public class SQLiteManager
 	public byte[] getImagenSensor(int sensor) throws SearchException
 	{
 		String query="SELECT Foto FROM Sensor WHERE Id_Sensor="+sensor;
-		Statement stmt=null;
-		byte[] imgArr = new byte[1];
+		Statement stmt;
+		byte[] imgArr;
 		try{
 			stmt=connection.createStatement();
 			ResultSet rslt=stmt.executeQuery(query);
