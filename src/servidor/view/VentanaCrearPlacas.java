@@ -1,27 +1,20 @@
 package servidor.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Image;
+import servidor.serverModel.InteraccionDB;
+import util.excepciones.RepetElement;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import servidor.serverModel.InteraccionDB;
-import util.excepciones.RepetElement;
-
 public class VentanaCrearPlacas extends JDialog{
+	private static final long serialVersionUID = 1L;
 	private Image image;
 	private JButton btnInsertar;
-	private static final long serialVersionUID = 1L;
 	public VentanaCrearPlacas()
 	{
 	    setSize(new Dimension(250,135));

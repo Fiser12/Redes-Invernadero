@@ -1,28 +1,22 @@
 package servidor.serverModel;
 
-import java.awt.Image;
-import java.awt.image.RenderedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import javax.imageio.ImageIO;
-
 import util.Util;
 import util.excepciones.SearchException;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.sql.*;
+
 public class SQLiteManager
 {
+	private static SQLiteManager instance = null;
 	private Connection connection;
 	private Statement query;
 	private String dir;
 	private boolean conectado;
-	private static SQLiteManager instance = null;
 	private ResultSet resultadoDeConsulta;
 
 	public SQLiteManager()

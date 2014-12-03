@@ -1,27 +1,18 @@
 package servidor.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
+import servidor.serverModel.InteraccionDB;
+import servidor.serverModel.ModelClass.Asociacion;
+import servidor.serverModel.ModelClass.Placa;
+import servidor.serverModel.ModelClass.Usuario;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.LinkedList;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
-
-import servidor.serverModel.InteraccionDB;
-import servidor.serverModel.ModelClass.Asociacion;
-import servidor.serverModel.ModelClass.Placa;
-import servidor.serverModel.ModelClass.Usuario;
 
 public class PanelUsuarios extends JPanel{
 

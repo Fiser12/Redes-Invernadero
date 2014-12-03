@@ -1,23 +1,10 @@
 package servidor.view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import java.awt.GridLayout;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-
-import java.awt.FlowLayout;
-import java.awt.CardLayout;
-import java.awt.event.ActionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-
-import java.awt.Font;
+import java.awt.event.ActionListener;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -38,10 +25,6 @@ public class VentanaPrincipal extends JFrame {
 	private PanelSensores pSensores;
 	private PanelAdminServer pPanelAdmin;
 
-	public PanelAdminServer getPanelServer()
-	{
-		return pPanelAdmin;
-	}
 	/**
 	 * Create the frame.
 	 */
@@ -150,9 +133,16 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 	}
+
 	public static void desconectar(){
 		System.exit(0);
 	}
+
+	public PanelAdminServer getPanelServer()
+	{
+		return pPanelAdmin;
+	}
+
 	public void administrarSensores(){
 		pSensores.setVisible(true);
 		botoneraInicial.setVisible(false);

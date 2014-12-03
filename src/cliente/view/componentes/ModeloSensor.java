@@ -1,7 +1,8 @@
 package cliente.view.componentes;
 
-import javax.swing.table.DefaultTableModel;
 import servidor.serverModel.ModelClass.Sensor;
+
+import javax.swing.table.DefaultTableModel;
 
 /**
  * Clase creada para hacer no editable una tabla

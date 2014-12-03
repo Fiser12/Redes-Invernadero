@@ -1,8 +1,8 @@
 package cliente;
 
-import java.awt.EventQueue;
-
 import cliente.view.VentanaConexion;
+
+import java.awt.*;
 
 public class mainCliente {
 	/**

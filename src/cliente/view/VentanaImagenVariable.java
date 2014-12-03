@@ -1,12 +1,8 @@
 package cliente.view;
 
-import java.awt.BorderLayout;
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
+import java.awt.*;
 
 public class VentanaImagenVariable extends JFrame {
 

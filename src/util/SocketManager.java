@@ -1,6 +1,8 @@
 package util;
-import java.net.*;
+
 import java.io.*;
+import java.net.InetAddress;
+import java.net.Socket;
 
 public class SocketManager {
 	private Socket mySocket;

@@ -1,8 +1,12 @@
 package servidor.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Image;
+import servidor.serverModel.InteraccionDB;
+import util.excepciones.RepetElement;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -10,28 +14,10 @@ import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import servidor.serverModel.InteraccionDB;
-import util.excepciones.RepetElement;
-
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-
 public class VentanaCrearSensores extends JDialog{
+	private static final long serialVersionUID = 1L;
 	private Image image;
 	private JButton btnInsertar;
-	private static final long serialVersionUID = 1L;
 	private JTextField tFFuncionPrincipal;
 	private JTextField tFUltimaAccion;
 	private JCheckBox chckbxNewCheckBox;

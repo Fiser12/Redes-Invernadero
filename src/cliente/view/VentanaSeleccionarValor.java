@@ -1,34 +1,18 @@
 package cliente.view;
 
-import java.awt.BorderLayout;
-import java.awt.Image;
-
-import javax.imageio.ImageIO;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.text.NumberFormatter;
-import javax.swing.JLabel;
-
-import java.awt.GridLayout;
-
-import javax.swing.JButton;
-
 import servidor.serverModel.ModelClass.Sensor;
 import util.Util;
 
-import java.awt.event.ActionListener;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.NumberFormatter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
-
-import javax.swing.BoxLayout;
-import javax.swing.SwingConstants;
-
-import java.awt.FlowLayout;
 
 public class VentanaSeleccionarValor extends JFrame {
 
@@ -36,9 +20,8 @@ public class VentanaSeleccionarValor extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private JPanel contentPane;
 	String respuesta = "";
+	private JPanel contentPane;
 	private JFormattedTextField txIncremento;
 
 	/**

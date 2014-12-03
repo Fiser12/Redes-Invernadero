@@ -1,20 +1,19 @@
 package servidor.serverModel;
 
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.LinkedList;
-
-import javax.imageio.ImageIO;
-
 import servidor.serverModel.ModelClass.Asociacion;
 import servidor.serverModel.ModelClass.Placa;
 import servidor.serverModel.ModelClass.Sensor;
 import servidor.serverModel.ModelClass.Usuario;
 import util.excepciones.RepetElement;
 import util.excepciones.SearchException;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.LinkedList;
 
 /**
  * Clase dedicada a métodos estaticos que haciendo uso de SQLiteManager enmascara el modelo al controlador
@@ -119,23 +118,6 @@ public class InteraccionDB {
 		else
 			throw new RepetElement();
 	}
-	public static void insertarVariable(String nombre, Image imagen) throws RepetElement{
-
-		gestor.enviarComando("Select * FROM Variable WHERE Nombre='"+nombre+"');");
-		ResultSet resultado=gestor.getResultSet();
-
-		try {
-			if(!resultado.isFirst()){
-				gestor.insertarDatos("INSERT INTO Variable(Foto, Nombre_Variable) VALUES(?, ?);", imagen, nombre);
-			}
-			else{
-				throw new RepetElement();
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	public static void insertarPlaca(Image imagen) throws RepetElement{
 		gestor.insertarDatos("INSERT INTO Placa(Foto, Estado) VALUES(?, ?) ", imagen, "ON");
 	}
@@ -158,9 +140,6 @@ public class InteraccionDB {
 	public static void eliminarPlaca(int ID){
 		gestor.enviarComando("DELETE FROM Placa WHERE (Id="+ID+");");	
 	}
-	public static void eliminarVariable(String Nombre){
-		gestor.enviarComando("DELETE FROM Variable WHERE (Nombre_Variable='"+Nombre+"');");	
-	}
 	public static LinkedList<Sensor>ListadoSensor(){
 		LinkedList<Sensor> sensores=new LinkedList<Sensor>();
 		gestor.enviarComando("SELECT * FROM Sensor");
@@ -170,7 +149,6 @@ public class InteraccionDB {
 				sensores.add(new Sensor(resultado.getInt("Id_Sensor"), resultado.getString("Nombre_Variable"), resultado.getString("Funcion_Principal"), resultado.getString("Estado_la_variable"), resultado.getString("Ultima_Accion"), resultado.getInt("id_Placa")));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return sensores;
@@ -184,7 +162,6 @@ public class InteraccionDB {
 			placas.add(new Placa(respuesta.getInt(1)));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return placas;
@@ -198,7 +175,6 @@ public class InteraccionDB {
 				variables.add(respuesta.getString(1));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return variables;
@@ -214,7 +190,6 @@ public class InteraccionDB {
 				
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return usuarios;
@@ -273,9 +248,7 @@ public class InteraccionDB {
 			if(resultado.next())
 			{
 				String estado = resultado.getString("Estado_la_variable");
-				if(estado.equals("ON"))
-					return true;
-				else return false;
+				return estado.equals("ON");
 			}
 			else
 				throw new SearchException();

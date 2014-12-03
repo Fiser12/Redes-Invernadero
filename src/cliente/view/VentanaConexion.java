@@ -1,41 +1,29 @@
 package cliente.view;
 
-import java.awt.BorderLayout;
-import util.*;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import util.SocketManager;
+import util.Util;
+
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
-import java.awt.GridLayout;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.NumberFormat;
 
 public class VentanaConexion extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4392006415802003983L;
-	private JPanel contentPane;
 	private JTextField tFIP;
 	private JFormattedTextField tFpuerto;
 
-	/**
-	 * Create the frame.
-	 */
 	public VentanaConexion() {
 		setTitle("Conexion");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 170);
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);

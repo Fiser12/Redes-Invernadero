@@ -2,9 +2,7 @@ package servidor.view;
 
 import javax.swing.JPanel;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.*;
 
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -13,8 +11,6 @@ import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
-
-import java.awt.Font;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;

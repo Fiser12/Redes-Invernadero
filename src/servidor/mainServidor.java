@@ -1,13 +1,12 @@
 package servidor;
 
-import java.net.ServerSocket;
-
 import servidor.serverController.Request;
 import servidor.view.VentanaPrincipal;
 import util.SocketManager;
 
+import java.net.ServerSocket;
+
 public class mainServidor {
-	public static int usuariosConectados = 0;
 	public static boolean userMax = false;
 	public static ServerSocket wellcomeSocket;
 	
