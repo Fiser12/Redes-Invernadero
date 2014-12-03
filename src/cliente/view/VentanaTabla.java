@@ -33,9 +33,7 @@ public class VentanaTabla extends JFrame{
     private String respuesta;
 
 	public VentanaTabla() {
-		/*
-		 * Rellenar el array list De TodasPlacas
-		 */
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 550);
 		contentPane = new JPanel();
