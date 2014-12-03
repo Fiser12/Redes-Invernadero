@@ -129,7 +129,7 @@ public final class Request implements Runnable {
 						String variables = requestLine.substring(requestLine.indexOf(" ") + 1);
 						String idPlaca = variables.substring(0, variables.indexOf(" "));
 						String Variable = variables.substring(variables.indexOf(" ") + 1, variables.length());
-						// Comprobar si está encendido y mandar error 405 y si no existe el 404 sino poner a ON
+						// Comprobar si esta encendido y mandar error 405 y si no existe el 404 sino poner a ON
 						try {
 							if (InteraccionDB.comprobarEstado(Variable, idPlaca)) {
 								sockManager.Escribir("405 ERR " + Variable + " en estado ON \n");
@@ -146,7 +146,7 @@ public final class Request implements Runnable {
 						String variables = requestLine.substring(requestLine.indexOf(" ") + 1);
 						String idPlaca = variables.substring(0, variables.indexOf(" "));
 						String Variable = variables.substring(variables.indexOf(" ") + 1, variables.length());
-						// Comprobar si está apagado y mandar error 407 y si no existe el 406 sino poner a ON
+						// Comprobar si esta apagado y mandar error 407 y si no existe el 406 sino poner a ON
 						try {
 							if (InteraccionDB.comprobarEstado(Variable, idPlaca)) {//Continuar con el proceso de poner a OFF
 								InteraccionDB.actualizarEstado(Variable, idPlaca, "OFF");
@@ -219,7 +219,7 @@ public final class Request implements Runnable {
 								} catch (SearchException E) {
 									sockManager.Escribir("403 ERR Identificador no existe\n");
 								}
-							} else if (tipo.equals("Varia")) {//Método de extracción de la imagen del sensor
+							} else if (tipo.equals("Varia")) {//Metodo de extraccion de la imagen del sensor
 								String id = requestLine.substring(21);
 								System.out.println("ID: " + id);
 								try {
@@ -272,7 +272,7 @@ public final class Request implements Runnable {
 									try {
 										byte[] imagen = InteraccionDB.getImagenSensor(id);
 										sockManager.Escribir("206 OK Transmitiendo " + imagen.length + " bytes\n");
-										if (!accion.contains("color"))//método para convertir la foto en blanco y negro una vez salida de la BD
+										if (!accion.contains("color"))//metodo para convertir la foto en blanco y negro una vez salida de la BD
 										{
 											BufferedImage temp = ImageIO.read(new ByteArrayInputStream(imagen));
 											ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_GRAY);

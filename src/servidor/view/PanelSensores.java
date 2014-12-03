@@ -79,7 +79,7 @@ public class PanelSensores extends JPanel{
 		panelTablas.add(scrollPaneVariable);
 		
 		/**
-		 * El panel inferior con todos los botones y sus métodos
+		 * El panel inferior con todos los botones y sus metodos
 		 */
 		panelInferior.setLayout(new GridLayout(1, 0, 0, 0));
 		

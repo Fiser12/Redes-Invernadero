@@ -94,7 +94,7 @@ public class VentanaConexion extends JFrame {
 					ventana.setVisible(true);
 					dispose();
 				} catch (IOException e) {
-					JOptionPane.showMessageDialog(null, "Error, el servidor no está encendido", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Error, el servidor no esta encendido", "Error de conexion", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

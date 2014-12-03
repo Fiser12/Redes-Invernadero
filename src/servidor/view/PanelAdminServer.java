@@ -62,7 +62,7 @@ public class PanelAdminServer extends JPanel {
 		panelPrincipal.setLayout(new BorderLayout(0, 0));
 
 		mUsuario=new DefaultTableModel();
-		mUsuario.setColumnIdentifiers(new String[]{"USERNAME" , "Nº USUARIO", "DIRECCIÓN", "NOMBRE DEL HOST", "PUERTO", "NOMBRE CANONICO"});
+		mUsuario.setColumnIdentifiers(new String[]{"USERNAME" , "Nº USUARIO", "DIRECCION", "NOMBRE DEL HOST", "PUERTO", "NOMBRE CANONICO"});
 		tUsuario=new JTable(mUsuario);
 		tUsuario.getTableHeader().setReorderingAllowed(false);
 		tUsuario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -112,7 +112,7 @@ public class PanelAdminServer extends JPanel {
 	public void rellenarTablaUsuario()
 	{
 		mUsuario=new DefaultTableModel();
-		mUsuario.setColumnIdentifiers(new String[]{"USERNAME" , "Nº USUARIO", "DIRECCIÓN", "NOMBRE DEL HOST", "PUERTO"});
+		mUsuario.setColumnIdentifiers(new String[]{"USERNAME" , "Nº USUARIO", "DIRECCION", "NOMBRE DEL HOST", "PUERTO"});
 		for(int i = 0; i<Util.listaHilos.size(); i++)
 			mUsuario.addRow(obtenerUsuario(i));
 		mUsuario.fireTableDataChanged();

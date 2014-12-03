@@ -83,7 +83,7 @@ public class PanelUsuarios extends JPanel{
 		panelTablas.add(scrollPaneAsociacion);
 		
 		/**
-		 * El panel inferior con todos los botones y sus métodos
+		 * El panel inferior con todos los botones y sus metodos
 		 */
 		panelInferior.setLayout(new GridLayout(1, 0, 0, 0));
 		

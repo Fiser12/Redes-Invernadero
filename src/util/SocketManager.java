@@ -77,7 +77,7 @@ public class SocketManager {
 	public void setMySocket(Socket mySocket) {
 		this.mySocket = mySocket;
 	}
-	//Estos métodos los he conseguido de aquí http://stackoverflow.com/questions/2878867/how-to-send-an-array-of-bytes-over-a-tcp-connection-java-programming
+	//Estos metodos los he conseguido de aqui http://stackoverflow.com/questions/2878867/how-to-send-an-array-of-bytes-over-a-tcp-connection-java-programming
 	public void sendBytes(byte[] myByteArray) throws IOException {
 		sendBytes(myByteArray, 0, myByteArray.length);
 	}

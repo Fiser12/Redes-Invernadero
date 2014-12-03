@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 /**
- * Clase dedicada a métodos estaticos que haciendo uso de SQLiteManager enmascara el modelo al controlador
+ * Clase dedicada a metodos estaticos que haciendo uso de SQLiteManager enmascara el modelo al controlador
  * @author Fiser
  *
  */

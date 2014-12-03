@@ -68,7 +68,7 @@ public class PanelPlacas extends JPanel {
 		btnAnadir.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				añadir();
+				anadir();
 			}
 		});
 		panelInferior.add(btnAnadir);
@@ -88,7 +88,7 @@ public class PanelPlacas extends JPanel {
 		InteraccionDB.eliminarPlaca(id);
 		rellenarPlacas();
 	}
-	public void añadir()
+	public void anadir()
 	{
 		VentanaCrearPlacas nueva = new VentanaCrearPlacas();
 		nueva.setVisible(true);

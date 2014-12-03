@@ -37,7 +37,7 @@ public class SQLiteManager
 		return instance;
 	}
 	/**
-	 * Conecta con la base de datos SQLite establecida en la direción Util
+	 * Conecta con la base de datos SQLite establecida en la direcion Util
 	 */
 	private void connect()
 	{
@@ -68,14 +68,14 @@ public class SQLiteManager
 		}
 	}
 	/**
-	 * Retorna el resultado de la consulta SQL última que se ha realizado
+	 * Retorna el resultado de la consulta SQL ultima que se ha realizado
 	 * @return
 	 */
 	public ResultSet getResultSet(){
 		return resultadoDeConsulta;
 	}
 	/**
-	 * Método preparado para enviar cualquier tipo de comando y ajusta la llamada para decidir si devuelve algún valor o no
+	 * Metodo preparado para enviar cualquier tipo de comando y ajusta la llamada para decidir si devuelve algun valor o no
 	 * @param comando
 	 * @return
 	 */

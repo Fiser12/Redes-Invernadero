@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import servidor.serverController.Request;
 
 /**
- * Clase dedicada a guardar métodos o atributos genéricos que puedan ser accedidos desde cualquier parte del sistema
+ * Clase dedicada a guardar metodos o atributos genericos que puedan ser accedidos desde cualquier parte del sistema
  * @author Fiser
  *
  */
