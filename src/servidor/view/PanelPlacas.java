@@ -23,10 +23,10 @@ public class PanelPlacas extends JPanel {
 	JScrollPane scrollPane;
 	JTable tPlaca;
 	DefaultTableModel mPlaca;
-	JPanel central;
-	public PanelPlacas(JPanel central)
+	VentanaPrincipal principal;
+	public PanelPlacas(VentanaPrincipal principal)
 	{
-		this.central = central;
+		this.principal = principal;
 		mPlaca=new DefaultTableModel();
 		mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});
 		panelCentral = new JPanel();
@@ -78,7 +78,7 @@ public class PanelPlacas extends JPanel {
 	}
 	public void atras()
 	{
-		central.setVisible(true);
+		principal.getPanelcentral().setVisible(true);
 		this.setVisible(false);
 	}
 	public void borrar()
@@ -86,15 +86,22 @@ public class PanelPlacas extends JPanel {
 		int id=Integer.parseInt((String) tPlaca.getValueAt(tPlaca.getSelectedRow(), 0));
 		InteraccionDB.eliminarPlaca(id);
 		rellenarPlacas();
+		principal.getpSensores().rellenarPlacas();
+		principal.getpSensores().rellenarTablaSensor();
+		principal.getpUsuarios().rellenarPlacas();
+		principal.getpUsuarios().rellenarAsociacion();
 	}
 	public void anadir()
 	{
 		VentanaCrearPlacas nueva = new VentanaCrearPlacas();
 		nueva.setVisible(true);
 		nueva.addWindowListener(new WindowAdapter() {
-			public void windowClosed(WindowEvent e)
-			{
+			public void windowClosed(WindowEvent e) {
 				rellenarPlacas();
+				principal.getpSensores().rellenarPlacas();
+				principal.getpSensores().rellenarTablaSensor();
+				principal.getpUsuarios().rellenarPlacas();
+				principal.getpUsuarios().rellenarAsociacion();
 			}
 		});
 	}

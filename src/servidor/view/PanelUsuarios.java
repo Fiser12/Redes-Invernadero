@@ -29,7 +29,7 @@ public class PanelUsuarios extends JPanel{
 	private JTable tUsuario;
 	private DefaultTableModel mPlaca;
 	private DefaultTableModel mUsuario;
-	private JPanel central;
+	private VentanaPrincipal principal;
 	private JScrollPane scrollPanePlaca;
 	private JScrollPane scrollPaneUsuario;
 	private DefaultTableModel mAsociacion;
@@ -40,9 +40,9 @@ public class PanelUsuarios extends JPanel{
 
 	private JButton borrarAsociacion;
 
-	public PanelUsuarios(JPanel central)
+	public PanelUsuarios(VentanaPrincipal prin)
 	{
-		this.central = central;
+		this.principal = prin;
 		this.setLayout(new BorderLayout());
 		panelInferior = new JPanel();
 		panelCentral = new JPanel();
@@ -153,7 +153,7 @@ public class PanelUsuarios extends JPanel{
 	}
 	public void atras()
 	{
-		central.setVisible(true);
+		principal.getPanelcentral().setVisible(true);
 		this.setVisible(false);
 	}
 	public void borrarUsuario()
@@ -175,12 +175,9 @@ public class PanelUsuarios extends JPanel{
 	{
 		mUsuario=new DefaultTableModel();
 		mUsuario.setColumnIdentifiers(new String[]{"Nombre Usuario"});
-		LinkedList<Usuario> devolver = new LinkedList<Usuario>();
-		devolver=InteraccionDB.listadoUsuario();
-		for(int i=0;i<devolver.size();i++)		
-		{
-			Usuario u= devolver.get(i);
-			mUsuario.addRow(new String[]{u.getUsuario()});	
+		LinkedList<Usuario> devolver = InteraccionDB.listadoUsuario();
+		for (Usuario u : devolver) {
+			mUsuario.addRow(new String[]{u.getUsuario()});
 		}
 		mUsuario.fireTableDataChanged();
 		tUsuario.setModel(mUsuario);
@@ -189,11 +186,9 @@ public class PanelUsuarios extends JPanel{
 	{
 		mPlaca=new DefaultTableModel();
 		mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});	
-		LinkedList<Placa> devolver = new LinkedList<Placa>();
-		devolver=InteraccionDB.listadoPlacas();
-		for(int i=0;i<devolver.size();i++){
-			Placa p=devolver.get(i);
-			mPlaca.addRow(new String[]{""+p.getId()});
+		LinkedList<Placa> devolver = InteraccionDB.listadoPlacas();
+		for (Placa p : devolver) {
+			mPlaca.addRow(new String[]{"" + p.getId()});
 		}
 		mPlaca.fireTableDataChanged();
 		tPlaca.setModel(mPlaca);
@@ -202,11 +197,9 @@ public class PanelUsuarios extends JPanel{
 	{
 		mAsociacion=new DefaultTableModel();
 		mAsociacion.setColumnIdentifiers(new String[]{"Nombre Usuario", "ID Placa"});	
-		LinkedList<Asociacion> devolver = new LinkedList<Asociacion>();
-		devolver=InteraccionDB.getUserPlaca();
-		for(int i=0;i<devolver.size();i++){
-			Asociacion p=devolver.get(i);
-			mAsociacion.addRow(new String[]{p.getUser(), p.getPlaca()+""});
+		LinkedList<Asociacion> devolver = InteraccionDB.getUserPlaca();
+		for (Asociacion p : devolver) {
+			mAsociacion.addRow(new String[]{p.getUser(), p.getPlaca() + ""});
 		}
 		mAsociacion.fireTableDataChanged();
 		tAsociacion.setModel(mAsociacion);

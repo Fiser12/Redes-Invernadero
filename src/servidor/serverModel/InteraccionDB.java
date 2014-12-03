@@ -28,7 +28,7 @@ public class InteraccionDB {
 		gestor.enviarComando("PRAGMA foreign_keys = ON");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario (Nombre VARCHAR(50) NOT NULL ,Pass VARCHAR(50) NOT NULL, PRIMARY KEY(Nombre));");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Placa (Id INTEGER PRIMARY KEY AUTOINCREMENT, Estado VARCHAR(250) NOT NULL, Foto BLOB);");
-		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario_Placa(Nombre VARCHAR(50) NOT NULL, Id_Placa INT(10) NOT NULL, CONSTRAINT Nombre FOREIGN KEY (Nombre) REFERENCES Usuario (Nombre), CONSTRAINT Id_Placa FOREIGN KEY (Id_Placa) REFERENCES Placa(Id))");
+		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario_Placa(Nombre VARCHAR(50) NOT NULL, Id_Placa INT(10) NOT NULL, CONSTRAINT Nombre FOREIGN KEY (Nombre) REFERENCES Usuario (Nombre), CONSTRAINT Id_Placa FOREIGN KEY (Id_Placa) REFERENCES Placa(Id), UNIQUE(Nombre, Id_Placa))");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Sensor (Id_Sensor INTEGER PRIMARY KEY AUTOINCREMENT, Nombre_Variable VARCHAR(250) NOT NULL, Funcion_Principal VARCHAR(500) NOT NULL, Estado_la_variable VARCHAR(250) NOT NULL,Ultima_Accion VARCHAR(500) NOT NULL, id_Placa INT(10), Foto BLOB, CONSTRAINT id_Placa FOREIGN KEY (id_Placa) REFERENCES Placa (Id) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT Nombre_Variable FOREIGN KEY (Nombre_Variable) REFERENCES Variable (Nombre_variable) ON DELETE CASCADE ON UPDATE CASCADE, UNIQUE(id_Placa, Nombre_Variable));");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Variable (Nombre_Variable VARCHAR(250) PRIMARY KEY, Foto BLOB)");
 	}
@@ -132,13 +132,16 @@ public class InteraccionDB {
 	}
 
 	public static void eliminarUser(String usuario){
-		gestor.enviarComando("DELETE FROM Usuario WHERE (Nombre='"+usuario+"');");	
+		gestor.enviarComando("DELETE FROM Usuario WHERE (Nombre='"+usuario+"');");
+		gestor.enviarComando("DELETE FROM Usuario_Placa WHERE (Nombre = '"+usuario+"');");
 	}
 	public static void eliminarSensor(int ID){
 		gestor.enviarComando("DELETE FROM Sensor WHERE (Id_Sensor="+ID+");");	
 	}
 	public static void eliminarPlaca(int ID){
-		gestor.enviarComando("DELETE FROM Placa WHERE (Id="+ID+");");	
+		gestor.enviarComando("DELETE FROM Placa WHERE (Id="+ID+");");
+		gestor.enviarComando("DELETE FROM Usuario_Placa WHERE (Id_Placa = "+ID+");");
+		gestor.enviarComando("DELETE FROM Sensor WHERE (id_Placa = "+ID+");");
 	}
 	public static LinkedList<Sensor>ListadoSensor(){
 		LinkedList<Sensor> sensores=new LinkedList<Sensor>();

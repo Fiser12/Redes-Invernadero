@@ -35,15 +35,12 @@ public class VentanaPrincipal extends JFrame {
 					setResizable(false);
 
 
-					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 					setBounds(100, 100, 700, 400);
 					contentPane = new JPanel();
 					contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 					contentPane.setLayout(new BorderLayout(0, 0));
 					setContentPane(contentPane);
-					/*
-					 * Inicializaccion de modelos de tabla
-					 */
 
 					panelSuperior = new JPanel();
 					contentPane.add(panelSuperior, BorderLayout.NORTH);
@@ -114,10 +111,10 @@ public class VentanaPrincipal extends JFrame {
 						}
 					});
 					panelApagar.add(btnAServidor);
-					pPlacas = new PanelPlacas(panelcentral);
-					pUsuarios = new PanelUsuarios(panelcentral);
-					pSensores = new PanelSensores(panelcentral);
-					pPanelAdmin = new PanelAdminServer(panelcentral);
+					pPlacas = new PanelPlacas(VentanaPrincipal.this);
+					pUsuarios = new PanelUsuarios(VentanaPrincipal.this);
+					pSensores = new PanelSensores(VentanaPrincipal.this);
+					pPanelAdmin = new PanelAdminServer(VentanaPrincipal.this);
 					pPlacas.setVisible(false);
 					pUsuarios.setVisible(false);
 					pSensores.setVisible(false);
@@ -160,5 +157,14 @@ public class VentanaPrincipal extends JFrame {
 		pPanelAdmin.setVisible(true);
 		botoneraInicial.setVisible(false);
 	}
-	
+	public PanelUsuarios getpUsuarios() {
+		return pUsuarios;
+	}
+
+	public PanelSensores getpSensores() {
+		return pSensores;
+	}
+	public JPanel getPanelcentral() {
+		return panelcentral;
+	}
 }

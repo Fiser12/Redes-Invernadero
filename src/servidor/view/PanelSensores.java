@@ -37,8 +37,8 @@ public class PanelSensores extends JPanel{
 	JScrollPane scrollPanePlaca;
 	JScrollPane scrollPaneSensor;
 	JScrollPane scrollPaneVariable;
-	JPanel central;
-	public PanelSensores(JPanel central)
+	VentanaPrincipal central;
+	public PanelSensores(VentanaPrincipal central)
 	{
 		this.central = central;
 		this.setLayout(new BorderLayout());
@@ -162,7 +162,7 @@ public class PanelSensores extends JPanel{
 	}
 	public void atras()
 	{
-		central.setVisible(true);
+		central.getPanelcentral().setVisible(true);
 		this.setVisible(false);
 	}
 	public void borrarUsuario()
@@ -175,24 +175,21 @@ public class PanelSensores extends JPanel{
 	{
 		mSensor=new DefaultTableModel();
 		mSensor.setColumnIdentifiers(new String[]{"ID Sensor", "ID Placa","Estado","Variable","Accion","Funcion"});
-		LinkedList<Sensor> devolver = new LinkedList<Sensor>();
-		devolver=InteraccionDB.ListadoSensor();
-		for(int i=0;i<devolver.size();i++){
-			Sensor s=devolver.get(i);
-			mSensor.addRow(new String[]{""+s.getId_sensor(),""+s.getId_Placa(),s.getEstadoVariable(),s.getVariable(),s.getUltimaAccion(),s.getFuncionPrincipal()});
+		LinkedList<Sensor> devolver = InteraccionDB.ListadoSensor();
+		for (Sensor s : devolver) {
+			mSensor.addRow(new String[]{"" + s.getId_sensor(), "" + s.getId_Placa(), s.getEstadoVariable(), s.getVariable(), s.getUltimaAccion(), s.getFuncionPrincipal()});
 
 		}
 		mSensor.fireTableDataChanged();
 		tSensor.setModel(mSensor);
 	}
 	public void rellenarVariables(){
-		LinkedList<String> devolver = new LinkedList<String>();
-		devolver=InteraccionDB.listadoVariable();
+		LinkedList<String> devolver = InteraccionDB.listadoVariable();
 		mVariable=new DefaultTableModel();
 		mVariable.setColumnIdentifiers(new String[]{"Nombre Variable"});
-		for(int i=0;i<devolver.size();i++){
+		for (String aDevolver : devolver) {
 
-			mVariable.addRow(new String[]{	devolver.get(i)});
+			mVariable.addRow(new String[]{aDevolver});
 		}
 		mVariable.fireTableDataChanged();
 		tVariable.setModel(mVariable);
@@ -201,14 +198,11 @@ public class PanelSensores extends JPanel{
 	{
 		mPlaca=new DefaultTableModel();
 		mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});	
-		LinkedList<Placa> devolver = new LinkedList<Placa>();
-		devolver=InteraccionDB.listadoPlacas();
-		for(int i=0;i<devolver.size();i++){
-			Placa p=devolver.get(i);
-			mPlaca.addRow(new String[]{""+p.getId()});
+		LinkedList<Placa> devolver = InteraccionDB.listadoPlacas();
+		for (Placa p : devolver) {
+			mPlaca.addRow(new String[]{"" + p.getId()});
 		}
 		mPlaca.fireTableDataChanged();
-		tPlaca.setModel(mPlaca);
 		tPlaca.setModel(mPlaca);
 	}
 }

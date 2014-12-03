@@ -31,11 +31,11 @@ public class PanelAdminServer extends JPanel {
 	private JSpinner spinnerConexiones;
 	private DefaultTableModel mUsuario;
 	private JPanel panelPrincipal;
-	private JPanel central;
+	private VentanaPrincipal central;
 	private JScrollPane scrollPaneTablaconetados;
 	private JLabel lblNewLabel;
 	
-	public PanelAdminServer(JPanel central)
+	public PanelAdminServer(VentanaPrincipal central)
 	{
 		this.central = central;
 
@@ -124,7 +124,7 @@ public class PanelAdminServer extends JPanel {
 	}
 	public void atras()
 	{
-		central.setVisible(true);
+		central.getPanelcentral().setVisible(true);
 		this.setVisible(false);
 	}
 	public static String[] obtenerUsuario(int usuario)
