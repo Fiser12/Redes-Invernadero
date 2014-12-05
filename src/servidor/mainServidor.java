@@ -8,14 +8,13 @@ import java.net.ServerSocket;
 
 public class mainServidor {
 	public static boolean userMax = false;
-	public static ServerSocket wellcomeSocket;
-	
+
 	public static void main(String[]args) throws Exception
 	{
 		VentanaPrincipal frame = new VentanaPrincipal();
 		frame.setVisible(true);
 		int port = 3000;
-		wellcomeSocket = new ServerSocket(port);
+		ServerSocket wellcomeSocket = new ServerSocket(port);
 		while (true)
 		{
 			SocketManager sockManager = new SocketManager(wellcomeSocket.accept());

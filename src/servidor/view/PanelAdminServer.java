@@ -1,39 +1,26 @@
 package servidor.view;
 
-import javax.swing.JPanel;
-
-import java.awt.*;
-
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JLabel;
-import javax.swing.ListSelectionModel;
-import javax.swing.SpinnerNumberModel;
-
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.table.DefaultTableModel;
-
 import servidor.mainServidor;
 import servidor.serverController.Request;
 import util.SocketManager;
 import util.Util;
 
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class PanelAdminServer extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTable tUsuario;
-	private JSpinner spinnerConexiones;
+	private final JTable tUsuario;
+	private final JSpinner spinnerConexiones;
+	private final VentanaPrincipal central;
+	private final JLabel lblNewLabel;
 	private DefaultTableModel mUsuario;
-	private JPanel panelPrincipal;
-	private VentanaPrincipal central;
-	private JScrollPane scrollPaneTablaconetados;
-	private JLabel lblNewLabel;
 	
 	public PanelAdminServer(VentanaPrincipal central)
 	{
@@ -56,8 +43,7 @@ public class PanelAdminServer extends JPanel {
 			}});
 
 
-
-		panelPrincipal = new JPanel();
+		JPanel panelPrincipal = new JPanel();
 		add(panelPrincipal, "name_116325924696087");
 		panelPrincipal.setLayout(new BorderLayout(0, 0));
 
@@ -67,7 +53,7 @@ public class PanelAdminServer extends JPanel {
 		tUsuario.getTableHeader().setReorderingAllowed(false);
 		tUsuario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tUsuario.setModel(mUsuario);
-		scrollPaneTablaconetados = new JScrollPane(tUsuario);
+		JScrollPane scrollPaneTablaconetados = new JScrollPane(tUsuario);
 		scrollPaneTablaconetados.setPreferredSize(new Dimension(650, 230));
 		panelPrincipal.add(scrollPaneTablaconetados, BorderLayout.CENTER);
 
@@ -109,6 +95,21 @@ public class PanelAdminServer extends JPanel {
 		panelPrincipal.add(lblNewLabel, BorderLayout.NORTH);
 		rellenarTablaUsuario();
 	}
+
+	private static String[] obtenerUsuario(int usuario) {
+		String[] devolver = new String[6];
+		String usuarioRegistrado = Util.listaHilos.get(usuario).getUsuario();
+		if (usuarioRegistrado == null)
+			usuarioRegistrado = "DESCONECTADO";
+
+		devolver[0] = usuarioRegistrado;
+		devolver[1] = (usuario + 1) + "";
+		devolver[2] = Util.listaSockets.get(usuario).getMySocket().getInetAddress().getHostAddress();
+		devolver[3] = Util.listaSockets.get(usuario).getMySocket().getInetAddress().getHostName();
+		devolver[4] = Util.listaSockets.get(usuario).getMySocket().getPort() + "";
+		return devolver;
+	}
+
 	public void rellenarTablaUsuario()
 	{
 		mUsuario=new DefaultTableModel();
@@ -118,30 +119,19 @@ public class PanelAdminServer extends JPanel {
 		mUsuario.fireTableDataChanged();
 		tUsuario.setModel(mUsuario);
 	}
+
 	public void actualizarLabel()
 	{
 		lblNewLabel.setText("Usuarios Conectados: " + (Util.listaHilos.size()));
 	}
-	public void atras()
+
+	void atras()
 	{
 		central.getPanelcentral().setVisible(true);
 		this.setVisible(false);
 	}
-	public static String[] obtenerUsuario(int usuario)
-	{
-		String [] devolver = new String[6];
-		String usuarioRegistrado = Util.listaHilos.get(usuario).getUsuario();
-		if(usuarioRegistrado == null)
-			usuarioRegistrado = "DESCONECTADO";
 
-		devolver[0] = usuarioRegistrado;
-		devolver[1] = (usuario+1)+"";
-		devolver[2] = Util.listaSockets.get(usuario).getMySocket().getInetAddress().getHostAddress();
-		devolver[3] = Util.listaSockets.get(usuario).getMySocket().getInetAddress().getHostName();
-		devolver[4] = Util.listaSockets.get(usuario).getMySocket().getPort()+"";
-		return devolver;
-	}
-	public void desconectarUsuario(int usuario){
+	void desconectarUsuario(int usuario) {
 		SocketManager temp1 = Util.listaSockets.get(usuario);
 		Request temp2 = Util.listaHilos.get(usuario);
 		try {
@@ -152,18 +142,21 @@ public class PanelAdminServer extends JPanel {
 		}
 		borrar(temp1, temp2);
 	}
-	public void cambioMaximoUser(){
+
+	void cambioMaximoUser() {
 		Util.setUsuariosMaximos((Integer) spinnerConexiones.getValue());
 		mainServidor.userMax = (Util.listaHilos.size() >= Util.getUsuariosMaximos());
 	}
-	public void cerrarConexion()
+
+	void cerrarConexion()
 	{
 		int rowIndex = tUsuario.getSelectedRow();
 		int posicion = Integer.parseInt((String) tUsuario.getValueAt(rowIndex, 1));
 		desconectarUsuario(posicion-1);
 		rellenarTablaUsuario();
 	}
-	public void borrar(SocketManager add1, Request add2)
+
+	void borrar(SocketManager add1, Request add2)
 	{
 		Util.listaSockets.remove(add1);
 		Util.listaHilos.remove(add2);

@@ -17,38 +17,24 @@ import java.util.LinkedList;
 public class PanelUsuarios extends JPanel{
 
 	private static final long serialVersionUID = 1L;
-	
-	private JPanel panelCentral;
-	private JPanel panelInferior;
-	private JPanel panelTablas;
-	private JButton atras;
-	private JButton asociar;
-	private JButton crear;
-	private JButton borrar;
-	private JTable tPlaca;
-	private JTable tUsuario;
+
+	private final JTable tPlaca;
+	private final JTable tUsuario;
+	private final VentanaPrincipal principal;
+	private final JTable tAsociacion;
 	private DefaultTableModel mPlaca;
 	private DefaultTableModel mUsuario;
-	private VentanaPrincipal principal;
-	private JScrollPane scrollPanePlaca;
-	private JScrollPane scrollPaneUsuario;
 	private DefaultTableModel mAsociacion;
-
-	private JTable tAsociacion;
-
-	private JScrollPane scrollPaneAsociacion;
-
-	private JButton borrarAsociacion;
 
 	public PanelUsuarios(VentanaPrincipal prin)
 	{
 		this.principal = prin;
 		this.setLayout(new BorderLayout());
-		panelInferior = new JPanel();
-		panelCentral = new JPanel();
+		JPanel panelInferior = new JPanel();
+		JPanel panelCentral = new JPanel();
 		add(panelInferior, BorderLayout.SOUTH);
 		add(panelCentral, BorderLayout.CENTER);
-		panelTablas = new JPanel();
+		JPanel panelTablas = new JPanel();
 		panelCentral.add(panelTablas);
 		panelTablas.setLayout(new FlowLayout());
 		
@@ -58,7 +44,7 @@ public class PanelUsuarios extends JPanel{
 		tPlaca.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tPlaca.setModel(mPlaca);
 		tPlaca.getTableHeader().setReorderingAllowed(false);
-		scrollPanePlaca = new JScrollPane(tPlaca);
+		JScrollPane scrollPanePlaca = new JScrollPane(tPlaca);
 		scrollPanePlaca.setPreferredSize(new Dimension(222, 400));
 		panelTablas.add(scrollPanePlaca);
 
@@ -68,7 +54,7 @@ public class PanelUsuarios extends JPanel{
 		tUsuario.getTableHeader().setReorderingAllowed(false);
 		tUsuario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tUsuario.setModel(mUsuario);
-		scrollPaneUsuario = new JScrollPane(tUsuario);
+		JScrollPane scrollPaneUsuario = new JScrollPane(tUsuario);
 		scrollPaneUsuario.setPreferredSize(new Dimension(222, 400));
 		panelTablas.add(scrollPaneUsuario);
 		
@@ -78,7 +64,7 @@ public class PanelUsuarios extends JPanel{
 		tAsociacion.getTableHeader().setReorderingAllowed(false);
 		tAsociacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tAsociacion.setModel(mUsuario);
-		scrollPaneAsociacion = new JScrollPane(tAsociacion);
+		JScrollPane scrollPaneAsociacion = new JScrollPane(tAsociacion);
 		scrollPaneAsociacion.setPreferredSize(new Dimension(222, 400));
 		panelTablas.add(scrollPaneAsociacion);
 		
@@ -86,8 +72,8 @@ public class PanelUsuarios extends JPanel{
 		 * El panel inferior con todos los botones y sus metodos
 		 */
 		panelInferior.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		atras = new JButton("Atras");
+
+		JButton atras = new JButton("Atras");
 		atras.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		atras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -95,8 +81,8 @@ public class PanelUsuarios extends JPanel{
 			}
 		});
 		panelInferior.add(atras);
-			
-		asociar = new JButton("Asociar");
+
+		JButton asociar = new JButton("Asociar");
 		asociar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelInferior.add(asociar);
 		asociar.addActionListener(new ActionListener() {
@@ -105,7 +91,7 @@ public class PanelUsuarios extends JPanel{
 			}
 		});
 
-		crear = new JButton("Crear");
+		JButton crear = new JButton("Crear");
 		crear.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelInferior.add(crear);
 		crear.addActionListener(new ActionListener() {
@@ -113,7 +99,7 @@ public class PanelUsuarios extends JPanel{
 				crearUsuario();
 			}
 		});
-		borrar = new JButton("Borrar Usuario");
+		JButton borrar = new JButton("Borrar Usuario");
 		borrar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelInferior.add(borrar);
 		borrar.addActionListener(new ActionListener() {
@@ -121,7 +107,7 @@ public class PanelUsuarios extends JPanel{
 				borrarUsuario();
 			}
 		});
-		borrarAsociacion = new JButton("Borrar Asociacion");
+		JButton borrarAsociacion = new JButton("Borrar Asociacion");
 		borrarAsociacion.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelInferior.add(borrarAsociacion);
 		borrarAsociacion.addActionListener(new ActionListener() {
@@ -133,14 +119,16 @@ public class PanelUsuarios extends JPanel{
 		rellenarTablaUsuario();
 		rellenarAsociacion();
 	}
-	public void asociar()
+
+	void asociar()
 	{
 		String Nombre= (String) tUsuario.getValueAt(tUsuario.getSelectedRow(), 0);
 		int placa = Integer.parseInt((String)tPlaca.getValueAt(tPlaca.getSelectedRow(), 0));
 		InteraccionDB.asociarUserPlaca(Nombre, placa);
 		rellenarAsociacion();
 	}
-	public void crearUsuario()
+
+	void crearUsuario()
 	{
 		VentanaCrearUsuario nuevo = new VentanaCrearUsuario();
 		nuevo.setVisible(true);
@@ -151,19 +139,22 @@ public class PanelUsuarios extends JPanel{
 			}
 		});
 	}
-	public void atras()
+
+	void atras()
 	{
 		principal.getPanelcentral().setVisible(true);
 		this.setVisible(false);
 	}
-	public void borrarUsuario()
+
+	void borrarUsuario()
 	{
 		String Nombre= (String) tUsuario.getValueAt(tUsuario.getSelectedRow(), 0);
 		InteraccionDB.eliminarUser(Nombre);
 		rellenarTablaUsuario();
 		rellenarAsociacion();
 	}
-	public void borrarAsociacion()
+
+	void borrarAsociacion()
 	{
 		String Nombre= (String) tAsociacion.getValueAt(tAsociacion.getSelectedRow(), 0);
 		int placa = Integer.parseInt((String)tAsociacion.getValueAt(tAsociacion.getSelectedRow(), 1));
@@ -171,7 +162,8 @@ public class PanelUsuarios extends JPanel{
 		rellenarTablaUsuario();
 		rellenarAsociacion();
 	}
-	public void rellenarTablaUsuario()
+
+	void rellenarTablaUsuario()
 	{
 		mUsuario=new DefaultTableModel();
 		mUsuario.setColumnIdentifiers(new String[]{"Nombre Usuario"});

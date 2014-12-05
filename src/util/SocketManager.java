@@ -1,7 +1,6 @@
 package util;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 
 public class SocketManager {
@@ -15,23 +14,10 @@ public class SocketManager {
 	}
 	/**
 	 *
-	 * @param address InetAddress
-	 * @param port int numero de puerto
 	 * @throws IOException
 	 */
-	public SocketManager(InetAddress address, int port) throws IOException {
-		mySocket = new Socket(address, port);
-		InicializaStreams();
-	}
-
-	/**
-	 *
-	 * @param host String nombre del servidor al que se conecta
-	 * @param port int puerto de conexion
-	 * @throws IOException
-	 */
-	public SocketManager(String host, int port) throws IOException {
-		mySocket = new Socket(host, port);
+	public SocketManager() throws IOException {
+		mySocket = new Socket("127.0.0.1", 3000);
 		InicializaStreams();
 	}
 
@@ -39,7 +25,7 @@ public class SocketManager {
 	 * Inicializacion de los bufferes de lectura y escritura del socket
 	 * @throws IOException
 	 */
-	public void InicializaStreams() throws IOException {
+	void InicializaStreams() throws IOException {
 		bufferEscritura = new DataOutputStream(mySocket.getOutputStream());
 		bufferLectura = new BufferedReader(new InputStreamReader(mySocket.
 				getInputStream()));
@@ -66,26 +52,20 @@ public class SocketManager {
 		bufferEscritura.writeBytes(contenido);
 	}
 
-	public void Escribir(byte[] buffer, int bytes) throws IOException {
-		bufferEscritura.write(buffer, 0, bytes);
-	}
-
 	public Socket getMySocket() {
 		return mySocket;
 	}
 
-	public void setMySocket(Socket mySocket) {
-		this.mySocket = mySocket;
-	}
 	//Estos metodos los he conseguido de aqui http://stackoverflow.com/questions/2878867/how-to-send-an-array-of-bytes-over-a-tcp-connection-java-programming
 	public void sendBytes(byte[] myByteArray) throws IOException {
-		sendBytes(myByteArray, 0, myByteArray.length);
+		sendBytes(myByteArray, myByteArray.length);
 	}
-	public void sendBytes(byte[] myByteArray, int start, int len) throws IOException {
+
+	void sendBytes(byte[] myByteArray, int len) throws IOException {
 		if (len < 0)
 			throw new IllegalArgumentException("Negative length not allowed");
-		if (start < 0 || start >= myByteArray.length)
-			throw new IndexOutOfBoundsException("Out of bounds: " + start);
+		if (0 >= myByteArray.length)
+			throw new IndexOutOfBoundsException("Out of bounds: " + 0);
 		// Other checks if needed.
 
 		// just like the socket variable.
@@ -95,7 +75,7 @@ public class SocketManager {
 
 		dos.writeInt(len);
 		if (len > 0) {
-			dos.write(myByteArray, start, len);
+			dos.write(myByteArray, 0, len);
 		}
 	}
 	public byte[] readBytes() throws IOException {

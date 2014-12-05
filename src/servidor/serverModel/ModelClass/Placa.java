@@ -3,6 +3,7 @@ package servidor.serverModel.ModelClass;
 import java.awt.*;
 import java.util.LinkedList;
 
+@SuppressWarnings("UnusedDeclaration")
 public class Placa {
 	private int id;
 	private String estado;
@@ -10,17 +11,18 @@ public class Placa {
 	private LinkedList<Integer>sensores;
 	private LinkedList<String>usuarios;
 	private String nombreVariable;
-	
-	public Placa(int id, String estado, Image foto, LinkedList<Integer> sensores, LinkedList<String> usuarios, String variable) {
+
+	public Placa(int id, String estado, Image foto, LinkedList<Integer> sensores, LinkedList<String> usuarios) {
 		this.id = id;
 		this.estado = estado;
 		this.foto = foto;
 		this.sensores = sensores;
 		this.usuarios = usuarios;
 	}
-	public Placa(int id, String estado, Image temp) {
+
+	public Placa(int id, Image temp) {
 		this.id = id;
-		this.estado = estado;
+		this.estado = "";
 		this.foto = temp;
 	}
 	public Placa(int id){

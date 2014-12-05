@@ -28,7 +28,7 @@ public class VentanaPrincipal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaPrincipal() throws Exception{
+	public VentanaPrincipal() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -131,7 +131,7 @@ public class VentanaPrincipal extends JFrame {
 		});
 	}
 
-	public static void desconectar(){
+	private static void desconectar() {
 		System.exit(0);
 	}
 
@@ -140,19 +140,22 @@ public class VentanaPrincipal extends JFrame {
 		return pPanelAdmin;
 	}
 
-	public void administrarSensores(){
+	void administrarSensores() {
 		pSensores.setVisible(true);
 		botoneraInicial.setVisible(false);
 	}
-	public void administrarUsuarios(){
+
+	void administrarUsuarios() {
 		pUsuarios.setVisible(true);
 		botoneraInicial.setVisible(false);
 	}
-	public void administrarPlacas(){
+
+	void administrarPlacas() {
 		pPlacas.setVisible(true);
 		botoneraInicial.setVisible(false);
 	}
-	public void administrarGestion(){
+
+	void administrarGestion() {
 		pPanelAdmin.rellenarTablaUsuario();
 		pPanelAdmin.setVisible(true);
 		botoneraInicial.setVisible(false);

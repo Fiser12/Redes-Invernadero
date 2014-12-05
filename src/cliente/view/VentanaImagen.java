@@ -12,7 +12,6 @@ public class VentanaImagen extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
@@ -24,7 +23,7 @@ public class VentanaImagen extends JFrame {
 	 */
 	public VentanaImagen(Placa p) {
 		setBounds(100, 100, new ImageIcon(p.getFoto()).getIconWidth(), new ImageIcon(p.getFoto()).getIconHeight()+70);
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));

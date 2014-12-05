@@ -16,38 +16,23 @@ import java.util.LinkedList;
 public class PanelSensores extends JPanel{
 
 	private static final long serialVersionUID = 1L;
-	
-	JPanel panelCentral;
-	JPanel panelInferior;
-	JPanel panelTablas;
-	JButton atras;
-	JButton asociarVariable;
-	JButton asociarPlaca;
 
-	JButton crear;
-	JButton borrar;
-	JTable tPlaca;
-	JTable tSensor;
-	JTable tVariable;
-
-	DefaultTableModel mPlaca;
-	DefaultTableModel mSensor;
-	DefaultTableModel mVariable;
-
-	JScrollPane scrollPanePlaca;
-	JScrollPane scrollPaneSensor;
-	JScrollPane scrollPaneVariable;
-	VentanaPrincipal central;
+	private final JTable tPlaca;
+	private final JTable tSensor;
+	private final JTable tVariable;
+	private final VentanaPrincipal central;
+	private DefaultTableModel mPlaca;
+	private DefaultTableModel mVariable;
 	public PanelSensores(VentanaPrincipal central)
 	{
 		this.central = central;
 		this.setLayout(new BorderLayout());
-		panelInferior = new JPanel();
-		panelCentral = new JPanel();
+		JPanel panelInferior = new JPanel();
+		JPanel panelCentral = new JPanel();
 		add(panelInferior, BorderLayout.SOUTH);
 		add(panelCentral, BorderLayout.CENTER);
 
-		panelTablas = new JPanel();
+		JPanel panelTablas = new JPanel();
 		panelCentral.add(panelTablas);
 		panelTablas.setLayout(new FlowLayout());
 		
@@ -57,13 +42,13 @@ public class PanelSensores extends JPanel{
 		tPlaca.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tPlaca.setModel(mPlaca);
 		tPlaca.getTableHeader().setReorderingAllowed(false);
-		scrollPanePlaca = new JScrollPane(tPlaca);
+		JScrollPane scrollPanePlaca = new JScrollPane(tPlaca);
 		scrollPanePlaca.setPreferredSize(new Dimension(100, 400));
 
 		tSensor=new JTable();
 		tSensor.getTableHeader().setReorderingAllowed(false);
 		tSensor.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPaneSensor = new JScrollPane(tSensor);
+		JScrollPane scrollPaneSensor = new JScrollPane(tSensor);
 		scrollPaneSensor.setPreferredSize(new Dimension(466, 400));
 		panelTablas.add(scrollPaneSensor);
 		
@@ -73,7 +58,7 @@ public class PanelSensores extends JPanel{
 		tVariable.getTableHeader().setReorderingAllowed(false);
 		tVariable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tVariable.setModel(mVariable);
-		scrollPaneVariable = new JScrollPane(tVariable);
+		JScrollPane scrollPaneVariable = new JScrollPane(tVariable);
 		scrollPaneVariable.setPreferredSize(new Dimension(100, 400));
 		panelTablas.add(scrollPanePlaca);
 		panelTablas.add(scrollPaneVariable);
@@ -82,8 +67,8 @@ public class PanelSensores extends JPanel{
 		 * El panel inferior con todos los botones y sus metodos
 		 */
 		panelInferior.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		atras = new JButton("Atras");
+
+		JButton atras = new JButton("Atras");
 		atras.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		atras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -91,8 +76,8 @@ public class PanelSensores extends JPanel{
 			}
 		});
 		panelInferior.add(atras);
-			
-		asociarVariable = new JButton("Asociar Variable");
+
+		JButton asociarVariable = new JButton("Asociar Variable");
 		asociarVariable.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelInferior.add(asociarVariable);
 		asociarVariable.addActionListener(new ActionListener() {
@@ -101,7 +86,7 @@ public class PanelSensores extends JPanel{
 			}
 		});
 
-		asociarPlaca = new JButton("Asociar Placa");
+		JButton asociarPlaca = new JButton("Asociar Placa");
 		asociarPlaca.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelInferior.add(asociarPlaca);
 		asociarPlaca.addActionListener(new ActionListener() {
@@ -110,8 +95,8 @@ public class PanelSensores extends JPanel{
 			}
 		});
 
-		
-		crear = new JButton("Crear");
+
+		JButton crear = new JButton("Crear");
 		crear.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelInferior.add(crear);
 		crear.addActionListener(new ActionListener() {
@@ -119,7 +104,7 @@ public class PanelSensores extends JPanel{
 				crearUsuario();
 			}
 		});
-		borrar = new JButton("Borrar");
+		JButton borrar = new JButton("Borrar");
 		borrar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelInferior.add(borrar);
 		borrar.addActionListener(new ActionListener() {
@@ -131,7 +116,8 @@ public class PanelSensores extends JPanel{
 		rellenarVariables();
 		rellenarPlacas();
 	}
-	public void asociarVariable()
+
+	void asociarVariable()
 	{
 		int rowIndexSensor = tSensor.getSelectedRow();
 		int sensor = Integer.parseInt((String) tSensor.getValueAt(rowIndexSensor, 0));
@@ -140,7 +126,8 @@ public class PanelSensores extends JPanel{
 		InteraccionDB.actualizarVariable(sensor, variable);
 		rellenarTablaSensor();
 	}
-	public void asociarPlaca()
+
+	void asociarPlaca()
 	{
 		int rowIndexSensor = tSensor.getSelectedRow();
 		int sensor = Integer.parseInt((String) tSensor.getValueAt(rowIndexSensor, 0));
@@ -149,7 +136,8 @@ public class PanelSensores extends JPanel{
 		InteraccionDB.actualizarPlaca(sensor, placa);
 		rellenarTablaSensor();
 	}
-	public void crearUsuario()
+
+	void crearUsuario()
 	{
 		VentanaCrearSensores nueva = new VentanaCrearSensores();
 		nueva.setVisible(true);
@@ -160,12 +148,14 @@ public class PanelSensores extends JPanel{
 			}
 		});
 	}
-	public void atras()
+
+	void atras()
 	{
 		central.getPanelcentral().setVisible(true);
 		this.setVisible(false);
 	}
-	public void borrarUsuario()
+
+	void borrarUsuario()
 	{
 		int id=Integer.parseInt((String) tSensor.getValueAt(tSensor.getSelectedRow(), 0));
 		InteraccionDB.eliminarSensor(id);
@@ -173,8 +163,8 @@ public class PanelSensores extends JPanel{
 	}
 	public void rellenarTablaSensor()
 	{
-		mSensor=new DefaultTableModel();
-		mSensor.setColumnIdentifiers(new String[]{"ID Sensor", "ID Placa","Estado","Variable","Accion","Funcion"});
+		DefaultTableModel mSensor = new DefaultTableModel();
+		mSensor.setColumnIdentifiers(new String[]{"ID Sensor", "ID Placa", "Estado", "Variable", "Accion", "Funcion"});
 		LinkedList<Sensor> devolver = InteraccionDB.ListadoSensor();
 		for (Sensor s : devolver) {
 			mSensor.addRow(new String[]{"" + s.getId_sensor(), "" + s.getId_Placa(), s.getEstadoVariable(), s.getVariable(), s.getUltimaAccion(), s.getFuncionPrincipal()});
@@ -183,7 +173,8 @@ public class PanelSensores extends JPanel{
 		mSensor.fireTableDataChanged();
 		tSensor.setModel(mSensor);
 	}
-	public void rellenarVariables(){
+
+	void rellenarVariables() {
 		LinkedList<String> devolver = InteraccionDB.listadoVariable();
 		mVariable=new DefaultTableModel();
 		mVariable.setColumnIdentifiers(new String[]{"Nombre Variable"});

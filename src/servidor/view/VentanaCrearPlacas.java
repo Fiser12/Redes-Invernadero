@@ -1,7 +1,6 @@
 package servidor.view;
 
 import servidor.serverModel.InteraccionDB;
-import util.excepciones.RepetElement;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,8 +12,8 @@ import java.io.IOException;
 
 public class VentanaCrearPlacas extends JDialog{
 	private static final long serialVersionUID = 1L;
+	private final JButton btnInsertar;
 	private Image image;
-	private JButton btnInsertar;
 	public VentanaCrearPlacas()
 	{
 	    setSize(new Dimension(250,135));
@@ -53,16 +52,14 @@ public class VentanaCrearPlacas extends JDialog{
 		panelInferior.add(btnCancelar);
 		
 	}
-	public void insertar()
+
+	void insertar()
 	{
-	    try {
-	    	InteraccionDB.insertarPlaca(image);
-			dispose();
-	    }catch(RepetElement E){
-	    	JOptionPane.showMessageDialog(null,"El Usuario ya esta insertado","Error",JOptionPane.ERROR_MESSAGE);
-	    }
+		InteraccionDB.insertarPlaca(image);
+		dispose();
 	}
-	public void sacarFoto()
+
+	void sacarFoto()
 	{
 	    FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & PNG Images", "jpg", "png");
         JFileChooser fc = new JFileChooser();
@@ -77,7 +74,8 @@ public class VentanaCrearPlacas extends JDialog{
             btnInsertar.setEnabled(true);  
         }
 	}
-	public void cancelar()
+
+	void cancelar()
 	{
 		dispose();
 	}

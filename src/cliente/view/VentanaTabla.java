@@ -17,26 +17,18 @@ import java.util.LinkedList;
 public class VentanaTabla extends JFrame{
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-    private JButton btnImagen;
-    private JButton btnImagenVar;
-	private JButton btnActivar;
-	private JButton btnDesactivar;
-	private JTextField textVariable;
-	private JComboBox<String> comboBoxBusqueda;
-	private JButton btnBuscar;
-	private JButton btnListar;
-	private JButton btnActuar;
+	private final JTextField textVariable;
+	private final JComboBox<String> comboBoxBusqueda;
+	private final JTable tabla;
 	private ModeloSensor modeloTabla;
-	private JTable tabla;
 	private int ultimaCarga = 0;
     private String respuesta;
 
 	public VentanaTabla() {
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 550);
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
@@ -44,39 +36,39 @@ public class VentanaTabla extends JFrame{
 		JPanel BotonesArriba = new JPanel();
 		contentPane.add(BotonesArriba, BorderLayout.EAST);
 	    BotonesArriba.setLayout(new GridLayout(14, 1, 0, 0));
-	    btnActivar = new JButton("Activar");
-	    BotonesArriba.add(btnActivar);
+		JButton btnActivar = new JButton("Activar");
+		BotonesArriba.add(btnActivar);
 	    btnActivar.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent arg0) {
-	    		activar();
-	    	}
-	    });
-	    
-	    btnDesactivar = new JButton("Desactivar");
-	    btnDesactivar.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent arg0) {
-	    		desactivar();
-	    	}
-	    });
-	    BotonesArriba.add(btnDesactivar);
-			
-	    btnImagen = new JButton("Imagen Placa");
-	    btnImagen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				activar();
+			}
+		});
+
+		JButton btnDesactivar = new JButton("Desactivar");
+		btnDesactivar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				desactivar();
+			}
+		});
+		BotonesArriba.add(btnDesactivar);
+
+		JButton btnImagen = new JButton("Imagen Placa");
+		btnImagen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				obtenerFoto();
 			}
 		});
 		BotonesArriba.add(btnImagen);
-	    btnImagenVar = new JButton("Imagen Variable");
-	    btnImagenVar.addActionListener(new ActionListener() {
+		JButton btnImagenVar = new JButton("Imagen Variable");
+		btnImagenVar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				obtenerFotoVariable();
 			}
 		});
 		BotonesArriba.add(btnImagenVar);
-		btnActuar = new JButton("Actuar");
+		JButton btnActuar = new JButton("Actuar");
 		BotonesArriba.add(btnActuar);
 		
 		JPanel BotonesAbajo = new JPanel();
@@ -96,7 +88,7 @@ public class VentanaTabla extends JFrame{
 		comboBoxBusqueda.setToolTipText("Elegir opcion\r\n");
 		Busqueda.add(comboBoxBusqueda);
 
-		btnBuscar = new JButton("Buscar");
+		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				buscar();
@@ -109,7 +101,7 @@ public class VentanaTabla extends JFrame{
 		BotonesAbajo.add(Listar);
 		Listar.setLayout(new GridLayout(0, 2, 0, 0));
 
-		btnListar = new JButton("Listar");
+		JButton btnListar = new JButton("Listar");
 		btnListar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -126,11 +118,11 @@ public class VentanaTabla extends JFrame{
 			}
 		});
 		btnActuar.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				actuar();
-				
+
 			}
 		});
 		Listar.add(btnSalir);
@@ -141,7 +133,8 @@ public class VentanaTabla extends JFrame{
 		JScrollPane scroll = new JScrollPane(tabla);
 		contentPane.add(scroll, BorderLayout.CENTER);
 	}
-	public  void buscar(){
+
+	void buscar() {
 		try{
 			Util.claseSocketCliente.Escribir("BUSCAR "+ comboBoxBusqueda.getSelectedItem().toString() + " " + textVariable.getText() + "\n");
 			respuesta = Util.claseSocketCliente.Leer().replace("/n", "\n");
@@ -159,7 +152,8 @@ public class VentanaTabla extends JFrame{
 			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
 		}
 	}
-	public void salir(){
+
+	void salir() {
 		try {
 			Util.claseSocketCliente.Escribir("SALIR\n");
 			respuesta = Util.claseSocketCliente.Leer();
@@ -171,7 +165,8 @@ public class VentanaTabla extends JFrame{
 		}
 		dispose();
 	}
-	public void activar(){
+
+	void activar() {
 		int rowIndex = tabla.getSelectedRow();
 		Sensor seleccionado;
 		try
@@ -197,7 +192,8 @@ public class VentanaTabla extends JFrame{
 		}
 		recargarTabla();
 	}
-	public void desactivar(){
+
+	void desactivar() {
 		int rowIndex = tabla.getSelectedRow();
 		Sensor seleccionado;
 		try
@@ -222,7 +218,8 @@ public class VentanaTabla extends JFrame{
 			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
 		}
 	}
-	public void actuar(){
+
+	void actuar() {
 		int rowIndex = tabla.getSelectedRow();
 		Sensor seleccionado;
 		try
@@ -236,7 +233,8 @@ public class VentanaTabla extends JFrame{
 		VentanaElegirAccion nuevaVentana = new VentanaElegirAccion(seleccionado, this);
 		nuevaVentana.setVisible(true);
 	}
-	public void listar(){
+
+	void listar() {
 		try {
 			Util.claseSocketCliente.Escribir("LISTADO\n");
 			respuesta = Util.claseSocketCliente.Leer().replace("/n", "\n");
@@ -286,7 +284,8 @@ public class VentanaTabla extends JFrame{
 		}
 		return devolver;
 	}
-	public void obtenerFoto()
+
+	void obtenerFoto()
 	{
 		int rowIndex = tabla.getSelectedRow();
 		Sensor seleccionado;
@@ -307,7 +306,7 @@ public class VentanaTabla extends JFrame{
 			{
 				byte[] imagen = Util.claseSocketCliente.readBytes();
 				Image temp = ImageIO.read(new ByteArrayInputStream(imagen));
-				Placa visualizar = new Placa(seleccionado.getId_Placa(), "", temp);
+				Placa visualizar = new Placa(seleccionado.getId_Placa(), temp);
 				VentanaImagen ventana = new VentanaImagen(visualizar);
 				ventana.setVisible(true);
 			}
@@ -315,7 +314,8 @@ public class VentanaTabla extends JFrame{
 			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
 		}
 	}
-	public void obtenerFotoVariable()
+
+	void obtenerFotoVariable()
 	{
 		int rowIndex = tabla.getSelectedRow();
 		Sensor seleccionado;

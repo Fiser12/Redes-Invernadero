@@ -20,16 +20,15 @@ public class VentanaSeleccionarValor extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	String respuesta = "";
-	private JPanel contentPane;
-	private JFormattedTextField txIncremento;
+	private final JFormattedTextField txIncremento;
+	private String respuesta = "";
 
 	/**
 	 * Create the frame.
 	 */
 	public VentanaSeleccionarValor(final Sensor s, final VentanaTabla control) {
 		setBounds(100, 100, 450, 200);
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);

@@ -1,7 +1,7 @@
 package servidor.serverModel.ModelClass;
 
 public class Asociacion {
-	private String user;
+	private final String user;
 	private int placa;
 	
 	public Asociacion(String user, int placa) {
@@ -10,9 +10,6 @@ public class Asociacion {
 	}
 	public String getUser() {
 		return user;
-	}
-	public void setUser(String user) {
-		this.user = user;
 	}
 	public int getPlaca() {
 		return placa;

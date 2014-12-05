@@ -15,30 +15,24 @@ import java.util.LinkedList;
 public class PanelPlacas extends JPanel {
 	private static final long serialVersionUID = 1L;
 
-	JPanel panelInferior;
-	JPanel panelCentral;
-	JButton btnAtras;
-	JButton btnAnadir;
-	JButton borrarPlaca;
-	JScrollPane scrollPane;
-	JTable tPlaca;
-	DefaultTableModel mPlaca;
-	VentanaPrincipal principal;
+	private final JTable tPlaca;
+	private final VentanaPrincipal principal;
+	private DefaultTableModel mPlaca;
 	public PanelPlacas(VentanaPrincipal principal)
 	{
 		this.principal = principal;
 		mPlaca=new DefaultTableModel();
 		mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});
-		panelCentral = new JPanel();
+		JPanel panelCentral = new JPanel();
 
 		setLayout(new BorderLayout(0, 0));
 
-		panelInferior = new JPanel();
+		JPanel panelInferior = new JPanel();
 		panelInferior.setLayout(new GridLayout(1, 1, 0, 0));
 		add(panelInferior, BorderLayout.SOUTH);
 		add(panelCentral, BorderLayout.CENTER);
 
-		btnAtras = new JButton("Atras");
+		JButton btnAtras = new JButton("Atras");
 		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAtras.addActionListener(new ActionListener() {
 
@@ -53,8 +47,8 @@ public class PanelPlacas extends JPanel {
 		tPlaca.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tPlaca.setModel(mPlaca);
 		tPlaca.getTableHeader().setReorderingAllowed(false);
-		scrollPane = new JScrollPane(tPlaca);
-		borrarPlaca = new JButton("Borrar placa");
+		JScrollPane scrollPane = new JScrollPane(tPlaca);
+		JButton borrarPlaca = new JButton("Borrar placa");
 		borrarPlaca.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		borrarPlaca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -63,7 +57,7 @@ public class PanelPlacas extends JPanel {
 		});
 		panelInferior.add(borrarPlaca);
 
-		btnAnadir = new JButton("Anadir placa");
+		JButton btnAnadir = new JButton("Anadir placa");
 		btnAnadir.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -76,12 +70,14 @@ public class PanelPlacas extends JPanel {
 		panelCentral.add(scrollPane, BorderLayout.CENTER);
 		rellenarPlacas();
 	}
-	public void atras()
+
+	void atras()
 	{
 		principal.getPanelcentral().setVisible(true);
 		this.setVisible(false);
 	}
-	public void borrar()
+
+	void borrar()
 	{
 		int id=Integer.parseInt((String) tPlaca.getValueAt(tPlaca.getSelectedRow(), 0));
 		InteraccionDB.eliminarPlaca(id);
@@ -91,7 +87,8 @@ public class PanelPlacas extends JPanel {
 		principal.getpUsuarios().rellenarPlacas();
 		principal.getpUsuarios().rellenarAsociacion();
 	}
-	public void anadir()
+
+	void anadir()
 	{
 		VentanaCrearPlacas nueva = new VentanaCrearPlacas();
 		nueva.setVisible(true);
@@ -105,7 +102,8 @@ public class PanelPlacas extends JPanel {
 			}
 		});
 	}
-	public void rellenarPlacas()
+
+	void rellenarPlacas()
 	{
 		mPlaca=new DefaultTableModel();
 		mPlaca.setColumnIdentifiers(new String[]{"ID Placa"});	

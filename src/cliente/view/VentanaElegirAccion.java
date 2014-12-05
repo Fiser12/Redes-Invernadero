@@ -14,19 +14,18 @@ import java.util.LinkedList;
 public class VentanaElegirAccion extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-    private LinkedList<JRadioButton> radioButtonGroup;
-    private ButtonGroup group = new ButtonGroup();
-    private Sensor accionSobre;
-    private String seleccion;
-    private JPanel opciones;
+	private final LinkedList<JRadioButton> radioButtonGroup;
+	private final ButtonGroup group = new ButtonGroup();
+	private final Sensor accionSobre;
+	private final JPanel opciones;
+	private String seleccion;
 
 	public VentanaElegirAccion(Sensor s, final VentanaTabla control) {
 		accionSobre = s;
 		opciones = new JPanel();
 		radioButtonGroup = new LinkedList<JRadioButton>();
 		setBounds(100, 100, 300, 200);
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
@@ -53,7 +52,7 @@ public class VentanaElegirAccion extends JFrame implements ActionListener {
 		btnContinuar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String respuesta = "";
+				String respuesta;
 				accionSobre.setUltimaAccion(seleccion);
 				try {
 					Util.claseSocketCliente.Escribir("ACCION "+ accionSobre.getId_Placa() + " "+ accionSobre.getVariable() + " " + accionSobre.getUltimaAccion()+"\n");
@@ -85,7 +84,8 @@ public class VentanaElegirAccion extends JFrame implements ActionListener {
 		opciones.setLayout(new GridLayout(4, 1, 0, 0));
 	
 	}
-	public void cargarRadioButtons(){
+
+	void cargarRadioButtons() {
 		if(accionSobre.getVariable().equals("Temperatura"))
 		{
 			JRadioButton uno = new JRadioButton("Subir a.c");

@@ -22,8 +22,9 @@ import java.util.LinkedList;
  */
 
 public class InteraccionDB {
-	static SQLiteManager gestor = SQLiteManager.getInstance();
-	public static void crearBaseDeDatos()
+	private static final SQLiteManager gestor = SQLiteManager.getInstance();
+
+	private static void crearBaseDeDatos()
 	{
 		gestor.enviarComando("PRAGMA foreign_keys = ON");
 		gestor.enviarComando("CREATE TABLE IF NOT EXISTS Usuario (Nombre VARCHAR(50) NOT NULL ,Pass VARCHAR(50) NOT NULL, PRIMARY KEY(Nombre));");
@@ -40,15 +41,18 @@ public class InteraccionDB {
 		gestor.enviarComando("DROP TABLE IF EXISTS Placa");
 		gestor.enviarComando("DROP TABLE IF EXISTS Usuario");
 	}
-	public static void reiniciarBase()
+
+	private static void reiniciarBase()
 	{
 		borrarBaseDeDatos();
 		crearBaseDeDatos();
 		cargarDatosIniciales();
 	}
-	public static void cargarDatosIniciales()
+
+	private static void cargarDatosIniciales()
 	{
 		gestor.enviarComando("INSERT INTO Usuario VALUES('Fiser', '1234')");
+		gestor.enviarComando("INSERT INTO Usuario VALUES('jonluther', '4321')");
 		gestor.enviarComando("INSERT INTO Placa(Estado) VALUES('ON')");
 		gestor.enviarComando("INSERT INTO Placa(Estado) VALUES('ON')");
 		gestor.enviarComando("INSERT INTO Placa(Estado) VALUES('ON')");
@@ -59,7 +63,9 @@ public class InteraccionDB {
 
 		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 1)");
 		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 2)");
-		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('Fiser', 3)");
+		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('jonluther', 3)");
+		gestor.enviarComando("INSERT INTO Usuario_Placa VALUES('jonluther', 1)");
+
 		gestor.enviarComando("INSERT INTO Sensor(Id_Sensor, Nombre_Variable, Funcion_Principal, Estado_la_variable, Ultima_Accion, id_Placa) VALUES(1, 'Temperatura', 'Regulacion climatizacion', 'ON', 'Subir a.c.', 1)");
 		gestor.enviarComando("INSERT INTO Sensor(Id_Sensor, Nombre_Variable, Funcion_Principal, Estado_la_variable, Ultima_Accion, id_Placa) VALUES(2, 'Humedad', 'Sistema de Riego', 'ON', 'Activar sistema de riego', 1)");
 		gestor.enviarComando("INSERT INTO Sensor(Id_Sensor, Nombre_Variable, Funcion_Principal, Estado_la_variable, Ultima_Accion, id_Placa) VALUES(3, 'Temperatura', 'Regulacion climatizacion', 'OFF', 'Subir a.c.', 2)");
@@ -118,17 +124,19 @@ public class InteraccionDB {
 		else
 			throw new RepetElement();
 	}
-	public static void insertarPlaca(Image imagen) throws RepetElement{
-		gestor.insertarDatos("INSERT INTO Placa(Foto, Estado) VALUES(?, ?) ", imagen, "ON");
+
+	public static void insertarPlaca(Image imagen) {
+		gestor.insertarDatos(imagen);
 	}
-	public static void insertarSensor(String funcion, String variable, String accion, boolean estado, Image imagen) throws RepetElement{
+
+	public static void insertarSensor(String funcion, String variable, String accion, boolean estado, Image imagen) {
 		String estadoStr = "ON";
 		if(!estado)
 			estadoStr = "OFF";
 		if(imagen!=null)
-			gestor.insertarSensor("INSERT INTO Sensor(Funcion_Principal, Nombre_Variable, Ultima_Accion, Estado_la_variable, Foto) VALUES(?, ?, ?, ?, ?) ", funcion, variable, accion, estadoStr,imagen);
+			gestor.insertarSensor(funcion, variable, accion, estadoStr, imagen);
 		else
-			gestor.enviarComando("INSERT INTO Sensor(Funcion_Principal, Nombre_Variable, Ultima_Accion, Estado_la_variable) VALUES('"+funcion+"', '"+variable+"', '"+accion+"', '"+estado+"') ");
+			gestor.enviarComando("INSERT INTO Sensor(Funcion_Principal, Nombre_Variable, Ultima_Accion, Estado_la_variable) VALUES('" + funcion + "', '" + variable + "', '" + accion + "', '" + estadoStr + "') ");
 	}
 
 	public static void eliminarUser(String usuario){
@@ -188,8 +196,8 @@ public class InteraccionDB {
 		ResultSet respuesta=gestor.getResultSet();
 		try {
 			while(respuesta.next()){
-				
-				usuarios.add(new Usuario(respuesta.getString("Nombre"),""));
+
+				usuarios.add(new Usuario(respuesta.getString("Nombre")));
 				
 			}
 		} catch (SQLException e) {

@@ -1,7 +1,6 @@
 package servidor.view;
 
 import servidor.serverModel.InteraccionDB;
-import util.excepciones.RepetElement;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,12 +15,12 @@ import java.util.LinkedList;
 
 public class VentanaCrearSensores extends JDialog{
 	private static final long serialVersionUID = 1L;
+	private final JButton btnInsertar;
+	private final JTextField tFFuncionPrincipal;
+	private final JTextField tFUltimaAccion;
+	private final JCheckBox chckbxNewCheckBox;
+	private final JComboBox<String> comboBoxVariable;
 	private Image image;
-	private JButton btnInsertar;
-	private JTextField tFFuncionPrincipal;
-	private JTextField tFUltimaAccion;
-	private JCheckBox chckbxNewCheckBox;
-	private JComboBox<String> comboBoxVariable;
 	public VentanaCrearSensores()
 	{
 	    setSize(new Dimension(400,300));
@@ -95,28 +94,26 @@ public class VentanaCrearSensores extends JDialog{
 		comboBoxVariable.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if(((String)comboBoxVariable.getSelectedItem()).equals("Imagen"))
+				if (comboBoxVariable.getSelectedItem().equals("Imagen"))
 					btnImagen.setEnabled(true);
 				else
 					btnImagen.setEnabled(false);
 			}
 		});
 	}
-	public void insertar()
+
+	void insertar()
 	{
-	    try {
-	    	String funcion = tFFuncionPrincipal.getText();
-	    	String variable = (String)comboBoxVariable.getSelectedItem();
-	    	boolean estado = chckbxNewCheckBox.isSelected();
-	    	String accion = tFUltimaAccion.getText();
-	    	InteraccionDB.insertarSensor(funcion, variable, accion, estado, image);
-			dispose();
-			image = null;
-	    }catch(RepetElement E){
-	    	JOptionPane.showMessageDialog(null,"El Usuario ya esta insertado","Error",JOptionPane.ERROR_MESSAGE);
-	    }
+		String funcion = tFFuncionPrincipal.getText();
+		String variable = (String) comboBoxVariable.getSelectedItem();
+		boolean estado = chckbxNewCheckBox.isSelected();
+		String accion = tFUltimaAccion.getText();
+		InteraccionDB.insertarSensor(funcion, variable, accion, estado, image);
+		dispose();
+		image = null;
 	}
-	public void sacarFoto()
+
+	void sacarFoto()
 	{
 	    FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & PNG Images", "jpg", "png");
         JFileChooser fc = new JFileChooser();
@@ -131,13 +128,15 @@ public class VentanaCrearSensores extends JDialog{
             btnInsertar.setEnabled(true);  
         }
 	}
-	public void cancelar()
+
+	void cancelar()
 	{
 		image = null;
 		dispose();
 	}
-	public String[]rellenarCombobox(){
-		LinkedList<String> devolver = new LinkedList<String>();
+
+	String[] rellenarCombobox() {
+		LinkedList<String> devolver;
 		devolver=InteraccionDB.listadoVariable();
 		String[]var=new String[devolver.size()];
 		for(int i=0;i<devolver.size();i++){

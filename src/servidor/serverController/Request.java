@@ -19,17 +19,16 @@ import java.io.IOException;
 
 public final class Request implements Runnable {
 
-	SocketManager sockManager;
-	int estado;
+	private final SocketManager sockManager;
+	private final PanelAdminServer conexiones;
+	private int estado;
 	private String usuario;
 	private String idPlacaAccion;
 	private String variableAccion;
 	private String accion;
-	private String requestLine;
 	private boolean stop;
-	private PanelAdminServer conexiones;
-	
-	public Request(SocketManager sockMan, PanelAdminServer conexiones) throws Exception {
+
+	public Request(SocketManager sockMan, PanelAdminServer conexiones) {
 		sockManager = sockMan;
 		this.conexiones = conexiones;
 	}
@@ -42,7 +41,8 @@ public final class Request implements Runnable {
 			System.out.println(e);
 		}
 	}
-	public void borrar(SocketManager add1, Request add2)
+
+	void borrar(SocketManager add1, Request add2)
 	{
 		Util.listaSockets.remove(add1);
 		Util.listaHilos.remove(add2);
@@ -53,7 +53,8 @@ public final class Request implements Runnable {
 			mainServidor.userMax = false;
 		}
 	}
-	public void anadir(SocketManager add1, Request add2)
+
+	void anadir(SocketManager add1, Request add2)
 	{
 		Util.listaSockets.add(add1);
 		Util.listaHilos.add(add2);
@@ -67,7 +68,7 @@ public final class Request implements Runnable {
 	private void processRequest() throws Exception {
 		anadir(sockManager, this);
 		conexiones.rellenarTablaUsuario();
-		requestLine = sockManager.Leer();
+		String requestLine = sockManager.Leer();
 		System.out.println("RequestLine: " + requestLine);
 		stop = false;
 
@@ -327,7 +328,8 @@ public final class Request implements Runnable {
 	public String getUsuario() {
 		return usuario;
 	}
-	public void salir() throws IOException
+
+	void salir() throws IOException
 	{
 		borrar(sockManager, this);
 		conexiones.rellenarTablaUsuario();

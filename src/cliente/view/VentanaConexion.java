@@ -15,13 +15,13 @@ import java.text.NumberFormat;
 public class VentanaConexion extends JFrame {
 
 	private static final long serialVersionUID = 4392006415802003983L;
-	private JTextField tFIP;
-	private JFormattedTextField tFpuerto;
+	private final JTextField tFIP;
+	private final JFormattedTextField tFpuerto;
 
 	public VentanaConexion() {
 		setTitle("Conexion");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 170);
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -89,7 +89,7 @@ public class VentanaConexion extends JFrame {
 				Util.puerto = Integer.parseInt(tFpuerto.getText().replace(".", ""));
 				Util.servidor = tFIP.getText();
 				try {
-					Util.claseSocketCliente = new SocketManager("127.0.0.1", 3000);
+					Util.claseSocketCliente = new SocketManager();
 					VentanaInicioSesion ventana = new VentanaInicioSesion();
 					ventana.setVisible(true);
 					dispose();

@@ -13,13 +13,13 @@ import java.sql.*;
 public class SQLiteManager
 {
 	private static SQLiteManager instance = null;
+	private final String dir;
 	private Connection connection;
 	private Statement query;
-	private String dir;
 	private boolean conectado;
 	private ResultSet resultadoDeConsulta;
 
-	public SQLiteManager()
+	private SQLiteManager()
 	{
 		this.dir = Util.SQLITE_NOMBRE_BBDD;
 		connect();
@@ -54,7 +54,8 @@ public class SQLiteManager
 	public ResultSet getResultSet(){
 		return resultadoDeConsulta;
 	}
-	public synchronized boolean enviarComando(String comando)
+
+	public synchronized void enviarComando(String comando)
 	{
 		try {
 			if(conectado){
@@ -71,13 +72,9 @@ public class SQLiteManager
 				}else{
 					resultadoDeConsulta = query.executeQuery(comando);
 				}
-				return true;
-			}else{
-				return false;
 			}
-		} catch (SQLException e) {
-			return false;
-		}               
+		} catch (SQLException ignored) {
+		}
 	}
 	public byte[] getImagen(int codigo) throws SearchException
 	{
@@ -136,11 +133,11 @@ public class SQLiteManager
 
 		return imgArr;
 	}
-	public boolean setImagen(String sql, Image image)
+
+	public void setImagen(String sql, Image image)
 	{
-		boolean funciona = true; 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-        try {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
                 ImageIO.write((RenderedImage)image, "png", baos);
         } catch (IOException e) {
                 e.printStackTrace();
@@ -150,14 +147,14 @@ public class SQLiteManager
 			PreparedStatement consultaPreparada = connection.prepareStatement(sql);
 			consultaPreparada.setBytes(1, data);
 			consultaPreparada.executeUpdate();
-		} catch (SQLException e) {
-			funciona = false;
+		} catch (SQLException ignored) {
 		}
-		return funciona;
+
 	}
-	public boolean insertarDatos(String sql, Image image, String dos)
+
+	public void insertarDatos(Image image)
 	{
-		boolean funciona = true; 
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();  
         try {
                 ImageIO.write((RenderedImage)image, "png", baos);
@@ -166,18 +163,18 @@ public class SQLiteManager
         }  
         byte[] data = baos.toByteArray(); 
 		try {
-			PreparedStatement consultaPreparada = connection.prepareStatement(sql);
+			PreparedStatement consultaPreparada = connection.prepareStatement("INSERT INTO Placa(Foto, Estado) VALUES(?, ?) ");
 			consultaPreparada.setBytes(1, data);
-			consultaPreparada.setString(2, dos);
+			consultaPreparada.setString(2, "ON");
 			consultaPreparada.executeUpdate();
-		} catch (SQLException e) {
-			funciona = false;
+		} catch (SQLException ignored) {
+
 		}
-		return funciona;
+
 	}
-	public boolean insertarSensor(String sql,String funcion, String variable, String accion, String estado, Image image)
+
+	public void insertarSensor(String funcion, String variable, String accion, String estado, Image image)
 	{
-		boolean funciona = true; 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		if(image!=null){
 			try {
@@ -188,7 +185,7 @@ public class SQLiteManager
 			byte[] data = baos.toByteArray();
 
 			try {
-				PreparedStatement consultaPreparada = connection.prepareStatement(sql);
+				PreparedStatement consultaPreparada = connection.prepareStatement("INSERT INTO Sensor(Funcion_Principal, Nombre_Variable, Ultima_Accion, Estado_la_variable, Foto) VALUES(?, ?, ?, ?, ?) ");
 				consultaPreparada.setString(1, funcion);
 				consultaPreparada.setString(2, variable);
 				consultaPreparada.setString(3, accion);
@@ -196,21 +193,18 @@ public class SQLiteManager
 				consultaPreparada.setBytes(5, data);
 
 				consultaPreparada.executeUpdate();
-			} catch (SQLException e) {
-				funciona = false;
+			} catch (SQLException ignored) {
 			}
 		}
 		else
 			try {
-				PreparedStatement consultaPreparada = connection.prepareStatement(sql);
+				PreparedStatement consultaPreparada = connection.prepareStatement("INSERT INTO Sensor(Funcion_Principal, Nombre_Variable, Ultima_Accion, Estado_la_variable, Foto) VALUES(?, ?, ?, ?, ?) ");
 				consultaPreparada.setString(1, funcion);
 				consultaPreparada.setString(2, variable);
 				consultaPreparada.setString(3, accion);
 				consultaPreparada.setString(4, estado);
 				consultaPreparada.executeUpdate();
-			} catch (SQLException e) {
-				funciona = false;
+			} catch (SQLException ignored) {
 			}
-		return funciona;
 	}
 }

@@ -7,11 +7,10 @@ import java.awt.*;
 public class VentanaImagenVariable extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 
 	public VentanaImagenVariable(Image i, String variable) {
 		setBounds(100, 100, new ImageIcon(i).getIconWidth(), new ImageIcon(i).getIconHeight()+70);
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));

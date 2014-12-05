@@ -11,8 +11,8 @@ import java.awt.event.ActionListener;
 public class VentanaCrearUsuario extends JDialog{
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textFieldUser;
-	private JPasswordField textFieldPass;
+	private final JTextField textFieldUser;
+	private final JPasswordField textFieldPass;
 	public VentanaCrearUsuario()
 	{
 	    setSize(new Dimension(250,135));
@@ -62,7 +62,8 @@ public class VentanaCrearUsuario extends JDialog{
 		panelInferior.add(btnCancelar);
 		
 	}
-	public void insertar()
+
+	void insertar()
 	{
 		String user = textFieldUser.getText();
 	    String pass=new String(textFieldPass.getPassword());
@@ -73,7 +74,8 @@ public class VentanaCrearUsuario extends JDialog{
 	    }
 		dispose();
 	}
-	public void cancelar()
+
+	void cancelar()
 	{
 		dispose();
 	}
