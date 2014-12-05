@@ -151,7 +151,7 @@ public class VentanaTabla extends JFrame{
 			}
 			modeloTabla.fireTableDataChanged();
 			tabla.setModel(modeloTabla);
-			ultimaCarga = 1;
+			ultimaCarga = 2;
 			repaint();
 		    tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
@@ -347,5 +347,7 @@ public class VentanaTabla extends JFrame{
 	{
 		if(ultimaCarga==1)
 			listar();
+		else if (ultimaCarga == 2)
+			buscar();
 	}
 }

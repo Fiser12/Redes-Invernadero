@@ -88,9 +88,9 @@ public class SocketManager {
 			throw new IndexOutOfBoundsException("Out of bounds: " + start);
 		// Other checks if needed.
 
-		// May be better to save the streams in the support class;
 		// just like the socket variable.
-		OutputStream out = mySocket.getOutputStream(); 
+		// May be better to save the streams in the support class;
+		OutputStream out = mySocket.getOutputStream();
 		DataOutputStream dos = new DataOutputStream(out);
 
 		dos.writeInt(len);
