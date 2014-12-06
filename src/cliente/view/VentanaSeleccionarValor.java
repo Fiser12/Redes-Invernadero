@@ -112,7 +112,8 @@ public class VentanaSeleccionarValor extends JFrame {
 						dispose();
 					}
 				} catch (IOException e1) {
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Error, el servidor no esta encendido", "Error de conexion", JOptionPane.ERROR_MESSAGE);
+					System.exit(0);
 				}
 			}
 		});
@@ -127,7 +128,8 @@ public class VentanaSeleccionarValor extends JFrame {
 					respuesta = Util.claseSocketCliente.Leer();
 					dispose();
 				} catch (IOException e1) {
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Error, el servidor no esta encendido", "Error de conexion", JOptionPane.ERROR_MESSAGE);
+					System.exit(0);
 				}
 			}
 		});

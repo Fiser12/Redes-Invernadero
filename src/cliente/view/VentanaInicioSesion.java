@@ -7,15 +7,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.io.IOException;
 
-public class VentanaInicioSesion extends JFrame implements FocusListener {
+public class VentanaInicioSesion extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private final JTextField textUsuario;
 	private final JPasswordField passwordField;
@@ -94,9 +89,7 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 		gbc_lblDatos.gridx = 0;
 		gbc_lblDatos.gridy = 0;
 		textoInicial.add(lblDatos, gbc_lblDatos);
-		textUsuario.addFocusListener( this);
-		passwordField.addFocusListener( this);
-		
+
 	}
 
 	void mandarUsuarioPass()
@@ -120,7 +113,8 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 			else
 				JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+			JOptionPane.showMessageDialog(null, "Error, el servidor no esta encendido", "Error de conexion", JOptionPane.ERROR_MESSAGE);
+			dispose();
 		}
 	}
 
@@ -136,16 +130,5 @@ public class VentanaInicioSesion extends JFrame implements FocusListener {
 		}
 
 		dispose();
-	}
-	@Override
-	public void focusGained(FocusEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void focusLost(FocusEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }

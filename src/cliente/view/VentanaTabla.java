@@ -149,7 +149,8 @@ public class VentanaTabla extends JFrame{
 		    tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		} catch(IOException e){
-			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+			JOptionPane.showMessageDialog(null, "Error, el servidor no esta encendido", "Error de conexion", JOptionPane.ERROR_MESSAGE);
+			dispose();
 		}
 	}
 
@@ -161,7 +162,7 @@ public class VentanaTabla extends JFrame{
 			Util.claseSocketCliente.CerrarSocket();
 
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+			JOptionPane.showMessageDialog(null, "Error, el servidor no esta encendido", "Error de conexion", JOptionPane.ERROR_MESSAGE);
 		}
 		dispose();
 	}
@@ -188,7 +189,8 @@ public class VentanaTabla extends JFrame{
 				recargarTabla();
 			}
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+			JOptionPane.showMessageDialog(null, "Error, el servidor no esta encendido", "Error de conexion", JOptionPane.ERROR_MESSAGE);
+			dispose();
 		}
 		recargarTabla();
 	}
@@ -215,7 +217,8 @@ public class VentanaTabla extends JFrame{
 				recargarTabla();
 			}
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+			JOptionPane.showMessageDialog(null, "Error, el servidor no esta encendido", "Error de conexion", JOptionPane.ERROR_MESSAGE);
+			dispose();
 		}
 	}
 
@@ -248,7 +251,8 @@ public class VentanaTabla extends JFrame{
 			repaint();
 		    tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+			JOptionPane.showMessageDialog(null, "Error, el servidor no esta encendido", "Error de conexion", JOptionPane.ERROR_MESSAGE);
+			dispose();
 		}
 
 	}
@@ -311,7 +315,8 @@ public class VentanaTabla extends JFrame{
 				ventana.setVisible(true);
 			}
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+			JOptionPane.showMessageDialog(null, "Error, el servidor no esta encendido", "Error de conexion", JOptionPane.ERROR_MESSAGE);
+			dispose();
 		}
 	}
 
@@ -339,7 +344,8 @@ public class VentanaTabla extends JFrame{
 				ventana.setVisible(true);
 			}
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE); 
+			JOptionPane.showMessageDialog(null, "Error, el servidor no esta encendido", "Error de conexion", JOptionPane.ERROR_MESSAGE);
+			dispose();
 		}
 
 	}

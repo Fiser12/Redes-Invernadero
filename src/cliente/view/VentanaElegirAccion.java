@@ -45,11 +45,6 @@ public class VentanaElegirAccion extends JFrame implements ActionListener {
 
 		JButton btnContinuar = new JButton("Continuar");
 		btnContinuar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		btnContinuar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String respuesta;
@@ -65,8 +60,8 @@ public class VentanaElegirAccion extends JFrame implements ActionListener {
 					else
 						JOptionPane.showMessageDialog(null,respuesta,"Error",JOptionPane.ERROR_MESSAGE);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Error, el servidor no esta encendido", "Error de conexion", JOptionPane.ERROR_MESSAGE);
+					System.exit(0);
 				}
 			}
 		});
